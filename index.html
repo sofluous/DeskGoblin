@@ -128,6 +128,12 @@
             font-size: 12px;
             color: rgba(255, 255, 255, 0.35);
         }
+
+        /* mobile soft keyboard friendliness */
+        .stage {
+            height: 100vh;
+            /* will be overridden by JS via visualViewport */
+        }
     </style>
 </head>
 
@@ -161,12 +167,30 @@
             const ctx = canvas.getContext("2d");
             const thought = document.getElementById("thought");
 
+            const DESIGN = { w: 1000, h: 700 };
+            let VIEW = { w: 1000, h: 700, scale: 1, ox: 0, oy: 0 };
+
             function resize() {
                 const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-                canvas.width = Math.floor(canvas.clientWidth * dpr);
-                canvas.height = Math.floor(canvas.clientHeight * dpr);
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                // canvas CSS size comes from the stage
+                const cssW = canvas.clientWidth;
+                const cssH = canvas.clientHeight;
+
+                canvas.width = Math.floor(cssW * dpr);
+                canvas.height = Math.floor(cssH * dpr);
+
+                // compute scene transform in CSS pixels (then dpr handled by setTransform)
+                const scale = Math.min(cssW / DESIGN.w, cssH / DESIGN.h);
+                const ox = (cssW - DESIGN.w * scale) * 0.5;
+                const oy = (cssH - DESIGN.h * scale) * 0.5;
+
+                VIEW = { w: cssW, h: cssH, scale, ox, oy };
+
+                // include dpr in the transform
+                ctx.setTransform(dpr * scale, 0, 0, dpr * scale, dpr * ox, dpr * oy);
             }
+
             window.addEventListener("resize", resize);
 
             canvas.tabIndex = 0;
@@ -183,6 +207,30 @@
                 if (t < 0.78) return lerp(1.0, 1.08, easeOutCubic((t - 0.60) / 0.18));
                 return lerp(1.08, 1.0, easeOutCubic((t - 0.78) / 0.22));
             }
+
+            const stageEl = document.querySelector(".stage");
+
+            function syncToVisualViewport() {
+                const vv = window.visualViewport;
+                const h = vv ? Math.floor(vv.height) : window.innerHeight;
+                stageEl.style.height = h + "px";
+                // Keep content pinned (prevents weird “keyboard pushes page” behavior)
+                window.scrollTo(0, 0);
+                resize(); // re-run canvas sizing
+            }
+
+            // run now + on changes
+            syncToVisualViewport();
+            window.addEventListener("resize", syncToVisualViewport);
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener("resize", syncToVisualViewport);
+                window.visualViewport.addEventListener("scroll", syncToVisualViewport);
+            }
+
+            // when the thought bubble is focused, force a re-sync
+            thought.addEventListener("focus", () => setTimeout(syncToVisualViewport, 50));
+            thought.addEventListener("blur", () => setTimeout(syncToVisualViewport, 50));
+
             function roundRect(x, y, w, h, r) {
                 r = Math.min(r, w / 2, h / 2);
                 ctx.beginPath();
@@ -258,38 +306,40 @@
 
             // ===== Layout
             function layout() {
-                const w = canvas.clientWidth;
-                const h = canvas.clientHeight;
+                const w = DESIGN.w;
+                const h = DESIGN.h;
 
                 const deskTopY = h * 0.56;
 
-                // ✅ keyboard: much narrower + more realistic proportions
-                const kbW = w * 0.46, kbH = h * 0.20;
+                // ✅ stable keyboard proportions (design space)
+                const kbW = w * 0.46;
+                const kbH = h * 0.20;
                 const kbX = (w - kbW) * 0.50;
                 const kbY = deskTopY + h * 0.075;
 
-                // mousepad stays to the right of keyboard
+                // mousepad + mouse: slimmer/taller mouse
                 const padW = w * 0.18;
                 const padH = h * 0.20;
                 const padX = kbX + kbW + w * 0.03;
                 const padY = kbY;
 
-                const mouseW = w * 0.11;
-                const mouseH = h * 0.15;
+                // make mouse more “mouse-like”
+                const mouseW = w * 0.075;  // narrower
+                const mouseH = h * 0.145;  // taller
 
-                const headW = w * 0.22, headH = headW * 0.95;
+                const headW = w * 0.22;
+                const headH = headW * 0.95;
                 const headX = w * 0.50 - headW * 0.5;
                 const headY = deskTopY - headH * 0.82;
 
-                // ✅ shoulders at outer edges of head (not inside it)
+                // shoulders at head edges (design space)
                 const shoulderY = deskTopY + 2;
-                const shoulderL = { x: headX + headW * 0.08, y: shoulderY };
-                const shoulderR = { x: headX + headW * 0.92, y: shoulderY };
+                const shoulderL = { x: headX + headW * 0.06, y: shoulderY };
+                const shoulderR = { x: headX + headW * 0.94, y: shoulderY };
 
-                // ✅ rest hands: raised above desk, near where hands would appear
                 const raise = h * 0.075;
-                const restL = { x: headX + headW * 0.18, y: deskTopY - raise };
-                const restR = { x: headX + headW * 0.82, y: deskTopY - raise };
+                const restL = { x: headX + headW * 0.16, y: deskTopY - raise };
+                const restR = { x: headX + headW * 0.84, y: deskTopY - raise };
 
                 return {
                     w, h, deskTopY,
@@ -301,7 +351,6 @@
                     restL, restR
                 };
             }
-
 
             // ===== Keyboard
             function buildKeyRects(kb) {
@@ -687,7 +736,7 @@
                 roundRect(kb.x, kb.y, kb.w, kb.h, kb.h * 0.16);
                 ctx.fill();
 
-                const fontPx = Math.max(10, kb.h * 0.10);
+                const fontPx = clamp(keys[0].h * 0.42, 10, 18);
                 ctx.font = `${fontPx}px system-ui`;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
