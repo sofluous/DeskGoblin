@@ -1,900 +1,959 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Desk Goblin Mash</title>
-  <style>
-    :root{
-      --bg:#0f1116;
-      --panel:#151a22;
-      --text:#d6dde8;
-      --muted:#8a94a7;
-      --accent:#6ee7ff;
-    }
-    html,body{
-      height:100%; margin:0;
-      background:var(--bg);
-      color:var(--text);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      overflow:hidden;
-    }
-    .wrap{
-      display:grid;
-      grid-template-rows:auto 1fr auto;
-      height:100%;
-    }
-    header,footer{
-      padding:12px 14px;
-      background:linear-gradient(to bottom, rgba(255,255,255,0.04), rgba(255,255,255,0));
-      border-bottom:1px solid rgba(255,255,255,0.06);
-    }
-    footer{
-      border-top:1px solid rgba(255,255,255,0.06);
-      border-bottom:none;
-      background:linear-gradient(to top, rgba(255,255,255,0.04), rgba(255,255,255,0));
-    }
-    header b{ color:var(--accent); }
-    .sub{ color:var(--muted); font-size:12px; margin-top:4px; }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Desk Goblin Mash</title>
+    <style>
+        :root {
+            --bg: #0f1116;
+            --text: #d6dde8;
+            --muted: #8a94a7;
+            --accent: #6ee7ff;
+        }
 
-    .stage{
-      position:relative;
-      width:100%;
-      height:100%;
-    }
-    #c{
-      width:100%;
-      height:100%;
-      display:block;
-      background:
-        radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,0.06), rgba(255,255,255,0.0)),
-        radial-gradient(900px 500px at 10% 80%, rgba(110,231,255,0.05), rgba(255,255,255,0.0));
-    }
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            overflow: hidden;
+        }
 
-    .hint{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-      font-size:12px; color:var(--muted);
-    }
-    .pill{
-      border:1px solid rgba(255,255,255,0.10);
-      background:rgba(255,255,255,0.04);
-      padding:4px 8px;
-      border-radius:999px;
-    }
+        .wrap {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            height: 100%;
+        }
 
-    /* Thought bubble */
-    .bubble{
-      position:absolute;
-      left: clamp(10px, 3vw, 28px);
-      top:  clamp(10px, 2.4vh, 22px);
-      width: min(520px, 56vw);
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 18px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.30);
-      backdrop-filter: blur(6px);
-      overflow:hidden;
-    }
-    .bubble:after{
-      content:"";
-      position:absolute;
-      left: 44px;
-      bottom: -14px;
-      width: 28px;
-      height: 28px;
-      background: rgba(255,255,255,0.06);
-      border-left: 1px solid rgba(255,255,255,0.10);
-      border-bottom: 1px solid rgba(255,255,255,0.10);
-      transform: rotate(45deg);
-    }
-    .bubble textarea{
-      width:100%;
-      height:96px;
-      resize:none;
-      border:0;
-      outline:none;
-      padding:12px 12px 14px 12px;
-      background:transparent;
-      color: var(--text);
-      font-size:14px;
-      line-height:1.35;
-    }
-    .bubble .label{
-      padding:8px 12px 0 12px;
-      font-size:12px;
-      color: rgba(255,255,255,0.35);
-    }
-  </style>
+        header,
+        footer {
+            padding: 12px 14px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: none;
+            background: linear-gradient(to top, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+        }
+
+        header b {
+            color: var(--accent);
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        #c {
+            width: 100%;
+            height: 100%;
+            display: block;
+            background:
+                radial-gradient(1200px 600px at 50% 20%, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.0)),
+                radial-gradient(900px 500px at 10% 80%, rgba(110, 231, 255, 0.05), rgba(255, 255, 255, 0.0));
+        }
+
+        .hint {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .pill {
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 4px 8px;
+            border-radius: 999px;
+        }
+
+        /* Thought bubble */
+        .bubble {
+            position: absolute;
+            left: clamp(10px, 3vw, 28px);
+            top: clamp(10px, 2.4vh, 22px);
+            width: min(520px, 56vw);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 18px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
+            backdrop-filter: blur(6px);
+            overflow: hidden;
+        }
+
+        .bubble:after {
+            content: "";
+            position: absolute;
+            left: 44px;
+            bottom: -14px;
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.06);
+            border-left: 1px solid rgba(255, 255, 255, 0.10);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            transform: rotate(45deg);
+        }
+
+        .bubble textarea {
+            width: 100%;
+            height: 96px;
+            resize: none;
+            border: 0;
+            outline: none;
+            padding: 12px 12px 14px 12px;
+            background: transparent;
+            color: var(--text);
+            font-size: 14px;
+            line-height: 1.35;
+        }
+
+        .bubble .label {
+            padding: 8px 12px 0 12px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+    </style>
 </head>
 
 <body>
-<div class="wrap">
-  <header>
-    <div><b>Desk Goblin Mash</b> — press keys / click mouse</div>
-    <div class="sub">Single HTML file. Keyboard is mirrored for the character. Hold keys to keep them pressed.</div>
-  </header>
+    <div class="wrap">
+        <header>
+            <div><b>Desk Goblin Mash</b> — press keys / click mouse</div>
+            <div class="sub">Rest pose = hands raised. Keyboard/mouse are mirrored for character perspective. Mouse
+                slides on a mousepad.</div>
+        </header>
 
-  <div class="stage">
-    <canvas id="c"></canvas>
+        <div class="stage">
+            <canvas id="c"></canvas>
 
-    <div class="bubble">
-      <div class="label">Thought bubble</div>
-      <textarea id="thought" placeholder="Type your thoughts… (the goblin will mash the keys while you type)"></textarea>
+            <div class="bubble">
+                <div class="label">Thought bubble</div>
+                <textarea id="thought" placeholder="Type… (the goblin will mash while you type)"></textarea>
+            </div>
+        </div>
+
+        <footer class="hint">
+            <span class="pill">Keyboard: press / hold</span>
+            <span class="pill">Mouse: move / hold buttons</span>
+            <span class="pill">Click once to focus + unlock audio</span>
+        </footer>
     </div>
-  </div>
-
-  <footer class="hint">
-    <span class="pill">Keyboard: press / hold</span>
-    <span class="pill">Mouse: left / right / middle</span>
-    <span class="pill">Tip: click canvas once if keys don’t register</span>
-    <span class="pill">Audio: first click unlocks sound</span>
-  </footer>
-</div>
-
-<script>
-(() => {
-  // =========================
-  // 1) CANVAS SETUP
-  // =========================
-  const canvas = document.getElementById("c");
-  const ctx = canvas.getContext("2d");
-
-  function resize() {
-    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-    const { clientWidth:w, clientHeight:h } = canvas;
-    canvas.width  = Math.floor(w * dpr);
-    canvas.height = Math.floor(h * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-  window.addEventListener("resize", resize);
-
-  // Focus handling
-  canvas.tabIndex = 0;
-  canvas.style.outline = "none";
-  canvas.addEventListener("pointerdown", () => canvas.focus());
-
-  // =========================
-  // 2) HELPERS
-  // =========================
-  const clamp = (v,min,max) => Math.max(min, Math.min(max, v));
-  const lerp  = (a,b,t) => a + (b-a)*t;
-
-  function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
-
-  // smash approach curve
-  function smashEase(t){
-    if (t < 0.60){
-      const x = t / 0.60;
-      return easeOutCubic(x);
-    } else if (t < 0.78){
-      const x = (t - 0.60) / 0.18;
-      return lerp(1.0, 1.08, easeOutCubic(x));
-    } else {
-      const x = (t - 0.78) / 0.22;
-      return lerp(1.08, 1.0, easeOutCubic(x));
-    }
-  }
-
-  function roundRect(x,y,w,h,r){
-    r = Math.min(r, w/2, h/2);
-    ctx.beginPath();
-    ctx.moveTo(x+r,y);
-    ctx.arcTo(x+w,y, x+w,y+h, r);
-    ctx.arcTo(x+w,y+h, x,y+h, r);
-    ctx.arcTo(x,y+h, x,y, r);
-    ctx.arcTo(x,y, x+w,y, r);
-    ctx.closePath();
-  }
-
-  // =========================
-  // 3) AUDIO (WebAudio)
-  // =========================
-  let audio = null;
-  function audioInit(){
-    if (audio) return;
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return;
-
-    const ctxA = new AC();
-    const master = ctxA.createGain();
-    master.gain.value = 0.22;
-    master.connect(ctxA.destination);
-
-    function env(g, t0, a, d, s){
-      g.gain.cancelScheduledValues(t0);
-      g.gain.setValueAtTime(0.0001, t0);
-      g.gain.exponentialRampToValueAtTime(a, t0 + 0.01);
-      g.gain.exponentialRampToValueAtTime(s, t0 + d);
-      g.gain.exponentialRampToValueAtTime(0.0001, t0 + d + 0.10);
-    }
-
-    function clack(){
-      const t = ctxA.currentTime;
-      const o = ctxA.createOscillator();
-      const g = ctxA.createGain();
-      o.type = "square";
-      o.frequency.setValueAtTime(520, t);
-      o.frequency.exponentialRampToValueAtTime(280, t + 0.03);
-      env(g, t, 0.7, 0.04, 0.08);
-      o.connect(g); g.connect(master);
-      o.start(t); o.stop(t + 0.14);
-    }
-
-    function thunk(){
-      const t = ctxA.currentTime;
-
-      // low "thump"
-      const o = ctxA.createOscillator();
-      const g = ctxA.createGain();
-      o.type = "sine";
-      o.frequency.setValueAtTime(140, t);
-      o.frequency.exponentialRampToValueAtTime(70, t + 0.06);
-      env(g, t, 0.9, 0.08, 0.12);
-      o.connect(g); g.connect(master);
-      o.start(t); o.stop(t + 0.18);
-
-      // tiny noise snap (optional)
-      const bufLen = Math.floor(ctxA.sampleRate * 0.05);
-      const buf = ctxA.createBuffer(1, bufLen, ctxA.sampleRate);
-      const data = buf.getChannelData(0);
-      for (let i=0;i<bufLen;i++){
-        data[i] = (Math.random()*2-1) * Math.exp(-i/(bufLen*0.25));
-      }
-      const n = ctxA.createBufferSource();
-      const ng = ctxA.createGain();
-      n.buffer = buf;
-      ng.gain.value = 0.22;
-      n.connect(ng); ng.connect(master);
-      n.start(t); n.stop(t + 0.06);
-    }
-
-    audio = { ctxA, clack, thunk };
-  }
-
-  // unlock audio on first pointerdown anywhere
-  window.addEventListener("pointerdown", () => {
-    audioInit();
-    if (audio?.ctxA?.state === "suspended") audio.ctxA.resume();
-  }, { once:false });
-
-  // =========================
-  // 4) LAYOUT (centered character + keyboard)
-  // =========================
-  function layout(){
-    const w = canvas.clientWidth;
-    const h = canvas.clientHeight;
-
-    const deskTopY = h * 0.56;
-
-    const kbW = w * 0.66;
-    const kbH = h * 0.20;
-    const kbX = (w - kbW) * 0.50;
-    const kbY = deskTopY + h * 0.075;
-
-    const mouseW = w * 0.12;
-    const mouseH = h * 0.16;
-    const mouseX = kbX + kbW + w * 0.03;
-    const mouseY = kbY + kbH * 0.12;
-
-    const headW = w * 0.22;
-    const headH = headW * 0.95;
-    const headX = w * 0.50 - headW * 0.5;
-    const headY = deskTopY - headH * 0.82;
-
-    // arm rests: symmetric, centered under head/keyboard
-    const restY = deskTopY + h * 0.035;
-    const restL = { x: w * 0.44, y: restY };
-    const restR = { x: w * 0.56, y: restY };
-
-    return {
-      w,h,deskTopY,
-      keyboard:{ x:kbX,y:kbY,w:kbW,h:kbH },
-      mouse:{ x:mouseX,y:mouseY,w:mouseW,h:mouseH },
-      head:{ x:headX,y:headY,w:headW,h:headH },
-      restL,restR
-    };
-  }
-
-  // =========================
-  // 5) KEYBOARD RECTS (mirrored)
-  // =========================
-  function buildKeyRects(kb){
-    const keys = [];
-
-    // 5 rows: 4 main + a dedicated space row to avoid overlap
-    const rows = [
-      { y: 0.14, h: 0.20, items: [["ESC",1.2],["1",1],["2",1],["3",1],["4",1],["5",1],["6",1],["7",1],["8",1],["9",1],["0",1],["-",1],["=",1],["BKSP",1.8]] },
-      { y: 0.36, h: 0.20, items: [["TAB",1.4],["Q",1],["W",1],["E",1],["R",1],["T",1],["Y",1],["U",1],["I",1],["O",1],["P",1],["[",1],["]",1],["\\",1.3]] },
-      { y: 0.58, h: 0.20, items: [["CAPS",1.6],["A",1],["S",1],["D",1],["F",1],["G",1],["H",1],["J",1],["K",1],["L",1],[";",1],["'",1],["ENTER",2.1]] },
-      { y: 0.80, h: 0.20, items: [["SHIFT",2.2],["Z",1],["X",1],["C",1],["V",1],["B",1],["N",1],["M",1],[",",1],[".",1],["/",1],["SHIFT",2.2]] },
-      { y: 0.94, h: 0.12, items: [["CTRL",1.2],["ALT",1.2],["SPACE",6.2],["ALT",1.2],["CTRL",1.2]] },
-    ];
-
-    const padX = kb.w * 0.04;
-    const padY = kb.h * 0.10;
-    const innerW = kb.w - padX*2;
-    const innerH = kb.h - padY*2;
-
-    rows.forEach((row, rIdx) => {
-      const totalUnits = row.items.reduce((s,it)=>s+it[1],0);
-      const gap = innerW * 0.010;
-      const unitW = (innerW - gap*(row.items.length-1)) / totalUnits;
-
-      let x = kb.x + padX;
-      const y = kb.y + padY + innerH*row.y - (innerH*row.h)*0.5;
-      const h = innerH * row.h;
-
-      row.items.forEach(([label,units], i) => {
-        const w = unitW * units;
-        keys.push({
-          id: `r${rIdx}_${i}_${label}`,
-          label,
-          x, y, w, h,
-          held:false,
-          press:0
-        });
-        x += w + gap;
-      });
-    });
-
-    // MIRROR for character orientation:
-    // x' = kb.x + kb.w - (x - kb.x) - w
-    keys.forEach(k => {
-      k.x = kb.x + kb.w - (k.x - kb.x) - k.w;
-    });
-
-    return keys;
-  }
-
-  // Map KeyboardEvent.code -> our label
-  function labelFromCode(e){
-    const c = e.code;
-
-    // letters
-    if (c.startsWith("Key")) return c.slice(3).toUpperCase();
-
-    // digits top row
-    if (c.startsWith("Digit")) return c.slice(5);
-
-    // space / enter / etc
-    const map = {
-      Space: "SPACE",
-      Enter: "ENTER",
-      Backspace: "BKSP",
-      Tab: "TAB",
-      Escape: "ESC",
-      CapsLock: "CAPS",
-      ShiftLeft: "SHIFT",
-      ShiftRight:"SHIFT",
-      ControlLeft:"CTRL",
-      ControlRight:"CTRL",
-      AltLeft:"ALT",
-      AltRight:"ALT",
-      Minus:"-",
-      Equal:"=",
-      BracketLeft:"[",
-      BracketRight:"]",
-      Backslash:"\\",
-      Semicolon:";",
-      Quote:"'",
-      Comma:",",
-      Period:".",
-      Slash:"/"
-    };
-    if (map[c]) return map[c];
-
-    // arrows: map to WASD for comedy + readability
-    const arrows = {
-      ArrowUp: "W",
-      ArrowDown: "S",
-      ArrowLeft: "A",
-      ArrowRight: "D"
-    };
-    if (arrows[c]) return arrows[c];
-
-    return null;
-  }
-
-  function findKeyByLabel(keys, label){
-    // SHIFT/CTRL/ALT duplicates exist: pick closest to center
-    const matches = keys.filter(k => k.label === label);
-    if (!matches.length) return null;
-    if (matches.length === 1) return matches[0];
-    // pick middle-most
-    matches.sort((a,b)=>(Math.abs((a.x+a.w*0.5)-keyCenterX) - Math.abs((b.x+b.w*0.5)-keyCenterX)));
-    return matches[0];
-  }
-
-  // =========================
-  // 6) MOUSE TARGETS + STATE
-  // =========================
-  function mouseTargets(m){
-    const {x,y,w,h} = m;
-    const r = Math.min(w,h);
-    return {
-      left:   { id:"mouse_left",  x:x+w*0.30, y:y+h*0.32, r:r*0.12, held:false, press:0 },
-      right:  { id:"mouse_right", x:x+w*0.70, y:y+h*0.32, r:r*0.12, held:false, press:0 },
-      middle: { id:"mouse_mid",   x:x+w*0.50, y:y+h*0.30, r:r*0.10, held:false, press:0 },
-    };
-  }
-
-  // =========================
-  // 7) ARMS: can hold on pressed target
-  // =========================
-  function makeArm(origin){
-    return {
-      origin: { ...origin },
-      pos:    { ...origin },
-      target: { ...origin },
-      assignedId: null,
-      phase: "idle", // idle | go | hold | return
-      t: 0,
-      dur: 0.16,
-      holdImpact: 0,
-      impact: 0,
-      returningFrom: null
-    };
-  }
-
-  // =========================
-  // 8) WORLD STATE
-  // =========================
-  let keyRects = [];
-  let L, R;
-  let mTargets = null;
-
-  // pressed targets map: id -> { id, x,y, type, held }
-  // id is keyRect.id or mouse target id
-  const pressed = new Map();
-
-  let headBob = { y:0, v:0 }; // simple spring for comedic bob
-
-  let lastTime = performance.now();
-  let keyCenterX = 0;
-
-  // =========================
-  // 9) ASSIGNMENT LOGIC (two hands)
-  // =========================
-  function assignTargets(){
-    const active = Array.from(pressed.values()).filter(t => t.held);
-
-    // maintain existing assignments if still held
-    [L,R].forEach(arm => {
-      if (arm.assignedId){
-        const t = pressed.get(arm.assignedId);
-        if (!t || !t.held){
-          arm.assignedId = null;
-        }
-      }
-    });
-
-    // gather free targets
-    const taken = new Set([L.assignedId, R.assignedId].filter(Boolean));
-    const freeTargets = active.filter(t => !taken.has(t.id));
-
-    // assign to arms that are free
-    const arms = [L,R].filter(a => !a.assignedId);
-
-    // greedy: for each free arm, pick nearest free target
-    arms.forEach(arm => {
-      if (!freeTargets.length) return;
-      let bestIdx = 0;
-      let bestD = Infinity;
-      for (let i=0;i<freeTargets.length;i++){
-        const t = freeTargets[i];
-        const d = Math.hypot(t.x - arm.origin.x, t.y - arm.origin.y);
-        if (d < bestD){ bestD = d; bestIdx = i; }
-      }
-      const chosen = freeTargets.splice(bestIdx,1)[0];
-      arm.assignedId = chosen.id;
-      startSmash(arm, chosen);
-    });
-
-    // if both arms free but only one key held, only one arm should take it
-    // (handled naturally by above)
-  }
-
-  function startSmash(arm, target){
-    arm.target = { x: target.x, y: target.y };
-    arm.t = 0;
-    arm.phase = "go";
-    arm.impact = 0;
-    arm.holdImpact = 0;
-    if (audio) audio.clack(); // initial "clack" when the goblin reacts
-  }
-
-  // =========================
-  // 10) INPUT (no rapid trigger, hold keeps depressed)
-  // =========================
-  const thought = document.getElementById("thought");
-
-  function isTyping(){
-    return document.activeElement === thought;
-  }
-
-  window.addEventListener("keydown", (e) => {
-    // ignore auto-repeat: prevents rapid re-trigger
-    if (e.repeat) return;
-
-    // If not typing in textarea, prevent page movement on some keys
-    if (!isTyping()){
-      if (["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.code)) e.preventDefault();
-    }
-
-    const label = labelFromCode(e);
-    if (!label) return;
-
-    const key = keyRects.find(k => k.label === label) || null;
-    if (!key) return;
-
-    key.held = true;
-    pressed.set(key.id, { id:key.id, x:key.x+key.w*0.5, y:key.y+key.h*0.55, type:"key", held:true });
-
-    // update assignment (so both arms can react)
-    assignTargets();
-  }, { passive:false });
-
-  window.addEventListener("keyup", (e) => {
-    const label = labelFromCode(e);
-    if (!label) return;
-
-    // release all keys that match label? (SHIFT/CTRL/ALT duplicates)
-    // We'll release any held keys of that label (simple, reliable).
-    keyRects.forEach(k => {
-      if (k.label === label){
-        k.held = false;
-        const t = pressed.get(k.id);
-        if (t) t.held = false;
-      }
-    });
-
-    assignTargets();
-  });
-
-  window.addEventListener("mousedown", (e) => {
-    const LAYOUT = layout();
-    mTargets = mouseTargets(LAYOUT.mouse);
-
-    let t = null;
-    if (e.button === 0) t = mTargets.left;
-    if (e.button === 1) t = mTargets.middle;
-    if (e.button === 2) t = mTargets.right;
-    if (!t) return;
-
-    t.held = true;
-    pressed.set(t.id, { id:t.id, x:t.x, y:t.y, type:"mouse", held:true });
-
-    assignTargets();
-  });
-
-  window.addEventListener("mouseup", (e) => {
-    if (!mTargets) return;
-    let id = null;
-    if (e.button === 0) id = "mouse_left";
-    if (e.button === 1) id = "mouse_mid";
-    if (e.button === 2) id = "mouse_right";
-    if (!id) return;
-
-    const t = pressed.get(id);
-    if (t) t.held = false;
-
-    if (id === "mouse_left")  mTargets.left.held = false;
-    if (id === "mouse_mid")   mTargets.middle.held = false;
-    if (id === "mouse_right") mTargets.right.held = false;
-
-    assignTargets();
-  });
-
-  window.addEventListener("contextmenu", (e) => e.preventDefault());
-
-  // =========================
-  // 11) DRAW (placeholders; swap with images later)
-  // =========================
-  function drawDesk(LAYOUT){
-    const { w,h,deskTopY } = LAYOUT;
-    ctx.fillStyle = "rgba(0,0,0,0.25)";
-    ctx.fillRect(0, deskTopY, w, h-deskTopY);
-    ctx.fillStyle = "rgba(255,255,255,0.06)";
-    ctx.fillRect(0, deskTopY-3, w, 3);
-  }
-
-  function drawHead(LAYOUT){
-    const { head, w } = LAYOUT;
-
-    // comedic bob/squash: translate by headBob.y, squash slightly on impact
-    const squash = 1 - headBob.y * 0.002; // tiny
-    const stretch = 1 + headBob.y * 0.001;
-
-    ctx.save();
-    ctx.translate(head.x + head.w/2, head.y + head.h/2 + headBob.y);
-    ctx.scale(stretch, squash);
-    ctx.translate(-head.w/2, -head.h/2);
-
-    ctx.fillStyle = "rgba(255,255,255,0.10)";
-    roundRect(0,0, head.w, head.h, head.w*0.35);
-    ctx.fill();
-
-    // eyes
-    ctx.fillStyle = "rgba(255,255,255,0.45)";
-    ctx.beginPath();
-    ctx.ellipse(head.w*0.32, head.h*0.52, head.w*0.07, head.h*0.10, 0, 0, Math.PI*2);
-    ctx.ellipse(head.w*0.68, head.h*0.52, head.w*0.07, head.h*0.10, 0, 0, Math.PI*2);
-    ctx.fill();
-
-    // blush
-    ctx.fillStyle = "rgba(255,120,160,0.25)";
-    ctx.beginPath();
-    ctx.ellipse(head.w*0.22, head.h*0.65, head.w*0.08, head.h*0.04, 0, 0, Math.PI*2);
-    ctx.ellipse(head.w*0.78, head.h*0.65, head.w*0.08, head.h*0.04, 0, 0, Math.PI*2);
-    ctx.fill();
-
-    ctx.restore();
-  }
-
-  function drawKeyboard(LAYOUT){
-    const kb = LAYOUT.keyboard;
-
-    // base
-    ctx.fillStyle = "rgba(255,255,255,0.06)";
-    roundRect(kb.x, kb.y, kb.w, kb.h, kb.h*0.16);
-    ctx.fill();
-
-    // keys
-    keyRects.forEach(k => {
-      const press = clamp(k.press, 0, 1);
-      const dy = press * (k.h * 0.18);
-
-      ctx.fillStyle = "rgba(255,255,255,0.07)";
-      roundRect(k.x, k.y + dy, k.w, k.h, k.h*0.25);
-      ctx.fill();
-
-      ctx.fillStyle = "rgba(255,255,255,0.18)";
-      ctx.font = `${Math.max(10, kb.h*0.10)}px system-ui`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(k.label, k.x + k.w/2, k.y + dy + k.h/2);
-    });
-  }
-
-  function drawMouse(LAYOUT){
-    const m = LAYOUT.mouse;
-    ctx.fillStyle = "rgba(255,255,255,0.06)";
-    roundRect(m.x, m.y, m.w, m.h, m.w*0.45);
-    ctx.fill();
-
-    const t = mTargets || mouseTargets(m);
-
-    function drawBtn(btn){
-      const dy = clamp(btn.press,0,1) * (btn.r * 0.55);
-      ctx.fillStyle = "rgba(255,255,255,0.10)";
-      ctx.beginPath();
-      ctx.ellipse(btn.x, btn.y + dy, btn.r*1.25, btn.r, 0, 0, Math.PI*2);
-      ctx.fill();
-    }
-
-    drawBtn(t.left);
-    drawBtn(t.right);
-
-    // middle wheel
-    const dy = clamp(t.middle.press,0,1) * (t.middle.r * 0.55);
-    ctx.fillStyle = "rgba(255,255,255,0.10)";
-    ctx.beginPath();
-    ctx.ellipse(t.middle.x, t.middle.y + dy, t.middle.r*0.8, t.middle.r*1.2, 0, 0, Math.PI*2);
-    ctx.fill();
-  }
-
-  function drawArm(arm){
-    const ox=arm.origin.x, oy=arm.origin.y;
-    const px=arm.pos.x, py=arm.pos.y;
-
-    const dx = px-ox, dy = py-oy;
-    const dist = Math.hypot(dx,dy) || 1;
-    const nx=dx/dist, ny=dy/dist;
-
-    const th = 10 + arm.impact*8;
-
-    ctx.strokeStyle = "rgba(255,255,255,0.18)";
-    ctx.lineWidth = th;
-    ctx.lineCap = "round";
-    ctx.beginPath();
-    ctx.moveTo(ox,oy);
-    ctx.lineTo(px - nx*10, py - ny*10);
-    ctx.stroke();
-
-    ctx.fillStyle = "rgba(255,255,255,0.22)";
-    ctx.beginPath();
-    ctx.ellipse(px, py, 18 + arm.impact*6, 14 - arm.impact*3, Math.atan2(dy,dx), 0, Math.PI*2);
-    ctx.fill();
-
-    // tiny impact spark
-    if (arm.impact > 0.65){
-      ctx.strokeStyle = "rgba(110,231,255,0.28)";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(px + 8, py - 10);
-      ctx.lineTo(px + 18, py - 18);
-      ctx.moveTo(px - 6, py - 12);
-      ctx.lineTo(px - 14, py - 22);
-      ctx.stroke();
-    }
-  }
-
-  // =========================
-  // 12) UPDATE LOOP
-  // =========================
-  function update(dt){
-    // key press depth: held stays down, released decays smoothly
-    keyRects.forEach(k => {
-      const target = k.held ? 1 : 0;
-      const speed = k.held ? 18 : 9;
-      k.press = lerp(k.press, target, 1 - Math.pow(0.001, dt*speed));
-    });
-
-    // mouse press depth
-    if (mTargets){
-      [mTargets.left, mTargets.right, mTargets.middle].forEach(btn => {
-        const target = btn.held ? 1 : 0;
-        const speed = btn.held ? 18 : 9;
-        btn.press = lerp(btn.press, target, 1 - Math.pow(0.001, dt*speed));
-      });
-    }
-
-    // Assignments might change if targets released/pressed
-    assignTargets();
-
-    // arms
-    [L,R].forEach(arm => {
-      const assigned = arm.assignedId ? pressed.get(arm.assignedId) : null;
-      const isHeld = !!(assigned && assigned.held);
-
-      // if assigned but target moved (it won't), update target point anyway
-      if (assigned){
-        arm.target.x = assigned.x;
-        arm.target.y = assigned.y;
-      }
-
-      if (arm.phase === "idle"){
-        arm.impact = Math.max(0, arm.impact - dt*8);
-        // if has assignment, start smash
-        if (arm.assignedId && isHeld){
-          startSmash(arm, assigned);
-        } else {
-          // drift to origin
-          arm.pos.x = lerp(arm.pos.x, arm.origin.x, 1 - Math.pow(0.001, dt));
-          arm.pos.y = lerp(arm.pos.y, arm.origin.y, 1 - Math.pow(0.001, dt));
-        }
-        return;
-      }
-
-      if (arm.phase === "go"){
-        arm.t += dt;
-        const t = clamp(arm.t / arm.dur, 0, 1);
-        const s = smashEase(t);
-
-        arm.pos.x = lerp(arm.origin.x, arm.target.x, s);
-        arm.pos.y = lerp(arm.origin.y, arm.target.y, s);
-
-        arm.impact = Math.max(arm.impact, t);
-
-        if (t >= 1){
-          // impact!
-          arm.phase = "hold";
-          arm.t = 0;
-          arm.impact = 1;
-          arm.holdImpact = 1;
-
-          // head bob impulse
-          headBob.v += 180;
-
-          // thunk sound on impact (only when we actually hit)
-          if (audio) audio.thunk();
-        }
-        return;
-      }
-
-      if (arm.phase === "hold"){
-        // stay planted if still held, otherwise return
-        // soften impact while holding so it doesn't stay "sparked"
-        arm.holdImpact = Math.max(0, arm.holdImpact - dt*6);
-        arm.impact = Math.max(0.20, arm.holdImpact);
-
-        // keep hand locked on target while held
-        arm.pos.x = lerp(arm.pos.x, arm.target.x, 1 - Math.pow(0.001, dt*30));
-        arm.pos.y = lerp(arm.pos.y, arm.target.y, 1 - Math.pow(0.001, dt*30));
-
-        if (!isHeld){
-          arm.phase = "return";
-          arm.t = 0;
-        }
-        return;
-      }
-
-      if (arm.phase === "return"){
-        arm.t += dt;
-        const t = clamp(arm.t / 0.20, 0, 1);
-        const s = easeOutCubic(t);
-
-        arm.pos.x = lerp(arm.target.x, arm.origin.x, s);
-        arm.pos.y = lerp(arm.target.y, arm.origin.y, s);
-
-        arm.impact = Math.max(0, 1 - t*1.2);
-
-        if (t >= 1){
-          arm.phase = "idle";
-          arm.impact = 0;
-          arm.pos.x = arm.origin.x;
-          arm.pos.y = arm.origin.y;
-        }
-        return;
-      }
-    });
-
-    // head bob spring
-    // (simple damped spring)
-    headBob.v += (-headBob.y * 28) * dt;
-    headBob.v *= Math.pow(0.01, dt); // damping
-    headBob.y += headBob.v * dt;
-    headBob.y = clamp(headBob.y, -18, 18);
-  }
-
-  function draw(){
-    const LAYOUT = layout();
-    const { w,h } = LAYOUT;
-
-    // update derived center for label picking
-    keyCenterX = LAYOUT.keyboard.x + LAYOUT.keyboard.w * 0.5;
-
-    ctx.clearRect(0,0,w,h);
-    ctx.fillStyle = "rgba(0,0,0,0.08)";
-    ctx.fillRect(0,0,w,h);
-
-    // layers
-    drawHead(LAYOUT);
-    drawDesk(LAYOUT);
-    drawKeyboard(LAYOUT);
-    drawMouse(LAYOUT);
-    drawArm(L);
-    drawArm(R);
-  }
-
-  function loop(now){
-    const dt = Math.min(0.033, (now - lastTime)/1000);
-    lastTime = now;
-    update(dt);
-    draw();
-    requestAnimationFrame(loop);
-  }
-
-  // =========================
-  // 13) INIT
-  // =========================
-  function init(){
-    resize();
-    const LAYOUT = layout();
-    keyRects = buildKeyRects(LAYOUT.keyboard);
-    mTargets = mouseTargets(LAYOUT.mouse);
-
-    L = makeArm(LAYOUT.restL);
-    R = makeArm(LAYOUT.restR);
-
-    window.addEventListener("resize", () => {
-      const L2 = layout();
-      keyRects = buildKeyRects(L2.keyboard);
-      mTargets = mouseTargets(L2.mouse);
-
-      L.origin = { ...L2.restL };
-      R.origin = { ...L2.restR };
-
-      // if idle, snap
-      if (L.phase === "idle"){ L.pos = { ...L.origin }; }
-      if (R.phase === "idle"){ R.pos = { ...R.origin }; }
-    });
-
-    requestAnimationFrame((t)=>{ lastTime=t; loop(t); });
-  }
-
-  init();
-})();
-</script>
+
+    <script>
+        (() => {
+            const canvas = document.getElementById("c");
+            const ctx = canvas.getContext("2d");
+            const thought = document.getElementById("thought");
+
+            function resize() {
+                const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+                canvas.width = Math.floor(canvas.clientWidth * dpr);
+                canvas.height = Math.floor(canvas.clientHeight * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+            window.addEventListener("resize", resize);
+
+            canvas.tabIndex = 0;
+            canvas.style.outline = "none";
+            canvas.addEventListener("pointerdown", () => canvas.focus());
+
+            function isTyping() { return document.activeElement === thought; }
+
+            const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+            const lerp = (a, b, t) => a + (b - a) * t;
+            function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+            function smashEase(t) {
+                if (t < 0.60) return easeOutCubic(t / 0.60);
+                if (t < 0.78) return lerp(1.0, 1.08, easeOutCubic((t - 0.60) / 0.18));
+                return lerp(1.08, 1.0, easeOutCubic((t - 0.78) / 0.22));
+            }
+            function roundRect(x, y, w, h, r) {
+                r = Math.min(r, w / 2, h / 2);
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.arcTo(x + w, y, x + w, y + h, r);
+                ctx.arcTo(x + w, y + h, x, y + h, r);
+                ctx.arcTo(x, y + h, x, y, r);
+                ctx.arcTo(x, y, x + w, y, r);
+                ctx.closePath();
+            }
+
+            // ===== Audio (unchanged)
+            let audio = null;
+            function audioInit() {
+                if (audio) return;
+                const AC = window.AudioContext || window.webkitAudioContext;
+                if (!AC) return;
+                const a = new AC();
+                const master = a.createGain();
+                master.gain.value = 0.22;
+                master.connect(a.destination);
+
+                function env(g, t0, aPeak, decay, sustain) {
+                    g.gain.cancelScheduledValues(t0);
+                    g.gain.setValueAtTime(0.0001, t0);
+                    g.gain.exponentialRampToValueAtTime(aPeak, t0 + 0.01);
+                    g.gain.exponentialRampToValueAtTime(sustain, t0 + decay);
+                    g.gain.exponentialRampToValueAtTime(0.0001, t0 + decay + 0.10);
+                }
+
+                function clack() {
+                    const t = a.currentTime;
+                    const o = a.createOscillator();
+                    const g = a.createGain();
+                    o.type = "square";
+                    o.frequency.setValueAtTime(520, t);
+                    o.frequency.exponentialRampToValueAtTime(280, t + 0.03);
+                    env(g, t, 0.7, 0.04, 0.08);
+                    o.connect(g); g.connect(master);
+                    o.start(t); o.stop(t + 0.14);
+                }
+                function thunk() {
+                    const t = a.currentTime;
+                    const o = a.createOscillator();
+                    const g = a.createGain();
+                    o.type = "sine";
+                    o.frequency.setValueAtTime(140, t);
+                    o.frequency.exponentialRampToValueAtTime(70, t + 0.06);
+                    env(g, t, 0.9, 0.08, 0.12);
+                    o.connect(g); g.connect(master);
+                    o.start(t); o.stop(t + 0.18);
+
+                    const len = Math.floor(a.sampleRate * 0.05);
+                    const buf = a.createBuffer(1, len, a.sampleRate);
+                    const data = buf.getChannelData(0);
+                    for (let i = 0; i < len; i++) {
+                        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (len * 0.25));
+                    }
+                    const n = a.createBufferSource();
+                    const ng = a.createGain();
+                    n.buffer = buf;
+                    ng.gain.value = 0.22;
+                    n.connect(ng); ng.connect(master);
+                    n.start(t); n.stop(t + 0.06);
+                }
+
+                audio = { a, clack, thunk };
+            }
+            window.addEventListener("pointerdown", () => {
+                audioInit();
+                if (audio?.a?.state === "suspended") audio.a.resume();
+            }, { passive: true });
+
+            // ===== Layout
+            function layout() {
+                const w = canvas.clientWidth;
+                const h = canvas.clientHeight;
+
+                const deskTopY = h * 0.56;
+
+                // ✅ keyboard: much narrower + more realistic proportions
+                const kbW = w * 0.46, kbH = h * 0.20;
+                const kbX = (w - kbW) * 0.50;
+                const kbY = deskTopY + h * 0.075;
+
+                // mousepad stays to the right of keyboard
+                const padW = w * 0.18;
+                const padH = h * 0.20;
+                const padX = kbX + kbW + w * 0.03;
+                const padY = kbY;
+
+                const mouseW = w * 0.11;
+                const mouseH = h * 0.15;
+
+                const headW = w * 0.22, headH = headW * 0.95;
+                const headX = w * 0.50 - headW * 0.5;
+                const headY = deskTopY - headH * 0.82;
+
+                // ✅ shoulders at outer edges of head (not inside it)
+                const shoulderY = deskTopY + 2;
+                const shoulderL = { x: headX + headW * 0.08, y: shoulderY };
+                const shoulderR = { x: headX + headW * 0.92, y: shoulderY };
+
+                // ✅ rest hands: raised above desk, near where hands would appear
+                const raise = h * 0.075;
+                const restL = { x: headX + headW * 0.18, y: deskTopY - raise };
+                const restR = { x: headX + headW * 0.82, y: deskTopY - raise };
+
+                return {
+                    w, h, deskTopY,
+                    keyboard: { x: kbX, y: kbY, w: kbW, h: kbH },
+                    mousepad: { x: padX, y: padY, w: padW, h: padH },
+                    mouseSize: { w: mouseW, h: mouseH },
+                    head: { x: headX, y: headY, w: headW, h: headH },
+                    shoulderL, shoulderR,
+                    restL, restR
+                };
+            }
+
+
+            // ===== Keyboard
+            function buildKeyRects(kb) {
+                const keys = [];
+
+                const rows = [
+                    [["ESC", 1.2], ["1", 1], ["2", 1], ["3", 1], ["4", 1], ["5", 1], ["6", 1], ["7", 1], ["8", 1], ["9", 1], ["0", 1], ["-", 1], ["=", 1], ["BKSP", 1.8]],
+                    [["TAB", 1.4], ["Q", 1], ["W", 1], ["E", 1], ["R", 1], ["T", 1], ["Y", 1], ["U", 1], ["I", 1], ["O", 1], ["P", 1], ["[", 1], ["]", 1], ["\\", 1.3]],
+                    [["CAPS", 1.6], ["A", 1], ["S", 1], ["D", 1], ["F", 1], ["G", 1], ["H", 1], ["J", 1], ["K", 1], ["L", 1], [";", 1], ["'", 1], ["ENTER", 2.1]],
+                    [["SHIFT", 2.2], ["Z", 1], ["X", 1], ["C", 1], ["V", 1], ["B", 1], ["N", 1], ["M", 1], [",", 1], [".", 1], ["/", 1], ["SHIFT", 2.2]],
+                    [["CTRL", 1.2], ["ALT", 1.2], ["SPACE", 6.2], ["ALT", 1.2], ["CTRL", 1.2]],
+                ];
+
+                const padX = kb.w * 0.04;
+                const padY = kb.h * 0.10;
+                const innerW = kb.w - padX * 2;
+                const innerH = kb.h - padY * 2;
+
+                const gapY = innerH * 0.04;
+                const rowH = (innerH - gapY * (rows.length - 1)) / rows.length;
+
+                rows.forEach((items, rIdx) => {
+                    const totalUnits = items.reduce((s, it) => s + it[1], 0);
+
+                    const gapX = innerW * 0.010;
+                    const unitW = (innerW - gapX * (items.length - 1)) / totalUnits;
+
+                    let x = kb.x + padX;
+                    const y = kb.y + padY + rIdx * (rowH + gapY);
+
+                    items.forEach(([label, u], i) => {
+                        const w = unitW * u;
+                        keys.push({
+                            id: `r${rIdx}_${i}_${label}`,
+                            label,
+                            x, y, w, h: rowH,
+                            held: false,
+                            press: 0
+                        });
+                        x += w + gapX;
+                    });
+                });
+
+                return keys;
+            }
+
+
+            function labelFromCode(e) {
+                const c = e.code;
+                if (c.startsWith("Key")) return c.slice(3).toUpperCase();
+                if (c.startsWith("Digit")) return c.slice(5);
+                const map = {
+                    Space: "SPACE", Enter: "ENTER", Backspace: "BKSP", Tab: "TAB", Escape: "ESC",
+                    CapsLock: "CAPS", ShiftLeft: "SHIFT", ShiftRight: "SHIFT",
+                    ControlLeft: "CTRL", ControlRight: "CTRL", AltLeft: "ALT", AltRight: "ALT",
+                    Minus: "-", Equal: "=", BracketLeft: "[", BracketRight: "]",
+                    Backslash: "\\", Semicolon: ";", Quote: "'", Comma: ",", Period: ".", Slash: "/"
+                };
+                if (map[c]) return map[c];
+                const arrows = { ArrowUp: "W", ArrowDown: "S", ArrowLeft: "A", ArrowRight: "D" };
+                if (arrows[c]) return arrows[c];
+                return null;
+            }
+
+            // ===== Mouse pad clamp + targets
+            function clampMouseToPad(mx, my, pad, mouseSize) {
+                const minX = pad.x + mouseSize.w * 0.5;
+                const maxX = pad.x + pad.w - mouseSize.w * 0.5;
+                const minY = pad.y + mouseSize.h * 0.5;
+                const maxY = pad.y + pad.h - mouseSize.h * 0.5;
+                return { x: clamp(mx, minX, maxX), y: clamp(my, minY, maxY) };
+            }
+
+            function mouseTargetsFromCenter(cx, cy, mouseSize) {
+                const w = mouseSize.w, h = mouseSize.h;
+                const r = Math.min(w, h);
+                return {
+                    left: { id: "mouse_left", x: cx - w * 0.18, y: cy - h * 0.10, r: r * 0.12, held: false, press: 0 },
+                    right: { id: "mouse_right", x: cx + w * 0.18, y: cy - h * 0.10, r: r * 0.12, held: false, press: 0 },
+                    middle: { id: "mouse_mid", x: cx, y: cy - h * 0.12, r: r * 0.10, held: false, press: 0 },
+                    move: { id: "mouse_move", x: cx, y: cy, r: r * 0.14, held: false, press: 0 },
+                };
+            }
+
+            // ===== Arms
+            function makeArm(shoulder, restHand) {
+                return {
+                    shoulder: { ...shoulder },
+                    rest: { ...restHand },
+                    pos: { ...restHand },
+                    target: { ...restHand },
+                    assignedId: null,
+                    phase: "idle",
+                    t: 0,
+                    dur: 0.13,
+                    impact: 0,
+                    holdImpact: 0
+                };
+            }
+
+            // ===== World state
+            let keys = [];
+            let armL = null, armR = null;
+
+            const pressed = new Map();
+
+            let mouseCenter = { x: 0, y: 0 };
+            let mousePad = null;
+            let mouseSize = null;
+            let mTargets = null;
+            let mouseMoveTimer = 0;
+
+            let headBob = { y: 0, v: 0 };
+            let lastTime = performance.now();
+
+            function activeMouseHeld() {
+                return !!(mTargets?.left?.held || mTargets?.right?.held || mTargets?.middle?.held);
+            }
+
+            function ensureMouseMoveTarget() {
+                const t = pressed.get("mouse_move");
+                if (mouseMoveTimer > 0) {
+                    if (!t) pressed.set("mouse_move", { id: "mouse_move", x: mouseCenter.x, y: mouseCenter.y, type: "mouse", held: true });
+                    else { t.held = true; t.x = mouseCenter.x; t.y = mouseCenter.y; }
+                } else {
+                    if (t) t.held = false;
+                }
+            }
+
+            function startSmash(arm, target) {
+                arm.target.x = target.x;
+                arm.target.y = target.y;
+                arm.t = 0;
+                arm.phase = "go";
+                arm.impact = 0;
+                arm.holdImpact = 0;
+                if (audio) audio.clack();
+            }
+
+            function chooseMouseArm() {
+                const dL = Math.hypot(mouseCenter.x - armL.shoulder.x, mouseCenter.y - armL.shoulder.y);
+                const dR = Math.hypot(mouseCenter.x - armR.shoulder.x, mouseCenter.y - armR.shoulder.y);
+                return (dL <= dR) ? armL : armR;
+            }
+
+            function assignTargets() {
+                ensureMouseMoveTarget();
+
+                const heldTargets = Array.from(pressed.values()).filter(t => t.held);
+                const mouseActive = (mouseMoveTimer > 0) || activeMouseHeld();
+
+                [armL, armR].forEach(a => {
+                    if (a.assignedId) {
+                        const t = pressed.get(a.assignedId);
+                        if (!t || !t.held) a.assignedId = null;
+                    }
+                });
+
+                if (mouseActive) {
+                    const mouseArm = chooseMouseArm();
+                    const keyArm = (mouseArm === armL) ? armR : armL;
+
+                    let mouseTarget = null;
+                    if (mTargets?.left?.held) mouseTarget = pressed.get("mouse_left");
+                    if (mTargets?.right?.held) mouseTarget = pressed.get("mouse_right");
+                    if (mTargets?.middle?.held) mouseTarget = pressed.get("mouse_mid");
+                    if (!mouseTarget) mouseTarget = pressed.get("mouse_move");
+
+                    if (mouseTarget?.held) {
+                        if (mouseArm.assignedId !== mouseTarget.id) {
+                            mouseArm.assignedId = mouseTarget.id;
+                            startSmash(mouseArm, mouseTarget);
+                        }
+                    } else {
+                        mouseArm.assignedId = null;
+                    }
+
+                    const keyTargets = heldTargets.filter(t => t.type === "key");
+                    if (keyTargets.length) {
+                        let best = keyTargets[0], bestD = Infinity;
+                        for (const t of keyTargets) {
+                            const d = Math.hypot(t.x - keyArm.shoulder.x, t.y - keyArm.shoulder.y);
+                            if (d < bestD) { bestD = d; best = t; }
+                        }
+                        if (keyArm.assignedId !== best.id) {
+                            keyArm.assignedId = best.id;
+                            startSmash(keyArm, best);
+                        }
+                    } else {
+                        if (keyArm.assignedId && pressed.get(keyArm.assignedId)?.type === "key") keyArm.assignedId = null;
+                    }
+                    return;
+                }
+
+                const keyTargets = heldTargets.filter(t => t.type === "key");
+                const taken = new Set([armL.assignedId, armR.assignedId].filter(Boolean));
+                const freeTargets = keyTargets.filter(t => !taken.has(t.id));
+                const freeArms = [armL, armR].filter(a => !a.assignedId);
+
+                freeArms.forEach(arm => {
+                    if (!freeTargets.length) return;
+                    let bestIdx = 0, bestD = Infinity;
+                    for (let i = 0; i < freeTargets.length; i++) {
+                        const t = freeTargets[i];
+                        const d = Math.hypot(t.x - arm.shoulder.x, t.y - arm.shoulder.y);
+                        if (d < bestD) { bestD = d; bestIdx = i; }
+                    }
+                    const chosen = freeTargets.splice(bestIdx, 1)[0];
+                    arm.assignedId = chosen.id;
+                    startSmash(arm, chosen);
+                });
+            }
+
+            // ===== INPUT
+            window.addEventListener("keydown", (e) => {
+                if (e.repeat) return;
+                if (!isTyping()) {
+                    if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.code)) e.preventDefault();
+                }
+                const label = labelFromCode(e);
+                if (!label) return;
+
+                const k = keys.find(x => x.label === label);
+                if (!k) return;
+
+                k.held = true;
+
+                const LAYOUT = layout();
+                const kb = LAYOUT.keyboard;
+
+                // both-axis flip for the target position
+                const xVis = kb.x + kb.w - (k.x - kb.x) - k.w;
+                const yVis = kb.y + kb.h - (k.y - kb.y) - k.h;
+
+                pressed.set(k.id, {
+                    id: k.id,
+                    x: xVis + k.w * 0.5,
+                    y: yVis + k.h * 0.60,
+                    type: "key",
+                    held: true
+                });
+
+
+                assignTargets();
+            }, { passive: false });
+
+            window.addEventListener("keyup", (e) => {
+                const label = labelFromCode(e);
+                if (!label) return;
+
+                keys.forEach(k => {
+                    if (k.label === label) {
+                        k.held = false;
+                        const t = pressed.get(k.id);
+                        if (t) t.held = false;
+                    }
+                });
+                assignTargets();
+            });
+
+            window.addEventListener("mousedown", (e) => {
+                if (!mTargets) return;
+                let btn = null;
+                if (e.button === 0) btn = mTargets.left;
+                if (e.button === 1) btn = mTargets.middle;
+                if (e.button === 2) btn = mTargets.right;
+                if (!btn) return;
+
+                btn.held = true;
+                pressed.set(btn.id, { id: btn.id, x: btn.x, y: btn.y, type: "mouse", held: true });
+                assignTargets();
+            });
+
+            window.addEventListener("mouseup", (e) => {
+                if (!mTargets) return;
+                let id = null;
+                if (e.button === 0) id = "mouse_left";
+                if (e.button === 1) id = "mouse_mid";
+                if (e.button === 2) id = "mouse_right";
+                if (!id) return;
+
+                const t = pressed.get(id);
+                if (t) t.held = false;
+
+                if (id === "mouse_left") mTargets.left.held = false;
+                if (id === "mouse_mid") mTargets.middle.held = false;
+                if (id === "mouse_right") mTargets.right.held = false;
+
+                assignTargets();
+            });
+
+            window.addEventListener("contextmenu", (e) => e.preventDefault());
+
+            // Mouse movement -> slide mouse on pad
+            let lastClientX = null, lastClientY = null;
+            window.addEventListener("mousemove", (e) => {
+                if (!mousePad || !mouseSize) return;
+
+                if (lastClientX == null) { lastClientX = e.clientX; lastClientY = e.clientY; return; }
+                const dx = e.clientX - lastClientX;
+                const dy = e.clientY - lastClientY;
+                lastClientX = e.clientX; lastClientY = e.clientY;
+
+                const s = 0.85;
+                const next = clampMouseToPad(mouseCenter.x + dx * s, mouseCenter.y + dy * s, mousePad, mouseSize);
+                const moved = (Math.abs(next.x - mouseCenter.x) + Math.abs(next.y - mouseCenter.y)) > 0.01;
+
+                mouseCenter = next;
+
+                mTargets = mouseTargetsFromCenter(mouseCenter.x, mouseCenter.y, mouseSize);
+                mTargets.left.held = !!pressed.get("mouse_left")?.held;
+                mTargets.right.held = !!pressed.get("mouse_right")?.held;
+                mTargets.middle.held = !!pressed.get("mouse_mid")?.held;
+
+                if (moved) {
+                    mouseMoveTimer = 0.22;
+                    if (pressed.get("mouse_left")?.held) (pressed.get("mouse_left").x = mTargets.left.x, pressed.get("mouse_left").y = mTargets.left.y);
+                    if (pressed.get("mouse_right")?.held) (pressed.get("mouse_right").x = mTargets.right.x, pressed.get("mouse_right").y = mTargets.right.y);
+                    if (pressed.get("mouse_mid")?.held) (pressed.get("mouse_mid").x = mTargets.middle.x, pressed.get("mouse_mid").y = mTargets.middle.y);
+
+                    assignTargets();
+                }
+            }, { passive: true });
+
+            // ===== DRAW HELPERS
+            function flipRect180InBox(rect, box) {
+                // 180° flip around the box center:
+                // x' = box.x + box.w - (x - box.x) - w
+                // y' = box.y + box.h - (y - box.y) - h
+                return {
+                    x: box.x + box.w - (rect.x - box.x) - rect.w,
+                    y: box.y + box.h - (rect.y - box.y) - rect.h,
+                };
+            }
+
+            function drawDesk(LAYOUT) {
+                const { w, h, deskTopY } = LAYOUT;
+                ctx.fillStyle = "rgb(18, 20, 26)";
+                ctx.fillRect(0, deskTopY, w, h - deskTopY);
+                ctx.fillStyle = "rgba(255,255,255,0.07)";
+                ctx.fillRect(0, deskTopY - 3, w, 3);
+                const g = ctx.createLinearGradient(0, deskTopY, 0, h);
+                g.addColorStop(0, "rgba(255,255,255,0.03)");
+                g.addColorStop(1, "rgba(0,0,0,0.18)");
+                ctx.fillStyle = g;
+                ctx.fillRect(0, deskTopY, w, h - deskTopY);
+            }
+
+            function drawHead(LAYOUT) {
+                const head = LAYOUT.head;
+                const squash = 1 - headBob.y * 0.002;
+                const stretch = 1 + headBob.y * 0.001;
+
+                ctx.save();
+                ctx.translate(head.x + head.w / 2, head.y + head.h / 2 + headBob.y);
+                ctx.scale(stretch, squash);
+                ctx.translate(-head.w / 2, -head.h / 2);
+
+                ctx.fillStyle = "rgba(255,255,255,0.10)";
+                roundRect(0, 0, head.w, head.h, head.w * 0.35);
+                ctx.fill();
+
+                ctx.fillStyle = "rgba(255,255,255,0.45)";
+                ctx.beginPath();
+                ctx.ellipse(head.w * 0.32, head.h * 0.52, head.w * 0.07, head.h * 0.10, 0, 0, Math.PI * 2);
+                ctx.ellipse(head.w * 0.68, head.h * 0.52, head.w * 0.07, head.h * 0.10, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = "rgba(255,120,160,0.25)";
+                ctx.beginPath();
+                ctx.ellipse(head.w * 0.22, head.h * 0.65, head.w * 0.08, head.h * 0.04, 0, 0, Math.PI * 2);
+                ctx.ellipse(head.w * 0.78, head.h * 0.65, head.w * 0.08, head.h * 0.04, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            function drawKeyboard(LAYOUT) {
+                const kb = LAYOUT.keyboard;
+
+                // base
+                ctx.fillStyle = "rgba(255,255,255,0.06)";
+                roundRect(kb.x, kb.y, kb.w, kb.h, kb.h * 0.16);
+                ctx.fill();
+
+                const fontPx = Math.max(10, kb.h * 0.10);
+                ctx.font = `${fontPx}px system-ui`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+
+                keys.forEach(k => {
+                    // ✅ flip key position on BOTH axes
+                    const flipped = flipRect180InBox({ x: k.x, y: k.y, w: k.w, h: k.h }, kb);
+
+                    const press = clamp(k.press, 0, 1);
+                    const dy = press * (k.h * 0.18);
+
+                    // keycap
+                    ctx.fillStyle = "rgba(255,255,255,0.07)";
+                    roundRect(flipped.x, flipped.y + dy, k.w, k.h, k.h * 0.25);
+                    ctx.fill();
+
+                    // ✅ label upside-down too (rotate text 180° around its center)
+                    const cx = flipped.x + k.w / 2;
+                    const cy = flipped.y + dy + k.h / 2;
+
+                    ctx.fillStyle = "rgba(255,255,255,0.18)";
+                    ctx.save();
+                    ctx.translate(cx, cy);
+                    ctx.rotate(Math.PI);
+                    ctx.fillText(k.label, 0, 0);
+                    ctx.restore();
+                });
+            }
+
+
+            function drawMouse(LAYOUT) {
+                const pad = LAYOUT.mousepad;
+
+                ctx.fillStyle = "rgba(255,255,255,0.03)";
+                roundRect(pad.x, pad.y, pad.w, pad.h, 14);
+                ctx.fill();
+                ctx.strokeStyle = "rgba(255,255,255,0.06)";
+                ctx.lineWidth = 1;
+                roundRect(pad.x, pad.y, pad.w, pad.h, 14);
+                ctx.stroke();
+
+                const cx = mouseCenter.x, cy = mouseCenter.y;
+                const w = mouseSize.w, h = mouseSize.h;
+
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.scale(-1, 1);
+                ctx.translate(-cx, -cy);
+
+                ctx.fillStyle = "rgba(255,255,255,0.06)";
+                roundRect(cx - w / 2, cy - h / 2, w, h, w * 0.45);
+                ctx.fill();
+
+                const t = mTargets;
+
+                function drawBtn(btn) {
+                    const dy = clamp(btn.press, 0, 1) * (btn.r * 0.55);
+                    ctx.fillStyle = "rgba(255,255,255,0.10)";
+                    ctx.beginPath();
+                    ctx.ellipse(btn.x, btn.y + dy, btn.r * 1.25, btn.r, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                drawBtn(t.left);
+                drawBtn(t.right);
+
+                const dy = clamp(t.middle.press, 0, 1) * (t.middle.r * 0.55);
+                ctx.fillStyle = "rgba(255,255,255,0.10)";
+                ctx.beginPath();
+                ctx.ellipse(t.middle.x, t.middle.y + dy, t.middle.r * 0.8, t.middle.r * 1.2, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            function drawArm(arm) {
+                const sx = arm.shoulder.x, sy = arm.shoulder.y;
+                const px = arm.pos.x, py = arm.pos.y;
+
+                const dx = px - sx, dy = py - sy;
+                const dist = Math.hypot(dx, dy) || 1;
+                const nx = dx / dist, ny = dy / dist;
+
+                const th = 10 + arm.impact * 8;
+
+                ctx.strokeStyle = "rgba(255,255,255,0.18)";
+                ctx.lineWidth = th;
+                ctx.lineCap = "round";
+                ctx.beginPath();
+                ctx.moveTo(sx, sy);
+                ctx.lineTo(px - nx * 10, py - ny * 10);
+                ctx.stroke();
+
+                ctx.fillStyle = "rgba(255,255,255,0.22)";
+                ctx.beginPath();
+                ctx.ellipse(px, py, 18 + arm.impact * 6, 14 - arm.impact * 3, Math.atan2(dy, dx), 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // ===== UPDATE / DRAW LOOP
+            function update(dt) {
+                mouseMoveTimer = Math.max(0, mouseMoveTimer - dt);
+
+                keys.forEach(k => {
+                    const target = k.held ? 1 : 0;
+                    const speed = k.held ? 18 : 9;
+                    k.press = lerp(k.press, target, 1 - Math.pow(0.001, dt * speed));
+                });
+
+                [mTargets.left, mTargets.right, mTargets.middle].forEach(btn => {
+                    const t = pressed.get(btn.id);
+                    btn.held = !!t?.held;
+                    const target = btn.held ? 1 : 0;
+                    const speed = btn.held ? 18 : 9;
+                    btn.press = lerp(btn.press, target, 1 - Math.pow(0.001, dt * speed));
+                });
+
+                assignTargets();
+
+                [armL, armR].forEach(arm => {
+                    const assigned = arm.assignedId ? pressed.get(arm.assignedId) : null;
+                    const isHeld = !!(assigned && assigned.held);
+                    if (assigned) { arm.target.x = assigned.x; arm.target.y = assigned.y; }
+
+                    if (arm.phase === "idle") {
+                        arm.pos.x = lerp(arm.pos.x, arm.rest.x, 1 - Math.pow(0.001, dt * 16));
+                        arm.pos.y = lerp(arm.pos.y, arm.rest.y, 1 - Math.pow(0.001, dt * 16));
+                        arm.impact = Math.max(0, arm.impact - dt * 8);
+                        if (arm.assignedId && isHeld) startSmash(arm, assigned);
+                        return;
+                    }
+
+                    if (arm.phase === "go") {
+                        arm.t += dt;
+                        const t = clamp(arm.t / arm.dur, 0, 1);
+                        const s = smashEase(t);
+                        arm.pos.x = lerp(arm.rest.x, arm.target.x, s);
+                        arm.pos.y = lerp(arm.rest.y, arm.target.y, s);
+                        arm.impact = Math.max(arm.impact, t);
+                        if (t >= 1) {
+                            arm.phase = "hold";
+                            arm.t = 0;
+                            arm.impact = 1;
+                            arm.holdImpact = 1;
+                            headBob.v += 180;
+                            if (audio) audio.thunk();
+                        }
+                        return;
+                    }
+
+                    if (arm.phase === "hold") {
+                        arm.holdImpact = Math.max(0, arm.holdImpact - dt * 6);
+                        arm.impact = Math.max(0.18, arm.holdImpact);
+                        arm.pos.x = lerp(arm.pos.x, arm.target.x, 1 - Math.pow(0.001, dt * 30));
+                        arm.pos.y = lerp(arm.pos.y, arm.target.y, 1 - Math.pow(0.001, dt * 30));
+                        if (!isHeld) { arm.phase = "return"; arm.t = 0; }
+                        return;
+                    }
+
+                    if (arm.phase === "return") {
+                        arm.t += dt;
+                        const t = clamp(arm.t / 0.18, 0, 1);
+                        const s = easeOutCubic(t);
+                        arm.pos.x = lerp(arm.target.x, arm.rest.x, s);
+                        arm.pos.y = lerp(arm.target.y, arm.rest.y, s);
+                        arm.impact = Math.max(0, 1 - t * 1.2);
+                        if (t >= 1) {
+                            arm.phase = "idle";
+                            arm.impact = 0;
+                            arm.pos.x = arm.rest.x;
+                            arm.pos.y = arm.rest.y;
+                        }
+                    }
+                });
+
+                headBob.v += (-headBob.y * 28) * dt;
+                headBob.v *= Math.pow(0.01, dt);
+                headBob.y += headBob.v * dt;
+                headBob.y = clamp(headBob.y, -18, 18);
+            }
+
+            function draw() {
+                const LAYOUT = layout();
+                const { w, h } = LAYOUT;
+
+                ctx.clearRect(0, 0, w, h);
+                ctx.fillStyle = "rgba(0,0,0,0.08)";
+                ctx.fillRect(0, 0, w, h);
+
+                drawHead(LAYOUT);
+                drawDesk(LAYOUT);
+                drawKeyboard(LAYOUT);
+                drawMouse(LAYOUT);
+
+                drawArm(armL);
+                drawArm(armR);
+            }
+
+            function loop(now) {
+                const dt = Math.min(0.033, (now - lastTime) / 1000);
+                lastTime = now;
+                update(dt);
+                draw();
+                requestAnimationFrame(loop);
+            }
+
+            // ===== INIT
+            function init() {
+                resize();
+                const LAYOUT = layout();
+
+                keys = buildKeyRects(LAYOUT.keyboard);
+
+                mousePad = LAYOUT.mousepad;
+                mouseSize = LAYOUT.mouseSize;
+                mouseCenter = {
+                    x: mousePad.x + mousePad.w * 0.5,
+                    y: mousePad.y + mousePad.h * 0.5
+                };
+                mTargets = mouseTargetsFromCenter(mouseCenter.x, mouseCenter.y, mouseSize);
+
+                pressed.set("mouse_left", { id: "mouse_left", x: mTargets.left.x, y: mTargets.left.y, type: "mouse", held: false });
+                pressed.set("mouse_right", { id: "mouse_right", x: mTargets.right.x, y: mTargets.right.y, type: "mouse", held: false });
+                pressed.set("mouse_mid", { id: "mouse_mid", x: mTargets.middle.x, y: mTargets.middle.y, type: "mouse", held: false });
+
+                armL = makeArm(LAYOUT.shoulderL, LAYOUT.restL);
+                armR = makeArm(LAYOUT.shoulderR, LAYOUT.restR);
+
+                window.addEventListener("resize", () => {
+                    resize();
+                    const L2 = layout();
+
+                    keys = buildKeyRects(L2.keyboard);
+                    mousePad = L2.mousepad;
+                    mouseSize = L2.mouseSize;
+
+                    const px = (mouseCenter.x - mousePad.x) / mousePad.w;
+                    const py = (mouseCenter.y - mousePad.y) / mousePad.h;
+                    mouseCenter = clampMouseToPad(
+                        mousePad.x + mousePad.w * clamp(px, 0, 1),
+                        mousePad.y + mousePad.h * clamp(py, 0, 1),
+                        mousePad,
+                        mouseSize
+                    );
+                    mTargets = mouseTargetsFromCenter(mouseCenter.x, mouseCenter.y, mouseSize);
+
+                    pressed.get("mouse_left").x = mTargets.left.x; pressed.get("mouse_left").y = mTargets.left.y;
+                    pressed.get("mouse_right").x = mTargets.right.x; pressed.get("mouse_right").y = mTargets.right.y;
+                    pressed.get("mouse_mid").x = mTargets.middle.x; pressed.get("mouse_mid").y = mTargets.middle.y;
+
+                    armL.shoulder = { ...L2.shoulderL };
+                    armR.shoulder = { ...L2.shoulderR };
+                    armL.rest = { ...L2.restL };
+                    armR.rest = { ...L2.restR };
+
+                    if (armL.phase === "idle") { armL.pos = { ...armL.rest }; }
+                    if (armR.phase === "idle") { armR.pos = { ...armR.rest }; }
+                });
+
+                requestAnimationFrame((t) => { lastTime = t; loop(t); });
+            }
+
+            init();
+        })();
+    </script>
+
 </body>
+
 </html>
