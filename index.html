@@ -5,86 +5,136 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Desk Goblin Mash</title>
   <style>
-    :root {
-      --bg: #0f1116;
-      --panel: #151a22;
-      --text: #d6dde8;
-      --muted: #8a94a7;
-      --accent: #6ee7ff;
+    :root{
+      --bg:#0f1116;
+      --panel:#151a22;
+      --text:#d6dde8;
+      --muted:#8a94a7;
+      --accent:#6ee7ff;
     }
-    html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    .wrap {
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      height: 100%;
+    html,body{
+      height:100%; margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      overflow:hidden;
     }
-    header, footer {
-      padding: 12px 14px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.04), rgba(255,255,255,0.0));
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+    .wrap{
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      height:100%;
     }
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      border-bottom: none;
-      background: linear-gradient(to top, rgba(255,255,255,0.04), rgba(255,255,255,0.0));
+    header,footer{
+      padding:12px 14px;
+      background:linear-gradient(to bottom, rgba(255,255,255,0.04), rgba(255,255,255,0));
+      border-bottom:1px solid rgba(255,255,255,0.06);
     }
-    header b { color: var(--accent); }
-    .sub { color: var(--muted); font-size: 12px; margin-top: 4px; }
-    #c {
-      width: 100%;
-      height: 100%;
-      display: block;
-      background: radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,0.06), rgba(255,255,255,0.0)),
-                  radial-gradient(900px 500px at 10% 80%, rgba(110,231,255,0.05), rgba(255,255,255,0.0));
+    footer{
+      border-top:1px solid rgba(255,255,255,0.06);
+      border-bottom:none;
+      background:linear-gradient(to top, rgba(255,255,255,0.04), rgba(255,255,255,0));
     }
-    .hint {
-      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
-      font-size: 12px; color: var(--muted);
+    header b{ color:var(--accent); }
+    .sub{ color:var(--muted); font-size:12px; margin-top:4px; }
+
+    .stage{
+      position:relative;
+      width:100%;
+      height:100%;
     }
-    .pill {
+    #c{
+      width:100%;
+      height:100%;
+      display:block;
+      background:
+        radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,0.06), rgba(255,255,255,0.0)),
+        radial-gradient(900px 500px at 10% 80%, rgba(110,231,255,0.05), rgba(255,255,255,0.0));
+    }
+
+    .hint{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      font-size:12px; color:var(--muted);
+    }
+    .pill{
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.04);
+      padding:4px 8px;
+      border-radius:999px;
+    }
+
+    /* Thought bubble */
+    .bubble{
+      position:absolute;
+      left: clamp(10px, 3vw, 28px);
+      top:  clamp(10px, 2.4vh, 22px);
+      width: min(520px, 56vw);
+      background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.04);
-      padding: 4px 8px;
-      border-radius: 999px;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.30);
+      backdrop-filter: blur(6px);
+      overflow:hidden;
+    }
+    .bubble:after{
+      content:"";
+      position:absolute;
+      left: 44px;
+      bottom: -14px;
+      width: 28px;
+      height: 28px;
+      background: rgba(255,255,255,0.06);
+      border-left: 1px solid rgba(255,255,255,0.10);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      transform: rotate(45deg);
+    }
+    .bubble textarea{
+      width:100%;
+      height:96px;
+      resize:none;
+      border:0;
+      outline:none;
+      padding:12px 12px 14px 12px;
+      background:transparent;
+      color: var(--text);
+      font-size:14px;
+      line-height:1.35;
+    }
+    .bubble .label{
+      padding:8px 12px 0 12px;
+      font-size:12px;
+      color: rgba(255,255,255,0.35);
     }
   </style>
 </head>
+
 <body>
 <div class="wrap">
   <header>
     <div><b>Desk Goblin Mash</b> — press keys / click mouse</div>
-    <div class="sub">Drop-in replaceable assets. Single HTML file for GitHub Pages.</div>
+    <div class="sub">Single HTML file. Keyboard is mirrored for the character. Hold keys to keep them pressed.</div>
   </header>
 
-  <canvas id="c"></canvas>
+  <div class="stage">
+    <canvas id="c"></canvas>
+
+    <div class="bubble">
+      <div class="label">Thought bubble</div>
+      <textarea id="thought" placeholder="Type your thoughts… (the goblin will mash the keys while you type)"></textarea>
+    </div>
+  </div>
 
   <footer class="hint">
-    <span class="pill">Keyboard: press anything</span>
+    <span class="pill">Keyboard: press / hold</span>
     <span class="pill">Mouse: left / right / middle</span>
     <span class="pill">Tip: click canvas once if keys don’t register</span>
+    <span class="pill">Audio: first click unlocks sound</span>
   </footer>
 </div>
 
 <script>
 (() => {
   // =========================
-  // 1) CONFIG: swap assets here
-  // =========================
-  const ASSETS = {
-    // Later: replace these with real images (PNG/SVG).
-    // If you want images: set enabled=true and provide src.
-    imagesEnabled: false,
-    head:   { src: "assets/head.png" },
-    desk:   { src: "assets/desk.png" },
-    hands:  { src: "assets/hands.png" },    // optional combined
-    armL:   { src: "assets/arm_left.png" },
-    armR:   { src: "assets/arm_right.png" },
-    keyboard:{ src: "assets/keyboard.png" },
-    mouse:  { src: "assets/mouse.png" }
-  };
-
-  // =========================
-  // 2) CANVAS SETUP
+  // 1) CANVAS SETUP
   // =========================
   const canvas = document.getElementById("c");
   const ctx = canvas.getContext("2d");
@@ -98,287 +148,470 @@
   }
   window.addEventListener("resize", resize);
 
-  // Ensure focus for key events
+  // Focus handling
   canvas.tabIndex = 0;
   canvas.style.outline = "none";
   canvas.addEventListener("pointerdown", () => canvas.focus());
 
   // =========================
-  // 3) SIMPLE TWEEN HELPERS
+  // 2) HELPERS
   // =========================
   const clamp = (v,min,max) => Math.max(min, Math.min(max, v));
   const lerp  = (a,b,t) => a + (b-a)*t;
 
-  // Aggressive smash curve: fast out, slightly overshoot, then spring back.
-  function smashEase(t) {
-    // t: 0..1
-    // Piecewise: rush in (0..0.55), overshoot (0.55..0.75), return (0.75..1)
-    if (t < 0.55) {
-      const x = t / 0.55;
-      // easeOutCubic
-      return 1 - Math.pow(1 - x, 3);
-    } else if (t < 0.75) {
-      const x = (t - 0.55) / 0.20;
-      // overshoot to 1.08
-      return lerp(1.0, 1.08, 1 - Math.pow(1 - x, 2));
+  function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+  // smash approach curve
+  function smashEase(t){
+    if (t < 0.60){
+      const x = t / 0.60;
+      return easeOutCubic(x);
+    } else if (t < 0.78){
+      const x = (t - 0.60) / 0.18;
+      return lerp(1.0, 1.08, easeOutCubic(x));
     } else {
-      const x = (t - 0.75) / 0.25;
-      // return back to 1.0
-      return lerp(1.08, 1.0, 1 - Math.pow(1 - x, 2));
+      const x = (t - 0.78) / 0.22;
+      return lerp(1.08, 1.0, easeOutCubic(x));
     }
   }
 
+  function roundRect(x,y,w,h,r){
+    r = Math.min(r, w/2, h/2);
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y, x+w,y+h, r);
+    ctx.arcTo(x+w,y+h, x,y+h, r);
+    ctx.arcTo(x,y+h, x,y, r);
+    ctx.arcTo(x,y, x+w,y, r);
+    ctx.closePath();
+  }
+
   // =========================
-  // 4) VIRTUAL LAYOUT (positions)
-  //    Everything scales with canvas size
+  // 3) AUDIO (WebAudio)
   // =========================
-  function layout() {
+  let audio = null;
+  function audioInit(){
+    if (audio) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+
+    const ctxA = new AC();
+    const master = ctxA.createGain();
+    master.gain.value = 0.22;
+    master.connect(ctxA.destination);
+
+    function env(g, t0, a, d, s){
+      g.gain.cancelScheduledValues(t0);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(a, t0 + 0.01);
+      g.gain.exponentialRampToValueAtTime(s, t0 + d);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + d + 0.10);
+    }
+
+    function clack(){
+      const t = ctxA.currentTime;
+      const o = ctxA.createOscillator();
+      const g = ctxA.createGain();
+      o.type = "square";
+      o.frequency.setValueAtTime(520, t);
+      o.frequency.exponentialRampToValueAtTime(280, t + 0.03);
+      env(g, t, 0.7, 0.04, 0.08);
+      o.connect(g); g.connect(master);
+      o.start(t); o.stop(t + 0.14);
+    }
+
+    function thunk(){
+      const t = ctxA.currentTime;
+
+      // low "thump"
+      const o = ctxA.createOscillator();
+      const g = ctxA.createGain();
+      o.type = "sine";
+      o.frequency.setValueAtTime(140, t);
+      o.frequency.exponentialRampToValueAtTime(70, t + 0.06);
+      env(g, t, 0.9, 0.08, 0.12);
+      o.connect(g); g.connect(master);
+      o.start(t); o.stop(t + 0.18);
+
+      // tiny noise snap (optional)
+      const bufLen = Math.floor(ctxA.sampleRate * 0.05);
+      const buf = ctxA.createBuffer(1, bufLen, ctxA.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i=0;i<bufLen;i++){
+        data[i] = (Math.random()*2-1) * Math.exp(-i/(bufLen*0.25));
+      }
+      const n = ctxA.createBufferSource();
+      const ng = ctxA.createGain();
+      n.buffer = buf;
+      ng.gain.value = 0.22;
+      n.connect(ng); ng.connect(master);
+      n.start(t); n.stop(t + 0.06);
+    }
+
+    audio = { ctxA, clack, thunk };
+  }
+
+  // unlock audio on first pointerdown anywhere
+  window.addEventListener("pointerdown", () => {
+    audioInit();
+    if (audio?.ctxA?.state === "suspended") audio.ctxA.resume();
+  }, { once:false });
+
+  // =========================
+  // 4) LAYOUT (centered character + keyboard)
+  // =========================
+  function layout(){
     const w = canvas.clientWidth;
     const h = canvas.clientHeight;
 
-    // Desk occupies lower 45% of screen
-    const deskTopY = h * 0.55;
+    const deskTopY = h * 0.56;
 
-    // Keyboard block
-    const kbW = w * 0.62;
-    const kbH = h * 0.18;
-    const kbX = (w - kbW) * 0.52; // slightly right
-    const kbY = deskTopY + h * 0.08;
+    const kbW = w * 0.66;
+    const kbH = h * 0.20;
+    const kbX = (w - kbW) * 0.50;
+    const kbY = deskTopY + h * 0.075;
 
-    // Mouse block
-    const mouseW = w * 0.13;
+    const mouseW = w * 0.12;
     const mouseH = h * 0.16;
     const mouseX = kbX + kbW + w * 0.03;
-    const mouseY = kbY + kbH * 0.10;
+    const mouseY = kbY + kbH * 0.12;
 
-    // Character head peeking above desk
     const headW = w * 0.22;
     const headH = headW * 0.95;
-    const headX = w * 0.34 - headW * 0.5;
+    const headX = w * 0.50 - headW * 0.5;
     const headY = deskTopY - headH * 0.82;
 
-    // Hand "rest" origins (where hands start)
-    const restL = { x: w * 0.33, y: deskTopY + h * 0.03 };
-    const restR = { x: w * 0.42, y: deskTopY + h * 0.03 };
+    // arm rests: symmetric, centered under head/keyboard
+    const restY = deskTopY + h * 0.035;
+    const restL = { x: w * 0.44, y: restY };
+    const restR = { x: w * 0.56, y: restY };
 
     return {
-      w, h,
-      deskTopY,
-      keyboard: { x: kbX, y: kbY, w: kbW, h: kbH },
-      mouse:    { x: mouseX, y: mouseY, w: mouseW, h: mouseH },
-      head:     { x: headX, y: headY, w: headW, h: headH },
-      restL, restR
+      w,h,deskTopY,
+      keyboard:{ x:kbX,y:kbY,w:kbW,h:kbH },
+      mouse:{ x:mouseX,y:mouseY,w:mouseW,h:mouseH },
+      head:{ x:headX,y:headY,w:headW,h:headH },
+      restL,restR
     };
   }
 
   // =========================
-  // 5) KEY MAP: define keyboard keys + positions
-  //    This is a "cartoon" keyboard: enough to look believable.
+  // 5) KEYBOARD RECTS (mirrored)
   // =========================
-  function buildKeyRects(kb) {
+  function buildKeyRects(kb){
     const keys = [];
 
-    // Rows with relative key counts/sizes (simple)
+    // 5 rows: 4 main + a dedicated space row to avoid overlap
     const rows = [
-      // row, y, height, keys: [label, widthUnits]
-      { y: 0.10, h: 0.22, items: [["ESC",1.2],["1",1],["2",1],["3",1],["4",1],["5",1],["6",1],["7",1],["8",1],["9",1],["0",1],["-",1],["=",1],["BKSP",1.7]] },
-      { y: 0.34, h: 0.22, items: [["TAB",1.4],["Q",1],["W",1],["E",1],["R",1],["T",1],["Y",1],["U",1],["I",1],["O",1],["P",1],["[",1],["]",1],["\\",1.3]] },
-      { y: 0.58, h: 0.22, items: [["CAPS",1.6],["A",1],["S",1],["D",1],["F",1],["G",1],["H",1],["J",1],["K",1],["L",1],[";",1],["'",1],["ENTER",2.0]] },
-      { y: 0.82, h: 0.22, items: [["SHIFT",2.2],["Z",1],["X",1],["C",1],["V",1],["B",1],["N",1],["M",1], [",",1],[".",1],["/",1],["SHIFT",2.2]] },
+      { y: 0.14, h: 0.20, items: [["ESC",1.2],["1",1],["2",1],["3",1],["4",1],["5",1],["6",1],["7",1],["8",1],["9",1],["0",1],["-",1],["=",1],["BKSP",1.8]] },
+      { y: 0.36, h: 0.20, items: [["TAB",1.4],["Q",1],["W",1],["E",1],["R",1],["T",1],["Y",1],["U",1],["I",1],["O",1],["P",1],["[",1],["]",1],["\\",1.3]] },
+      { y: 0.58, h: 0.20, items: [["CAPS",1.6],["A",1],["S",1],["D",1],["F",1],["G",1],["H",1],["J",1],["K",1],["L",1],[";",1],["'",1],["ENTER",2.1]] },
+      { y: 0.80, h: 0.20, items: [["SHIFT",2.2],["Z",1],["X",1],["C",1],["V",1],["B",1],["N",1],["M",1],[",",1],[".",1],["/",1],["SHIFT",2.2]] },
+      { y: 0.94, h: 0.12, items: [["CTRL",1.2],["ALT",1.2],["SPACE",6.2],["ALT",1.2],["CTRL",1.2]] },
     ];
 
     const padX = kb.w * 0.04;
     const padY = kb.h * 0.10;
-    const innerW = kb.w - padX * 2;
-    const innerH = kb.h - padY * 2;
+    const innerW = kb.w - padX*2;
+    const innerH = kb.h - padY*2;
 
     rows.forEach((row, rIdx) => {
       const totalUnits = row.items.reduce((s,it)=>s+it[1],0);
-      const gap = innerW * 0.008;
-      const unitW = (innerW - gap * (row.items.length - 1)) / totalUnits;
+      const gap = innerW * 0.010;
+      const unitW = (innerW - gap*(row.items.length-1)) / totalUnits;
 
       let x = kb.x + padX;
-      const y = kb.y + padY + innerH * row.y - (innerH * row.h) * 0.5;
+      const y = kb.y + padY + innerH*row.y - (innerH*row.h)*0.5;
       const h = innerH * row.h;
 
-      row.items.forEach(([label, units], i) => {
+      row.items.forEach(([label,units], i) => {
         const w = unitW * units;
         keys.push({
           id: `r${rIdx}_${i}_${label}`,
           label,
           x, y, w, h,
-          press: 0 // 0..1
+          held:false,
+          press:0
         });
         x += w + gap;
       });
     });
 
-    // Add a spacebar row as a single big key (optional)
-    keys.push({
-      id: `space`,
-      label: "SPACE",
-      x: kb.x + kb.w*0.18,
-      y: kb.y + kb.h*0.78,
-      w: kb.w*0.44,
-      h: kb.h*0.16,
-      press: 0
+    // MIRROR for character orientation:
+    // x' = kb.x + kb.w - (x - kb.x) - w
+    keys.forEach(k => {
+      k.x = kb.x + kb.w - (k.x - kb.x) - k.w;
     });
 
     return keys;
   }
 
-  // For mapping actual key events to a "target key" on our cartoon keyboard:
-  function chooseKeyForEvent(keys, e) {
-    // Prefer letter keys, digits, space, enter, backspace, tab, shift, esc.
-    const k = e.key;
+  // Map KeyboardEvent.code -> our label
+  function labelFromCode(e){
+    const c = e.code;
 
-    // Normalize
-    const upper = (typeof k === "string") ? k.toUpperCase() : "";
+    // letters
+    if (c.startsWith("Key")) return c.slice(3).toUpperCase();
 
-    const special = {
-      " ": "SPACE",
-      "ENTER": "ENTER",
-      "BACKSPACE": "BKSP",
-      "TAB": "TAB",
-      "SHIFT": "SHIFT",
-      "ESCAPE": "ESC"
+    // digits top row
+    if (c.startsWith("Digit")) return c.slice(5);
+
+    // space / enter / etc
+    const map = {
+      Space: "SPACE",
+      Enter: "ENTER",
+      Backspace: "BKSP",
+      Tab: "TAB",
+      Escape: "ESC",
+      CapsLock: "CAPS",
+      ShiftLeft: "SHIFT",
+      ShiftRight:"SHIFT",
+      ControlLeft:"CTRL",
+      ControlRight:"CTRL",
+      AltLeft:"ALT",
+      AltRight:"ALT",
+      Minus:"-",
+      Equal:"=",
+      BracketLeft:"[",
+      BracketRight:"]",
+      Backslash:"\\",
+      Semicolon:";",
+      Quote:"'",
+      Comma:",",
+      Period:".",
+      Slash:"/"
     };
+    if (map[c]) return map[c];
 
-    let wanted = special[upper] || special[k] || upper;
+    // arrows: map to WASD for comedy + readability
+    const arrows = {
+      ArrowUp: "W",
+      ArrowDown: "S",
+      ArrowLeft: "A",
+      ArrowRight: "D"
+    };
+    if (arrows[c]) return arrows[c];
 
-    // Single letters/digits/punct: map to same label if present
-    // For non-matching keys, just pick a random key for comedy.
-    let match = keys.find(x => x.label === wanted);
-    if (!match && wanted.length === 1) {
-      match = keys.find(x => x.label === wanted);
-    }
-    if (!match) {
-      // If key is like "ArrowLeft" etc, pick WASD-ish keys for fun
-      if (upper.includes("ARROW")) {
-        const map = { "ARROWLEFT":"A", "ARROWRIGHT":"D", "ARROWUP":"W", "ARROWDOWN":"S" };
-        const tryLabel = map[upper];
-        match = keys.find(x => x.label === tryLabel) || null;
-      }
-    }
-    if (!match) {
-      match = keys[Math.floor(Math.random() * keys.length)];
-    }
-    return match;
+    return null;
+  }
+
+  function findKeyByLabel(keys, label){
+    // SHIFT/CTRL/ALT duplicates exist: pick closest to center
+    const matches = keys.filter(k => k.label === label);
+    if (!matches.length) return null;
+    if (matches.length === 1) return matches[0];
+    // pick middle-most
+    matches.sort((a,b)=>(Math.abs((a.x+a.w*0.5)-keyCenterX) - Math.abs((b.x+b.w*0.5)-keyCenterX)));
+    return matches[0];
   }
 
   // =========================
-  // 6) ARM/SMASH STATE
+  // 6) MOUSE TARGETS + STATE
   // =========================
-  function makeArm(origin) {
+  function mouseTargets(m){
+    const {x,y,w,h} = m;
+    const r = Math.min(w,h);
+    return {
+      left:   { id:"mouse_left",  x:x+w*0.30, y:y+h*0.32, r:r*0.12, held:false, press:0 },
+      right:  { id:"mouse_right", x:x+w*0.70, y:y+h*0.32, r:r*0.12, held:false, press:0 },
+      middle: { id:"mouse_mid",   x:x+w*0.50, y:y+h*0.30, r:r*0.10, held:false, press:0 },
+    };
+  }
+
+  // =========================
+  // 7) ARMS: can hold on pressed target
+  // =========================
+  function makeArm(origin){
     return {
       origin: { ...origin },
       pos:    { ...origin },
       target: { ...origin },
-      active: false,
+      assignedId: null,
+      phase: "idle", // idle | go | hold | return
       t: 0,
-      dur: 0.16,      // time to reach (seconds-ish)
-      hold: 0.04,     // brief "impact" hold
-      returnDur: 0.20,
-      phase: "idle",  // "go" | "hold" | "return"
-      // Visual squash/impact
+      dur: 0.16,
+      holdImpact: 0,
       impact: 0,
+      returningFrom: null
     };
   }
 
-  let L, R;
+  // =========================
+  // 8) WORLD STATE
+  // =========================
   let keyRects = [];
-  let lastTime = performance.now();
+  let L, R;
+  let mTargets = null;
 
-  // Mouse buttons target zones on mouse
-  function mouseTargets(mouseRect) {
-    const { x,y,w,h } = mouseRect;
-    return {
-      left:   { x: x + w*0.30, y: y + h*0.32, r: Math.min(w,h)*0.12 },
-      right:  { x: x + w*0.70, y: y + h*0.32, r: Math.min(w,h)*0.12 },
-      middle: { x: x + w*0.50, y: y + h*0.30, r: Math.min(w,h)*0.10 },
-    };
+  // pressed targets map: id -> { id, x,y, type, held }
+  // id is keyRect.id or mouse target id
+  const pressed = new Map();
+
+  let headBob = { y:0, v:0 }; // simple spring for comedic bob
+
+  let lastTime = performance.now();
+  let keyCenterX = 0;
+
+  // =========================
+  // 9) ASSIGNMENT LOGIC (two hands)
+  // =========================
+  function assignTargets(){
+    const active = Array.from(pressed.values()).filter(t => t.held);
+
+    // maintain existing assignments if still held
+    [L,R].forEach(arm => {
+      if (arm.assignedId){
+        const t = pressed.get(arm.assignedId);
+        if (!t || !t.held){
+          arm.assignedId = null;
+        }
+      }
+    });
+
+    // gather free targets
+    const taken = new Set([L.assignedId, R.assignedId].filter(Boolean));
+    const freeTargets = active.filter(t => !taken.has(t.id));
+
+    // assign to arms that are free
+    const arms = [L,R].filter(a => !a.assignedId);
+
+    // greedy: for each free arm, pick nearest free target
+    arms.forEach(arm => {
+      if (!freeTargets.length) return;
+      let bestIdx = 0;
+      let bestD = Infinity;
+      for (let i=0;i<freeTargets.length;i++){
+        const t = freeTargets[i];
+        const d = Math.hypot(t.x - arm.origin.x, t.y - arm.origin.y);
+        if (d < bestD){ bestD = d; bestIdx = i; }
+      }
+      const chosen = freeTargets.splice(bestIdx,1)[0];
+      arm.assignedId = chosen.id;
+      startSmash(arm, chosen);
+    });
+
+    // if both arms free but only one key held, only one arm should take it
+    // (handled naturally by above)
   }
 
-  function retargetArmToPoint(point) {
-    // Pick the closer arm for the target
-    const dL = Math.hypot(point.x - L.origin.x, point.y - L.origin.y);
-    const dR = Math.hypot(point.x - R.origin.x, point.y - R.origin.y);
-    const arm = (dL <= dR) ? L : R;
-
-    // Start smash
-    arm.target = { ...point };
-    arm.active = true;
+  function startSmash(arm, target){
+    arm.target = { x: target.x, y: target.y };
     arm.t = 0;
     arm.phase = "go";
     arm.impact = 0;
-  }
-
-  function pressKeyRect(key) {
-    key.press = 1;
+    arm.holdImpact = 0;
+    if (audio) audio.clack(); // initial "clack" when the goblin reacts
   }
 
   // =========================
-  // 7) INPUT
+  // 10) INPUT (no rapid trigger, hold keeps depressed)
   // =========================
+  const thought = document.getElementById("thought");
+
+  function isTyping(){
+    return document.activeElement === thought;
+  }
+
   window.addEventListener("keydown", (e) => {
-    // Prevent page scrolling on space/arrow keys
-    if ([" ", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) e.preventDefault();
+    // ignore auto-repeat: prevents rapid re-trigger
+    if (e.repeat) return;
 
-    const key = chooseKeyForEvent(keyRects, e);
-    const point = { x: key.x + key.w*0.5, y: key.y + key.h*0.5 };
-    pressKeyRect(key);
-    retargetArmToPoint(point);
+    // If not typing in textarea, prevent page movement on some keys
+    if (!isTyping()){
+      if (["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.code)) e.preventDefault();
+    }
+
+    const label = labelFromCode(e);
+    if (!label) return;
+
+    const key = keyRects.find(k => k.label === label) || null;
+    if (!key) return;
+
+    key.held = true;
+    pressed.set(key.id, { id:key.id, x:key.x+key.w*0.5, y:key.y+key.h*0.55, type:"key", held:true });
+
+    // update assignment (so both arms can react)
+    assignTargets();
   }, { passive:false });
+
+  window.addEventListener("keyup", (e) => {
+    const label = labelFromCode(e);
+    if (!label) return;
+
+    // release all keys that match label? (SHIFT/CTRL/ALT duplicates)
+    // We'll release any held keys of that label (simple, reliable).
+    keyRects.forEach(k => {
+      if (k.label === label){
+        k.held = false;
+        const t = pressed.get(k.id);
+        if (t) t.held = false;
+      }
+    });
+
+    assignTargets();
+  });
 
   window.addEventListener("mousedown", (e) => {
     const LAYOUT = layout();
-    const t = mouseTargets(LAYOUT.mouse);
-    let point = null;
-    if (e.button === 0) point = { x: t.left.x, y: t.left.y };
-    if (e.button === 1) point = { x: t.middle.x, y: t.middle.y };
-    if (e.button === 2) point = { x: t.right.x, y: t.right.y };
-    if (!point) return;
-    retargetArmToPoint(point);
+    mTargets = mouseTargets(LAYOUT.mouse);
+
+    let t = null;
+    if (e.button === 0) t = mTargets.left;
+    if (e.button === 1) t = mTargets.middle;
+    if (e.button === 2) t = mTargets.right;
+    if (!t) return;
+
+    t.held = true;
+    pressed.set(t.id, { id:t.id, x:t.x, y:t.y, type:"mouse", held:true });
+
+    assignTargets();
   });
 
-  // stop context menu so right click feels like interaction
+  window.addEventListener("mouseup", (e) => {
+    if (!mTargets) return;
+    let id = null;
+    if (e.button === 0) id = "mouse_left";
+    if (e.button === 1) id = "mouse_mid";
+    if (e.button === 2) id = "mouse_right";
+    if (!id) return;
+
+    const t = pressed.get(id);
+    if (t) t.held = false;
+
+    if (id === "mouse_left")  mTargets.left.held = false;
+    if (id === "mouse_mid")   mTargets.middle.held = false;
+    if (id === "mouse_right") mTargets.right.held = false;
+
+    assignTargets();
+  });
+
   window.addEventListener("contextmenu", (e) => e.preventDefault());
 
   // =========================
-  // 8) DRAWING (placeholder style)
-  //    Replace these with image draws later.
+  // 11) DRAW (placeholders; swap with images later)
   // =========================
-  function roundRect(x,y,w,h,r) {
-    r = Math.min(r, w/2, h/2);
-    ctx.beginPath();
-    ctx.moveTo(x+r, y);
-    ctx.arcTo(x+w, y,   x+w, y+h, r);
-    ctx.arcTo(x+w, y+h, x,   y+h, r);
-    ctx.arcTo(x,   y+h, x,   y,   r);
-    ctx.arcTo(x,   y,   x+w, y,   r);
-    ctx.closePath();
-  }
-
-  function drawDesk(L) {
-    const { w,h,deskTopY } = L;
-    // desk front
+  function drawDesk(LAYOUT){
+    const { w,h,deskTopY } = LAYOUT;
     ctx.fillStyle = "rgba(0,0,0,0.25)";
-    ctx.fillRect(0, deskTopY, w, h - deskTopY);
-
-    // desk top lip
+    ctx.fillRect(0, deskTopY, w, h-deskTopY);
     ctx.fillStyle = "rgba(255,255,255,0.06)";
     ctx.fillRect(0, deskTopY-3, w, 3);
   }
 
-  function drawHead(L) {
-    const { head } = L;
-    // Placeholder chibi head (replace with image)
-    ctx.save();
-    ctx.translate(head.x, head.y);
+  function drawHead(LAYOUT){
+    const { head, w } = LAYOUT;
 
-    // head
+    // comedic bob/squash: translate by headBob.y, squash slightly on impact
+    const squash = 1 - headBob.y * 0.002; // tiny
+    const stretch = 1 + headBob.y * 0.001;
+
+    ctx.save();
+    ctx.translate(head.x + head.w/2, head.y + head.h/2 + headBob.y);
+    ctx.scale(stretch, squash);
+    ctx.translate(-head.w/2, -head.h/2);
+
     ctx.fillStyle = "rgba(255,255,255,0.10)";
-    roundRect(0, 0, head.w, head.h, head.w*0.35);
+    roundRect(0,0, head.w, head.h, head.w*0.35);
     ctx.fill();
 
     // eyes
@@ -398,8 +631,8 @@
     ctx.restore();
   }
 
-  function drawKeyboard(L) {
-    const kb = L.keyboard;
+  function drawKeyboard(LAYOUT){
+    const kb = LAYOUT.keyboard;
 
     // base
     ctx.fillStyle = "rgba(255,255,255,0.06)";
@@ -409,12 +642,12 @@
     // keys
     keyRects.forEach(k => {
       const press = clamp(k.press, 0, 1);
-      const dy = press * (k.h * 0.18); // depression amount
+      const dy = press * (k.h * 0.18);
+
       ctx.fillStyle = "rgba(255,255,255,0.07)";
       roundRect(k.x, k.y + dy, k.w, k.h, k.h*0.25);
       ctx.fill();
 
-      // label (optional)
       ctx.fillStyle = "rgba(255,255,255,0.18)";
       ctx.font = `${Math.max(10, kb.h*0.10)}px system-ui`;
       ctx.textAlign = "center";
@@ -423,54 +656,58 @@
     });
   }
 
-  function drawMouse(L) {
-    const m = L.mouse;
+  function drawMouse(LAYOUT){
+    const m = LAYOUT.mouse;
     ctx.fillStyle = "rgba(255,255,255,0.06)";
     roundRect(m.x, m.y, m.w, m.h, m.w*0.45);
     ctx.fill();
 
-    const t = mouseTargets(m);
-    ctx.fillStyle = "rgba(255,255,255,0.10)";
-    ctx.beginPath();
-    ctx.ellipse(t.left.x, t.left.y, t.left.r*1.25, t.left.r, 0, 0, Math.PI*2);
-    ctx.ellipse(t.right.x, t.right.y, t.right.r*1.25, t.right.r, 0, 0, Math.PI*2);
-    ctx.fill();
+    const t = mTargets || mouseTargets(m);
 
+    function drawBtn(btn){
+      const dy = clamp(btn.press,0,1) * (btn.r * 0.55);
+      ctx.fillStyle = "rgba(255,255,255,0.10)";
+      ctx.beginPath();
+      ctx.ellipse(btn.x, btn.y + dy, btn.r*1.25, btn.r, 0, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    drawBtn(t.left);
+    drawBtn(t.right);
+
+    // middle wheel
+    const dy = clamp(t.middle.press,0,1) * (t.middle.r * 0.55);
     ctx.fillStyle = "rgba(255,255,255,0.10)";
     ctx.beginPath();
-    ctx.ellipse(t.middle.x, t.middle.y, t.middle.r*0.8, t.middle.r*1.2, 0, 0, Math.PI*2);
+    ctx.ellipse(t.middle.x, t.middle.y + dy, t.middle.r*0.8, t.middle.r*1.2, 0, 0, Math.PI*2);
     ctx.fill();
   }
 
-  function drawArm(arm) {
-    // Simple stretchy arm: line + hand blob
-    const ox = arm.origin.x, oy = arm.origin.y;
-    const px = arm.pos.x, py = arm.pos.y;
+  function drawArm(arm){
+    const ox=arm.origin.x, oy=arm.origin.y;
+    const px=arm.pos.x, py=arm.pos.y;
 
-    const dx = px - ox, dy = py - oy;
-    const dist = Math.hypot(dx, dy) || 1;
-    const nx = dx / dist, ny = dy / dist;
+    const dx = px-ox, dy = py-oy;
+    const dist = Math.hypot(dx,dy) || 1;
+    const nx=dx/dist, ny=dy/dist;
 
-    // thickness scales a bit with impact
-    const th = 10 + arm.impact * 8;
+    const th = 10 + arm.impact*8;
 
-    // arm
     ctx.strokeStyle = "rgba(255,255,255,0.18)";
     ctx.lineWidth = th;
     ctx.lineCap = "round";
     ctx.beginPath();
-    ctx.moveTo(ox, oy);
+    ctx.moveTo(ox,oy);
     ctx.lineTo(px - nx*10, py - ny*10);
     ctx.stroke();
 
-    // hand
     ctx.fillStyle = "rgba(255,255,255,0.22)";
     ctx.beginPath();
-    ctx.ellipse(px, py, 18 + arm.impact*6, 14 - arm.impact*3, Math.atan2(dy, dx), 0, Math.PI*2);
+    ctx.ellipse(px, py, 18 + arm.impact*6, 14 - arm.impact*3, Math.atan2(dy,dx), 0, Math.PI*2);
     ctx.fill();
 
-    // tiny "slam spark"
-    if (arm.impact > 0.6) {
+    // tiny impact spark
+    if (arm.impact > 0.65){
       ctx.strokeStyle = "rgba(110,231,255,0.28)";
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -483,25 +720,53 @@
   }
 
   // =========================
-  // 9) UPDATE LOOP
+  // 12) UPDATE LOOP
   // =========================
-  function update(dt) {
-    // key rebound
+  function update(dt){
+    // key press depth: held stays down, released decays smoothly
     keyRects.forEach(k => {
-      // decay press
-      k.press = Math.max(0, k.press - dt * 6.5);
+      const target = k.held ? 1 : 0;
+      const speed = k.held ? 18 : 9;
+      k.press = lerp(k.press, target, 1 - Math.pow(0.001, dt*speed));
     });
 
-    // arm state machines
-    [L, R].forEach(arm => {
-      if (!arm.active) {
-        arm.pos.x = lerp(arm.pos.x, arm.origin.x, 1 - Math.pow(0.001, dt));
-        arm.pos.y = lerp(arm.pos.y, arm.origin.y, 1 - Math.pow(0.001, dt));
-        arm.impact = Math.max(0, arm.impact - dt * 8);
+    // mouse press depth
+    if (mTargets){
+      [mTargets.left, mTargets.right, mTargets.middle].forEach(btn => {
+        const target = btn.held ? 1 : 0;
+        const speed = btn.held ? 18 : 9;
+        btn.press = lerp(btn.press, target, 1 - Math.pow(0.001, dt*speed));
+      });
+    }
+
+    // Assignments might change if targets released/pressed
+    assignTargets();
+
+    // arms
+    [L,R].forEach(arm => {
+      const assigned = arm.assignedId ? pressed.get(arm.assignedId) : null;
+      const isHeld = !!(assigned && assigned.held);
+
+      // if assigned but target moved (it won't), update target point anyway
+      if (assigned){
+        arm.target.x = assigned.x;
+        arm.target.y = assigned.y;
+      }
+
+      if (arm.phase === "idle"){
+        arm.impact = Math.max(0, arm.impact - dt*8);
+        // if has assignment, start smash
+        if (arm.assignedId && isHeld){
+          startSmash(arm, assigned);
+        } else {
+          // drift to origin
+          arm.pos.x = lerp(arm.pos.x, arm.origin.x, 1 - Math.pow(0.001, dt));
+          arm.pos.y = lerp(arm.pos.y, arm.origin.y, 1 - Math.pow(0.001, dt));
+        }
         return;
       }
 
-      if (arm.phase === "go") {
+      if (arm.phase === "go"){
         arm.t += dt;
         const t = clamp(arm.t / arm.dur, 0, 1);
         const s = smashEase(t);
@@ -509,76 +774,91 @@
         arm.pos.x = lerp(arm.origin.x, arm.target.x, s);
         arm.pos.y = lerp(arm.origin.y, arm.target.y, s);
 
-        // ramp impact up near the end
         arm.impact = Math.max(arm.impact, t);
 
-        if (t >= 1) {
+        if (t >= 1){
+          // impact!
           arm.phase = "hold";
           arm.t = 0;
           arm.impact = 1;
+          arm.holdImpact = 1;
+
+          // head bob impulse
+          headBob.v += 180;
+
+          // thunk sound on impact (only when we actually hit)
+          if (audio) audio.thunk();
         }
-      } else if (arm.phase === "hold") {
-        arm.t += dt;
-        // keep impact
-        arm.impact = 1;
-        if (arm.t >= arm.hold) {
+        return;
+      }
+
+      if (arm.phase === "hold"){
+        // stay planted if still held, otherwise return
+        // soften impact while holding so it doesn't stay "sparked"
+        arm.holdImpact = Math.max(0, arm.holdImpact - dt*6);
+        arm.impact = Math.max(0.20, arm.holdImpact);
+
+        // keep hand locked on target while held
+        arm.pos.x = lerp(arm.pos.x, arm.target.x, 1 - Math.pow(0.001, dt*30));
+        arm.pos.y = lerp(arm.pos.y, arm.target.y, 1 - Math.pow(0.001, dt*30));
+
+        if (!isHeld){
           arm.phase = "return";
           arm.t = 0;
         }
-      } else if (arm.phase === "return") {
+        return;
+      }
+
+      if (arm.phase === "return"){
         arm.t += dt;
-        const t = clamp(arm.t / arm.returnDur, 0, 1);
-        // easeOutQuad back
-        const s = 1 - (1 - t) * (1 - t);
+        const t = clamp(arm.t / 0.20, 0, 1);
+        const s = easeOutCubic(t);
 
         arm.pos.x = lerp(arm.target.x, arm.origin.x, s);
         arm.pos.y = lerp(arm.target.y, arm.origin.y, s);
 
         arm.impact = Math.max(0, 1 - t*1.2);
 
-        if (t >= 1) {
-          arm.active = false;
+        if (t >= 1){
           arm.phase = "idle";
           arm.impact = 0;
           arm.pos.x = arm.origin.x;
           arm.pos.y = arm.origin.y;
         }
+        return;
       }
     });
+
+    // head bob spring
+    // (simple damped spring)
+    headBob.v += (-headBob.y * 28) * dt;
+    headBob.v *= Math.pow(0.01, dt); // damping
+    headBob.y += headBob.v * dt;
+    headBob.y = clamp(headBob.y, -18, 18);
   }
 
-  function draw() {
+  function draw(){
     const LAYOUT = layout();
     const { w,h } = LAYOUT;
 
-    ctx.clearRect(0,0,w,h);
+    // update derived center for label picking
+    keyCenterX = LAYOUT.keyboard.x + LAYOUT.keyboard.w * 0.5;
 
-    // Background
-    // (Already in canvas CSS, but you can add subtle overlays)
+    ctx.clearRect(0,0,w,h);
     ctx.fillStyle = "rgba(0,0,0,0.08)";
     ctx.fillRect(0,0,w,h);
 
-    // Scene layers:
-    // 1) head behind desk
+    // layers
     drawHead(LAYOUT);
-
-    // 2) desk
     drawDesk(LAYOUT);
-
-    // 3) keyboard + mouse
     drawKeyboard(LAYOUT);
     drawMouse(LAYOUT);
-
-    // 4) arms/hands on top
     drawArm(L);
     drawArm(R);
-
-    // Optional debug crosshair for last target
-    // ctx.fillStyle="rgba(110,231,255,0.4)"; ctx.fillRect(L.target?.x-2,L.target?.y-2,4,4);
   }
 
-  function loop(now) {
-    const dt = Math.min(0.033, (now - lastTime) / 1000);
+  function loop(now){
+    const dt = Math.min(0.033, (now - lastTime)/1000);
     lastTime = now;
     update(dt);
     draw();
@@ -586,32 +866,31 @@
   }
 
   // =========================
-  // 10) INIT
+  // 13) INIT
   // =========================
-  function init() {
+  function init(){
     resize();
     const LAYOUT = layout();
-
-    // build keys and arms
     keyRects = buildKeyRects(LAYOUT.keyboard);
+    mTargets = mouseTargets(LAYOUT.mouse);
+
     L = makeArm(LAYOUT.restL);
     R = makeArm(LAYOUT.restR);
 
-    // keep origins responsive on resize
     window.addEventListener("resize", () => {
       const L2 = layout();
-      // Rebuild key positions for new size
       keyRects = buildKeyRects(L2.keyboard);
+      mTargets = mouseTargets(L2.mouse);
 
-      // Update arm origins smoothly
       L.origin = { ...L2.restL };
       R.origin = { ...L2.restR };
-      // If idle, snap to origin
-      if (!L.active) L.pos = { ...L.origin };
-      if (!R.active) R.pos = { ...R.origin };
+
+      // if idle, snap
+      if (L.phase === "idle"){ L.pos = { ...L.origin }; }
+      if (R.phase === "idle"){ R.pos = { ...R.origin }; }
     });
 
-    requestAnimationFrame((t)=>{ lastTime = t; loop(t); });
+    requestAnimationFrame((t)=>{ lastTime=t; loop(t); });
   }
 
   init();
