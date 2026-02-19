@@ -1,0 +1,32 @@
+﻿{
+  "id": "fox",
+  "label": "Fox",
+  "visibleParts": [
+    "headFill",
+    "headLine",
+    "leftEye",
+    "rightEye",
+    "leftBrow",
+    "rightBrow",
+    "mouth"
+  ],
+  "hideDefaultArms": false,
+  "parts": {
+    "bodyFill": "BodyFillParts/Body fill.PNG",
+    "bodyLine": "BodyFillParts/Body.PNG",
+    "tailFill": "TailParts/TailFill.PNG",
+    "tailLine": "TailParts/Tail.PNG",
+    "headFill": "HeadBase/HeadFill.PNG",
+    "headLine": "HeadBase/Head.PNG",
+    "leftEarFill": "L_EarParts/L_EarFill.PNG",
+    "leftEarLine": "L_EarParts/L_Ear.PNG",
+    "leftEarInner": "L_EarParts/InnerEarLine.PNG",
+    "rightEarFill": "R_EarParts/R_EarFill.PNG",
+    "rightEarLine": "R_EarParts/R_Ear.PNG",
+    "leftEye": "Face/L_Eye.PNG",
+    "rightEye": "Face/R_Eye.PNG",
+    "leftBrow": "Face/L_Eyebrow.PNG",
+    "rightBrow": "Face/R_Eyebrow.PNG",
+    "mouth": "Face/Mouth.PNG"
+  }
+}
