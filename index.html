@@ -56,6 +56,7 @@
             position: relative;
             width: 100%;
             height: 100%;
+            overflow: hidden;
         }
 
         #c {
@@ -83,50 +84,209 @@
             border-radius: 999px;
         }
 
-        /* Thought bubble */
-        .bubble {
+        .panel-toggle {
             position: absolute;
-            left: clamp(10px, 3vw, 28px);
-            top: clamp(10px, 2.4vh, 22px);
-            width: min(520px, 56vw);
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            border-radius: 18px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.30);
+            right: clamp(10px, 2vw, 20px);
+            top: clamp(10px, 2vh, 20px);
+            z-index: 24;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background: rgba(10, 14, 21, 0.9);
+            color: var(--text);
+            border-radius: 10px;
+            padding: 6px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .side-panel {
+            position: absolute;
+            right: clamp(10px, 2vw, 20px);
+            top: clamp(48px, 8vh, 64px);
+            bottom: clamp(10px, 2vh, 16px);
+            width: min(390px, 44vw);
+            min-width: 290px;
+            max-width: 62vw;
+            z-index: 23;
+            background: rgba(8, 12, 20, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 12px;
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
             backdrop-filter: blur(6px);
+            display: grid;
+            grid-template-rows: auto auto 1fr;
             overflow: hidden;
+            resize: horizontal;
         }
 
-        .bubble:after {
-            content: "";
-            position: absolute;
-            left: 44px;
-            bottom: -14px;
-            width: 28px;
-            height: 28px;
-            background: rgba(255, 255, 255, 0.06);
-            border-left: 1px solid rgba(255, 255, 255, 0.10);
+        .side-panel.collapsed {
+            display: none;
+        }
+
+        .panel-head {
+            padding: 10px 12px 8px 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.10);
-            transform: rotate(45deg);
+            font-size: 12px;
+            color: var(--muted);
         }
 
-        .bubble textarea {
+        .tabs {
+            display: flex;
+            gap: 6px;
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .tab-btn {
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            border-color: rgba(110, 231, 255, 0.55);
+            color: #dff9ff;
+            background: rgba(110, 231, 255, 0.12);
+        }
+
+        .tab-body {
+            min-height: 0;
+            overflow: auto;
+            padding: 10px;
+        }
+
+        .tab-pane {
+            display: none;
+            height: 100%;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .pane-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 8px;
+        }
+
+        .panel-textarea {
             width: 100%;
-            height: 96px;
-            resize: none;
-            border: 0;
+            min-height: 190px;
+            height: calc(100% - 24px);
+            resize: vertical;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 10px;
             outline: none;
-            padding: 12px 12px 14px 12px;
-            background: transparent;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.04);
             color: var(--text);
             font-size: 14px;
             line-height: 1.35;
+            box-sizing: border-box;
         }
 
-        .bubble .label {
-            padding: 8px 12px 0 12px;
+        .panel-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.35);
+            color: var(--muted);
+        }
+
+        .panel-row select {
+            background: rgba(255, 255, 255, 0.09);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            border-radius: 8px;
+            padding: 4px 8px;
+            font-size: 12px;
+            outline: none;
+            max-width: 230px;
+        }
+
+        #debugText {
+            margin: 0;
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.04);
+            color: #b9c6dd;
+            font: 11px/1.3 Consolas, Menlo, monospace;
+            white-space: pre-wrap;
+            word-break: break-word;
+            min-height: 180px;
+        }
+
+        .inspector {
+            margin-top: 8px;
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .inspector h4 {
+            margin: 0 0 8px 0;
+            font-size: 12px;
+            color: #d7e2f5;
+            font-weight: 600;
+        }
+
+        .inspector-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .inspector-grid input,
+        .inspector-grid select {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 8px;
+            padding: 4px 6px;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .inspector-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .inspector-actions button {
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        #partJson {
+            width: 100%;
+            margin-top: 8px;
+            min-height: 90px;
+            resize: vertical;
+            box-sizing: border-box;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #c4d3ec;
+            font: 11px/1.3 Consolas, Menlo, monospace;
+            padding: 8px;
         }
 
         /* mobile soft keyboard friendliness */
@@ -134,24 +294,106 @@
             height: 100vh;
             /* will be overridden by JS via visualViewport */
         }
+
+        .stage.split-mobile {
+            display: grid;
+            grid-template-rows: 1fr min(42vh, 360px);
+        }
+
+        .stage.split-mobile #c {
+            grid-row: 1;
+        }
+
+        .stage.split-mobile.panel-collapsed {
+            grid-template-rows: 1fr;
+        }
+
+        .stage.split-mobile .panel-toggle {
+            right: 10px;
+            top: 10px;
+        }
+
+        .stage.split-mobile .side-panel {
+            position: relative;
+            right: auto;
+            top: auto;
+            bottom: auto;
+            width: 100%;
+            min-width: 0;
+            max-width: none;
+            resize: none;
+            border-radius: 12px 12px 0 0;
+            grid-row: 2;
+        }
     </style>
 </head>
 
 <body>
     <div class="wrap">
         <header>
-            <div><b>Desk Goblin Mash</b> — press keys / click mouse</div>
+            <div><b>Desk Goblin Mash</b> â€” press keys / click mouse</div>
             <div class="sub">Rest pose = hands raised. Keyboard/mouse are mirrored for character perspective. Mouse
                 slides on a mousepad.</div>
         </header>
 
         <div class="stage">
             <canvas id="c"></canvas>
-
-            <div class="bubble">
-                <div class="label">Thought bubble</div>
-                <textarea id="thought" placeholder="Type… (the goblin will mash while you type)"></textarea>
-            </div>
+            <button id="panelToggle" class="panel-toggle" type="button">Hide Panel</button>
+            <aside id="sidePanel" class="side-panel">
+                <div class="panel-head">Desk Goblin Panel</div>
+                <div class="tabs">
+                    <button type="button" class="tab-btn active" data-tab="input">Input</button>
+                    <button type="button" class="tab-btn" data-tab="debug">Debug</button>
+                    <button type="button" class="tab-btn" data-tab="options">Options</button>
+                </div>
+                <div class="tab-body">
+                    <section class="tab-pane active" data-pane="input">
+                        <div class="pane-label">Thoughts</div>
+                        <textarea id="thought" class="panel-textarea" placeholder="Type... (the goblin will mash while you type)"></textarea>
+                    </section>
+                    <section class="tab-pane" data-pane="debug">
+                        <div class="panel-row">
+                            <label><input id="debugEnabled" type="checkbox" checked /> Show debug text</label>
+                        </div>
+                        <pre id="debugText">Debug ready...</pre>
+                        <div id="partInspector" class="inspector">
+                            <h4>Parts Inspector (Asset Skins)</h4>
+                            <div class="inspector-grid">
+                                <label>Part
+                                    <select id="partKey"></select>
+                                </label>
+                                <label>Visible
+                                    <input id="partVisible" type="checkbox" />
+                                </label>
+                                <label>dX
+                                    <input id="partDx" type="number" step="1" value="0" />
+                                </label>
+                                <label>dY
+                                    <input id="partDy" type="number" step="1" value="0" />
+                                </label>
+                                <label>dW
+                                    <input id="partDw" type="number" step="1" value="0" />
+                                </label>
+                                <label>dH
+                                    <input id="partDh" type="number" step="1" value="0" />
+                                </label>
+                            </div>
+                            <div class="inspector-actions">
+                                <button id="partReset" type="button">Reset Part</button>
+                                <button id="partsResetAll" type="button">Reset All</button>
+                                <button id="partCopyJson" type="button">Copy JSON</button>
+                            </div>
+                            <textarea id="partJson" readonly></textarea>
+                        </div>
+                    </section>
+                    <section class="tab-pane" data-pane="options">
+                        <div class="panel-row">
+                            <label for="charSelect">Character:</label>
+                            <select id="charSelect"></select>
+                        </div>
+                    </section>
+                </div>
+            </aside>
         </div>
 
         <footer class="hint">
@@ -166,6 +408,24 @@
             const canvas = document.getElementById("c");
             const ctx = canvas.getContext("2d");
             const thought = document.getElementById("thought");
+            const charSelect = document.getElementById("charSelect");
+            const panelToggle = document.getElementById("panelToggle");
+            const sidePanel = document.getElementById("sidePanel");
+            const debugEnabled = document.getElementById("debugEnabled");
+            const debugText = document.getElementById("debugText");
+            const tabButtons = Array.from(document.querySelectorAll(".tab-btn"));
+            const tabPanes = Array.from(document.querySelectorAll(".tab-pane"));
+            const partInspector = document.getElementById("partInspector");
+            const partKeyEl = document.getElementById("partKey");
+            const partVisibleEl = document.getElementById("partVisible");
+            const partDxEl = document.getElementById("partDx");
+            const partDyEl = document.getElementById("partDy");
+            const partDwEl = document.getElementById("partDw");
+            const partDhEl = document.getElementById("partDh");
+            const partResetEl = document.getElementById("partReset");
+            const partsResetAllEl = document.getElementById("partsResetAll");
+            const partCopyJsonEl = document.getElementById("partCopyJson");
+            const partJsonEl = document.getElementById("partJson");
 
             const DESIGN = { w: 1000, h: 700 };
             let VIEW = { w: 1000, h: 700, scale: 1, ox: 0, oy: 0 };
@@ -198,15 +458,228 @@
             canvas.addEventListener("pointerdown", () => canvas.focus());
 
             function isTyping() { return document.activeElement === thought; }
+            function setPanelOpen(open) {
+                sidePanel.classList.toggle("collapsed", !open);
+                stageEl.classList.toggle("panel-collapsed", !open);
+                panelToggle.textContent = open ? "Hide Panel" : "Show Panel";
+            }
+
+            function setActiveTab(tab) {
+                tabButtons.forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === tab));
+                tabPanes.forEach((pane) => pane.classList.toggle("active", pane.dataset.pane === tab));
+            }
+
+            function updatePanelLayoutMode() {
+                const vv = window.visualViewport;
+                const w = vv ? vv.width : window.innerWidth;
+                const h = vv ? vv.height : window.innerHeight;
+                const splitMobile = w <= 900 && h > w;
+                stageEl.classList.toggle("split-mobile", splitMobile);
+            }
+
+            let panelOpen = true;
+            let debugOn = true;
+            let selectedPartKey = "";
+            panelToggle.addEventListener("click", () => {
+                panelOpen = !panelOpen;
+                setPanelOpen(panelOpen);
+            });
+            debugEnabled.addEventListener("change", () => {
+                debugOn = !!debugEnabled.checked;
+                debugText.style.display = debugOn ? "block" : "none";
+            });
+            tabButtons.forEach((btn) => {
+                btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
+            });
+            partKeyEl.addEventListener("change", () => {
+                selectedPartKey = partKeyEl.value;
+                refreshPartsInspector();
+            });
+            partVisibleEl.addEventListener("change", () => {
+                const def = getActiveAssetSkinDef();
+                if (!def || !selectedPartKey) return;
+                const st = getInspectorState(def);
+                if (partVisibleEl.checked) {
+                    st.visibleSet.add(selectedPartKey);
+                    ensurePartLoaded(def, selectedPartKey);
+                } else {
+                    st.visibleSet.delete(selectedPartKey);
+                }
+                refreshPartsInspector();
+            });
+            [partDxEl, partDyEl, partDwEl, partDhEl].forEach((el) => {
+                el.addEventListener("input", () => {
+                    const def = getActiveAssetSkinDef();
+                    if (!def || !selectedPartKey) return;
+                    const st = getInspectorState(def);
+                    st.partTweaks[selectedPartKey] = readPartBoxInputs();
+                    refreshPartsInspector();
+                });
+            });
+            partResetEl.addEventListener("click", () => {
+                const def = getActiveAssetSkinDef();
+                if (!def || !selectedPartKey) return;
+                const st = getInspectorState(def);
+                delete st.partTweaks[selectedPartKey];
+                refreshPartsInspector();
+            });
+            partsResetAllEl.addEventListener("click", () => {
+                const def = getActiveAssetSkinDef();
+                if (!def) return;
+                const st = getInspectorState(def);
+                st.partTweaks = clonePartTweaks(def.partTweaks || {});
+                st.visibleSet = new Set(def.visibleParts || DEFAULT_VISIBLE_PARTS);
+                st.requested = false;
+                st.loaded = false;
+                st.failed = [];
+                st.images = {};
+                loadAssetSkin(def);
+                refreshPartsInspector();
+            });
+            partCopyJsonEl.addEventListener("click", async () => {
+                try {
+                    await navigator.clipboard.writeText(partJsonEl.value || "");
+                } catch (_) {
+                    partJsonEl.select();
+                    document.execCommand("copy");
+                    partJsonEl.setSelectionRange(0, 0);
+                }
+            });
 
             const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
             const lerp = (a, b, t) => a + (b - a) * t;
             function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+            const copyNumObject = (obj) => Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, +v]));
+            const copyColorObject = (obj) => Object.fromEntries(
+                Object.entries(obj).map(([k, arr]) => [k, arr.slice()])
+            );
+            const lerpNumObject = (a, b, t) => {
+                const out = {};
+                for (const k of Object.keys(b)) out[k] = lerp(a[k], b[k], t);
+                return out;
+            };
+            const lerpColorObject = (a, b, t) => {
+                const out = {};
+                for (const k of Object.keys(b)) out[k] = b[k].map((v, i) => lerp(a[k][i], v, t));
+                return out;
+            };
+            const rgba = (c) => `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${c[3]})`;
             function smashEase(t) {
                 if (t < 0.60) return easeOutCubic(t / 0.60);
                 if (t < 0.78) return lerp(1.0, 1.08, easeOutCubic((t - 0.60) / 0.18));
                 return lerp(1.08, 1.0, easeOutCubic((t - 0.78) / 0.22));
             }
+
+            const BASE_SKINS = {
+                test: {
+                    label: "Test Goblin",
+                    morph: {
+                        round: 0.35,
+                        earWidth: 0.17,
+                        earHeight: 0.18,
+                        eyeGap: 0.18,
+                        eyeWidth: 0.07,
+                        eyeHeight: 0.10,
+                        blushWidth: 0.08,
+                        blushHeight: 0.04,
+                        mouthWidth: 0.24,
+                        mouthHeight: 0.05,
+                        mouthY: 0.73,
+                        browTilt: 0.08,
+                        hornSize: 0.0,
+                        squint: 0.30
+                    },
+                    colors: {
+                        skin: [228, 246, 232, 0.12],
+                        eye: [248, 252, 255, 0.52],
+                        blush: [255, 120, 160, 0.25],
+                        brow: [230, 245, 234, 0.42],
+                        mouth: [255, 210, 220, 0.30],
+                        horn: [255, 255, 255, 0.10]
+                    }
+                },
+                moss: {
+                    label: "Moss Goblin",
+                    morph: {
+                        round: 0.30,
+                        earWidth: 0.20,
+                        earHeight: 0.24,
+                        eyeGap: 0.20,
+                        eyeWidth: 0.065,
+                        eyeHeight: 0.12,
+                        blushWidth: 0.065,
+                        blushHeight: 0.032,
+                        mouthWidth: 0.20,
+                        mouthHeight: 0.06,
+                        mouthY: 0.74,
+                        browTilt: 0.14,
+                        hornSize: 0.04,
+                        squint: 0.38
+                    },
+                    colors: {
+                        skin: [132, 197, 146, 0.22],
+                        eye: [240, 255, 240, 0.58],
+                        blush: [120, 190, 110, 0.30],
+                        brow: [80, 120, 88, 0.62],
+                        mouth: [248, 220, 184, 0.34],
+                        horn: [245, 245, 230, 0.24]
+                    }
+                },
+                neon: {
+                    label: "Neon Gremlin",
+                    morph: {
+                        round: 0.42,
+                        earWidth: 0.14,
+                        earHeight: 0.14,
+                        eyeGap: 0.17,
+                        eyeWidth: 0.08,
+                        eyeHeight: 0.095,
+                        blushWidth: 0.10,
+                        blushHeight: 0.045,
+                        mouthWidth: 0.26,
+                        mouthHeight: 0.042,
+                        mouthY: 0.72,
+                        browTilt: 0.03,
+                        hornSize: 0.09,
+                        squint: 0.24
+                    },
+                    colors: {
+                        skin: [175, 110, 245, 0.20],
+                        eye: [255, 250, 188, 0.62],
+                        blush: [255, 110, 220, 0.32],
+                        brow: [255, 224, 140, 0.58],
+                        mouth: [255, 240, 190, 0.34],
+                        horn: [150, 255, 252, 0.30]
+                    }
+                }
+            };
+            let skinLibrary = { ...BASE_SKINS };
+
+            const DEFAULT_ASSET_PARTS = {
+                bodyFill: "BodyFillParts/Body fill.PNG",
+                bodyLine: "BodyFillParts/Body.PNG",
+                tailFill: "TailParts/TailFill.PNG",
+                tailLine: "TailParts/Tail.PNG",
+                headFill: "HeadBase/HeadFill.PNG",
+                headLine: "HeadBase/Head.PNG",
+                leftEarFill: "L_EarParts/L_EarFill.PNG",
+                leftEarLine: "L_EarParts/L_Ear.PNG",
+                leftEarInner: "L_EarParts/InnerEarLine.PNG",
+                rightEarFill: "R_EarParts/R_EarFill.PNG",
+                rightEarLine: "R_EarParts/R_Ear.PNG",
+                leftEye: "Face/L_Eye.PNG",
+                rightEye: "Face/R_Eye.PNG",
+                leftBrow: "Face/L_Eyebrow.PNG",
+                rightBrow: "Face/R_Eyebrow.PNG",
+                mouth: "Face/Mouth.PNG"
+            };
+            const DEFAULT_VISIBLE_PARTS = [
+                "headFill", "headLine",
+                "leftEye", "rightEye",
+                "leftBrow", "rightBrow",
+                "mouth"
+            ];
+            const assetSkinCache = new Map();
 
             const stageEl = document.querySelector(".stage");
 
@@ -214,7 +687,8 @@
                 const vv = window.visualViewport;
                 const h = vv ? Math.floor(vv.height) : window.innerHeight;
                 stageEl.style.height = h + "px";
-                // Keep content pinned (prevents weird “keyboard pushes page” behavior)
+                updatePanelLayoutMode();
+                // Keep content pinned (prevents weird â€œkeyboard pushes pageâ€ behavior)
                 window.scrollTo(0, 0);
                 resize(); // re-run canvas sizing
             }
@@ -311,7 +785,7 @@
 
                 const deskTopY = h * 0.56;
 
-                // ✅ stable keyboard proportions (design space)
+                // âœ… stable keyboard proportions (design space)
                 const kbW = w * 0.46;
                 const kbH = h * 0.20;
                 const kbX = (w - kbW) * 0.50;
@@ -323,7 +797,7 @@
                 const padX = kbX + kbW + w * 0.03;
                 const padY = kbY;
 
-                // make mouse more “mouse-like”
+                // make mouse more â€œmouse-likeâ€
                 const mouseW = w * 0.075;  // narrower
                 const mouseH = h * 0.145;  // taller
 
@@ -427,10 +901,20 @@
             function mouseTargetsFromCenter(cx, cy, mouseSize) {
                 const w = mouseSize.w, h = mouseSize.h;
                 const r = Math.min(w, h);
+                const a = Math.PI; // character-facing perspective (180deg from user view)
+                function rot(dx, dy) {
+                    return {
+                        x: cx + dx * Math.cos(a) - dy * Math.sin(a),
+                        y: cy + dx * Math.sin(a) + dy * Math.cos(a)
+                    };
+                }
+                const leftPos = rot(-w * 0.18, -h * 0.10);
+                const rightPos = rot(w * 0.18, -h * 0.10);
+                const midPos = rot(0, -h * 0.12);
                 return {
-                    left: { id: "mouse_left", x: cx - w * 0.18, y: cy - h * 0.10, r: r * 0.12, held: false, press: 0 },
-                    right: { id: "mouse_right", x: cx + w * 0.18, y: cy - h * 0.10, r: r * 0.12, held: false, press: 0 },
-                    middle: { id: "mouse_mid", x: cx, y: cy - h * 0.12, r: r * 0.10, held: false, press: 0 },
+                    left: { id: "mouse_left", x: leftPos.x, y: leftPos.y, r: r * 0.12, held: false, press: 0 },
+                    right: { id: "mouse_right", x: rightPos.x, y: rightPos.y, r: r * 0.12, held: false, press: 0 },
+                    middle: { id: "mouse_mid", x: midPos.x, y: midPos.y, r: r * 0.10, held: false, press: 0 },
                     move: { id: "mouse_move", x: cx, y: cy, r: r * 0.14, held: false, press: 0 },
                 };
             }
@@ -465,6 +949,253 @@
 
             let headBob = { y: 0, v: 0 };
             let lastTime = performance.now();
+            let sceneTime = 0;
+            let fpsSmoothed = 60;
+            let debugTicker = 0;
+
+            const skinState = {
+                activeId: "test",
+                targetId: "test",
+                t: 1,
+                dur: 0.24,
+                fromMorph: copyNumObject(BASE_SKINS.test.morph),
+                toMorph: copyNumObject(BASE_SKINS.test.morph),
+                renderedMorph: copyNumObject(BASE_SKINS.test.morph),
+                fromColors: copyColorObject(BASE_SKINS.test.colors),
+                toColors: copyColorObject(BASE_SKINS.test.colors),
+                renderedColors: copyColorObject(BASE_SKINS.test.colors),
+                motion: 0,
+                blinkTimer: 0,
+                blinkNext: 1.8 + Math.random() * 2.2,
+                blinkDur: 0.13,
+                blink: 0
+            };
+
+            function currentSkinDef() {
+                return skinLibrary[skinState.activeId] || BASE_SKINS.test;
+            }
+
+            function loadImage(src) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.onload = () => resolve(img);
+                    img.onerror = () => reject(new Error(`Failed to load ${src}`));
+                    img.src = src;
+                });
+            }
+
+            function getAssetSkinState(def) {
+                if (!assetSkinCache.has(def.id)) {
+                    assetSkinCache.set(def.id, { requested: false, loaded: false, failed: [], images: {} });
+                }
+                return assetSkinCache.get(def.id);
+            }
+
+            function clonePartTweaks(src) {
+                const out = {};
+                for (const [k, v] of Object.entries(src || {})) {
+                    out[k] = {
+                        x: +(v?.x || 0),
+                        y: +(v?.y || 0),
+                        w: +(v?.w || 0),
+                        h: +(v?.h || 0)
+                    };
+                }
+                return out;
+            }
+
+            function getInspectorState(def) {
+                const st = getAssetSkinState(def);
+                if (!st.inspectorReady) {
+                    st.partTweaks = clonePartTweaks(def.partTweaks || {});
+                    st.visibleSet = new Set(def.visibleParts || DEFAULT_VISIBLE_PARTS);
+                    st.inspectorReady = true;
+                }
+                return st;
+            }
+
+            function getActiveAssetSkinDef() {
+                const target = skinLibrary[skinState.targetId];
+                if (target?.mode === "asset") return target;
+                const active = currentSkinDef();
+                return (active.mode === "asset") ? active : null;
+            }
+
+            function ensurePartLoaded(def, key) {
+                const st = getInspectorState(def);
+                if (st.images[key]) return;
+                const parts = { ...DEFAULT_ASSET_PARTS, ...(def.parts || {}) };
+                const rel = parts[key];
+                if (!rel) return;
+                const src = def.root ? `${def.root}/${rel}` : rel;
+                loadImage(src).then((img) => {
+                    st.images[key] = img;
+                    st.loaded = Object.keys(st.images).length > 0;
+                }).catch(() => {
+                    if (!st.failed.includes(src)) st.failed.push(src);
+                });
+            }
+
+            function readPartBoxInputs() {
+                return {
+                    x: +(partDxEl.value || 0),
+                    y: +(partDyEl.value || 0),
+                    w: +(partDwEl.value || 0),
+                    h: +(partDhEl.value || 0)
+                };
+            }
+
+            function writePartBoxInputs(v) {
+                partDxEl.value = String(+(v?.x || 0));
+                partDyEl.value = String(+(v?.y || 0));
+                partDwEl.value = String(+(v?.w || 0));
+                partDhEl.value = String(+(v?.h || 0));
+            }
+
+            function refreshPartsInspector() {
+                const def = getActiveAssetSkinDef();
+                const disabled = !def;
+                [partKeyEl, partVisibleEl, partDxEl, partDyEl, partDwEl, partDhEl, partResetEl, partsResetAllEl, partCopyJsonEl]
+                    .forEach((el) => { el.disabled = disabled; });
+                if (!def) {
+                    partInspector.style.opacity = "0.55";
+                    partJsonEl.value = "Select an asset skin to inspect parts.";
+                    return;
+                }
+                partInspector.style.opacity = "1";
+
+                const st = getInspectorState(def);
+                const parts = { ...DEFAULT_ASSET_PARTS, ...(def.parts || {}) };
+                const keys = Object.keys(parts);
+                if (!keys.includes(selectedPartKey)) selectedPartKey = keys[0] || "";
+                const existing = Array.from(partKeyEl.options).map((o) => o.value);
+                const keySetChanged = existing.length !== keys.length || existing.some((k, i) => k !== keys[i]);
+                if (keySetChanged) {
+                    partKeyEl.innerHTML = "";
+                    keys.forEach((k) => {
+                        const opt = document.createElement("option");
+                        opt.value = k;
+                        opt.textContent = k;
+                        partKeyEl.appendChild(opt);
+                    });
+                }
+                partKeyEl.value = selectedPartKey;
+
+                partVisibleEl.checked = st.visibleSet.has(selectedPartKey);
+                writePartBoxInputs(st.partTweaks[selectedPartKey] || { x: 0, y: 0, w: 0, h: 0 });
+                partJsonEl.value = JSON.stringify({
+                    visibleParts: Array.from(st.visibleSet),
+                    partTweaks: st.partTweaks
+                }, null, 2);
+            }
+
+            function loadAssetSkin(def) {
+                const state = getInspectorState(def);
+                if (state.requested) return;
+                state.requested = true;
+                const parts = { ...DEFAULT_ASSET_PARTS, ...(def.parts || {}) };
+                const root = def.root || "";
+                const loadKeys = Array.from(state.visibleSet).filter((k) => !!parts[k]);
+
+                const jobs = loadKeys.map(async (key) => {
+                    const rel = parts[key];
+                    const src = root ? `${root}/${rel}` : rel;
+                    try {
+                        const img = await loadImage(src);
+                        state.images[key] = img;
+                    } catch (_) {
+                        state.failed.push(src);
+                    }
+                });
+
+                Promise.all(jobs).then(() => {
+                    state.loaded = Object.keys(state.images).length > 0;
+                    if (!state.loaded) {
+                        console.warn(`Asset skin '${def.id}' did not load any images. Check ${root}/manifest.json paths.`);
+                    } else if (state.failed.length) {
+                        console.warn(`Some asset files failed for skin '${def.id}':`, state.failed);
+                    }
+                });
+            }
+
+            function normalizeAssetSkin(id, manifest) {
+                const m = manifest || {};
+                return {
+                    id,
+                    label: m.label || id,
+                    mode: "asset",
+                    root: `_skins/${id}`,
+                    parts: m.parts || {},
+                    visibleParts: Array.isArray(m.visibleParts) ? m.visibleParts.slice() : DEFAULT_VISIBLE_PARTS.slice(),
+                    partTweaks: clonePartTweaks(m.partTweaks || {}),
+                    hideDefaultArms: !!m.hideDefaultArms,
+                    morph: { ...BASE_SKINS.test.morph, ...(m.morph || {}) },
+                    colors: { ...BASE_SKINS.test.colors, ...(m.colors || {}) }
+                };
+            }
+
+            async function loadManifestSkins() {
+                try {
+                    const res = await fetch("_skins/index.json", { cache: "no-store" });
+                    if (!res.ok) return;
+                    const data = await res.json();
+                    const ids = Array.isArray(data) ? data : Array.isArray(data?.skins) ? data.skins : [];
+                    for (const idRaw of ids) {
+                        const id = String(idRaw || "").trim();
+                        if (!id) continue;
+                        try {
+                            const manifestRes = await fetch(`_skins/${id}/manifest.json`, { cache: "no-store" });
+                            if (!manifestRes.ok) continue;
+                            const manifest = await manifestRes.json();
+                            const skin = normalizeAssetSkin(id, manifest);
+                            skinLibrary[skin.id] = skin;
+                        } catch (_) {
+                            console.warn(`Could not load skin manifest for '${id}'.`);
+                        }
+                    }
+                } catch (_) {
+                    // When running as file://, fetch may fail. Keep built-in skins.
+                }
+            }
+
+            function switchSkin(id) {
+                const next = skinLibrary[id];
+                if (!next || id === skinState.targetId) return;
+                if (next.mode === "asset") loadAssetSkin(next);
+                skinState.targetId = id;
+                skinState.t = 0;
+                skinState.fromMorph = copyNumObject(skinState.renderedMorph);
+                skinState.toMorph = copyNumObject(next.morph);
+                skinState.fromColors = copyColorObject(skinState.renderedColors);
+                skinState.toColors = copyColorObject(next.colors);
+                refreshPartsInspector();
+            }
+
+            function updateSkin(dt, activity) {
+                if (skinState.t < 1) {
+                    skinState.t = Math.min(1, skinState.t + dt / skinState.dur);
+                    const s = easeOutCubic(skinState.t);
+                    skinState.renderedMorph = lerpNumObject(skinState.fromMorph, skinState.toMorph, s);
+                    skinState.renderedColors = lerpColorObject(skinState.fromColors, skinState.toColors, s);
+                    if (skinState.t >= 1) skinState.activeId = skinState.targetId;
+                }
+
+                skinState.motion = lerp(skinState.motion, activity, 1 - Math.pow(0.001, dt * 6));
+
+                skinState.blinkTimer += dt;
+                if (skinState.blinkTimer >= skinState.blinkNext) {
+                    const t = skinState.blinkTimer - skinState.blinkNext;
+                    const p = clamp(t / skinState.blinkDur, 0, 1);
+                    skinState.blink = (p < 0.5) ? p * 2 : (1 - p) * 2;
+                    if (p >= 1) {
+                        skinState.blinkTimer = 0;
+                        skinState.blink = 0;
+                        skinState.blinkNext = 1.6 + Math.random() * 2.6;
+                    }
+                } else {
+                    skinState.blink = 0;
+                }
+            }
 
             function activeMouseHeld() {
                 return !!(mTargets?.left?.held || mTargets?.right?.held || mTargets?.middle?.held);
@@ -655,7 +1386,7 @@
                 lastClientX = e.clientX; lastClientY = e.clientY;
 
                 const s = 0.85;
-                const next = clampMouseToPad(mouseCenter.x + dx * s, mouseCenter.y + dy * s, mousePad, mouseSize);
+                const next = clampMouseToPad(mouseCenter.x - dx * s, mouseCenter.y - dy * s, mousePad, mouseSize);
                 const moved = (Math.abs(next.x - mouseCenter.x) + Math.abs(next.y - mouseCenter.y)) > 0.01;
 
                 mouseCenter = next;
@@ -677,7 +1408,7 @@
 
             // ===== DRAW HELPERS
             function flipRect180InBox(rect, box) {
-                // 180° flip around the box center:
+                // 180Â° flip around the box center:
                 // x' = box.x + box.w - (x - box.x) - w
                 // y' = box.y + box.h - (y - box.y) - h
                 return {
@@ -699,30 +1430,178 @@
                 ctx.fillRect(0, deskTopY, w, h - deskTopY);
             }
 
+            function drawImageFit(img, x, y, w, h, alpha = 1) {
+                if (!img) return;
+                ctx.save();
+                ctx.globalAlpha = alpha;
+                ctx.drawImage(img, x, y, w, h);
+                ctx.restore();
+            }
+
+            function drawCustomAssetCharacter(LAYOUT, skinDef) {
+                const state = getInspectorState(skinDef);
+                const img = state.images;
+                const visible = state.visibleSet;
+                const tweaks = state.partTweaks || {};
+                const head = LAYOUT.head;
+                const pulse = Math.sin(sceneTime * 4.8) * 0.5 + 0.5;
+                const mouthDrive = clamp(skinState.motion * 0.9 + pulse * 0.25, 0, 1.4);
+                const eyeOpen = clamp(1 - skinState.blink - skinState.motion * 0.24, 0.10, 1);
+                const drawPart = (key, x, y, w, h) => {
+                    if (!visible.has(key)) return;
+                    const t = tweaks[key] || { x: 0, y: 0, w: 0, h: 0 };
+                    drawImageFit(
+                        img[key],
+                        x + t.x,
+                        y + t.y,
+                        Math.max(2, w + t.w),
+                        Math.max(2, h + t.h)
+                    );
+                };
+
+                const bodyW = head.w * 1.95;
+                const bodyH = bodyW * 1.08;
+                const bodyX = head.x + head.w * 0.5 - bodyW * 0.5;
+                const bodyY = LAYOUT.deskTopY - bodyH * 0.52;
+
+                const tailW = head.w * 0.85;
+                const tailH = tailW * 0.9;
+                const tailX = head.x + head.w * 0.78;
+                const tailY = LAYOUT.deskTopY - tailH * 0.08;
+
+                drawPart("tailFill", tailX, tailY, tailW, tailH);
+                drawPart("tailLine", tailX, tailY, tailW, tailH);
+                drawPart("bodyFill", bodyX, bodyY, bodyW, bodyH);
+                drawPart("bodyLine", bodyX, bodyY, bodyW, bodyH);
+
+                ctx.save();
+                ctx.translate(head.x + head.w * 0.5, head.y + head.h * 0.5 + headBob.y);
+                ctx.scale(1 + headBob.y * 0.001, 1 - headBob.y * 0.002);
+                ctx.translate(-head.w * 0.5, -head.h * 0.5);
+
+                const earW = head.w * 0.46;
+                const earH = head.h * 0.58;
+                const lEarX = head.w * -0.18;
+                const rEarX = head.w * 0.70;
+                const earY = head.h * -0.20;
+
+                drawPart("leftEarFill", lEarX, earY, earW, earH);
+                drawPart("leftEarLine", lEarX, earY, earW, earH);
+                drawPart("leftEarInner", lEarX, earY, earW, earH);
+                drawPart("rightEarFill", rEarX, earY, earW, earH);
+                drawPart("rightEarLine", rEarX, earY, earW, earH);
+
+                drawPart("headFill", 0, 0, head.w, head.h);
+                drawPart("headLine", 0, 0, head.w, head.h);
+
+                const eyeW = head.w * 0.20;
+                const eyeH = head.h * 0.28 * eyeOpen;
+                const lEyeX = head.w * 0.20;
+                const rEyeX = head.w * 0.60;
+                const eyeY = head.h * 0.36 + (1 - eyeOpen) * head.h * 0.10;
+                drawPart("leftEye", lEyeX, eyeY, eyeW, eyeH);
+                drawPart("rightEye", rEyeX, eyeY, eyeW, eyeH);
+
+                const browW = head.w * 0.26;
+                const browH = head.h * 0.18;
+                const browY = eyeY - browH * (0.78 + skinState.motion * 0.25);
+                drawPart("leftBrow", head.w * 0.15, browY, browW, browH);
+                drawPart("rightBrow", head.w * 0.59, browY, browW, browH);
+
+                const mouthW = head.w * (0.26 + skinState.motion * 0.03);
+                const mouthH = head.h * (0.12 + mouthDrive * 0.03);
+                drawPart("mouth", head.w * 0.50 - mouthW * 0.5, head.h * 0.70, mouthW, mouthH);
+                ctx.restore();
+            }
+
             function drawHead(LAYOUT) {
+                const active = currentSkinDef();
+                if (active.mode === "asset") {
+                    const state = getAssetSkinState(active);
+                    if (!state.requested) loadAssetSkin(active);
+                    if (state.loaded) {
+                        drawCustomAssetCharacter(LAYOUT, active);
+                        return;
+                    }
+                }
+
+                if (active.mode === "asset") {
+                    // asset skin still loading/failing -> fallback to procedural look this frame
+                }
+
                 const head = LAYOUT.head;
                 const squash = 1 - headBob.y * 0.002;
                 const stretch = 1 + headBob.y * 0.001;
+                const morph = skinState.renderedMorph;
+                const col = skinState.renderedColors;
+                const pulse = Math.sin(sceneTime * 4.8) * 0.5 + 0.5;
+                const mouthDrive = clamp(skinState.motion * 0.9 + pulse * 0.25, 0, 1.4);
+                const eyeOpen = clamp(1 - skinState.blink - skinState.motion * morph.squint, 0.12, 1);
 
                 ctx.save();
                 ctx.translate(head.x + head.w / 2, head.y + head.h / 2 + headBob.y);
                 ctx.scale(stretch, squash);
                 ctx.translate(-head.w / 2, -head.h / 2);
 
-                ctx.fillStyle = "rgba(255,255,255,0.10)";
-                roundRect(0, 0, head.w, head.h, head.w * 0.35);
+                const earW = head.w * morph.earWidth;
+                const earH = head.h * morph.earHeight;
+                const leftEarX = head.w * 0.16 - earW * 0.5;
+                const rightEarX = head.w * 0.84 - earW * 0.5;
+                const earY = -earH * 0.52;
+
+                ctx.fillStyle = rgba(col.skin);
+                roundRect(leftEarX, earY, earW, earH, earW * 0.36);
+                ctx.fill();
+                roundRect(rightEarX, earY, earW, earH, earW * 0.36);
                 ctx.fill();
 
-                ctx.fillStyle = "rgba(255,255,255,0.45)";
-                ctx.beginPath();
-                ctx.ellipse(head.w * 0.32, head.h * 0.52, head.w * 0.07, head.h * 0.10, 0, 0, Math.PI * 2);
-                ctx.ellipse(head.w * 0.68, head.h * 0.52, head.w * 0.07, head.h * 0.10, 0, 0, Math.PI * 2);
+                ctx.fillStyle = rgba(col.skin);
+                roundRect(0, 0, head.w, head.h, head.w * morph.round);
                 ctx.fill();
 
-                ctx.fillStyle = "rgba(255,120,160,0.25)";
+                if (morph.hornSize > 0.001) {
+                    const hornR = head.w * morph.hornSize;
+                    ctx.fillStyle = rgba(col.horn);
+                    ctx.beginPath();
+                    ctx.ellipse(head.w * 0.40, -hornR * 0.35, hornR * 0.75, hornR, -0.25, 0, Math.PI * 2);
+                    ctx.ellipse(head.w * 0.60, -hornR * 0.35, hornR * 0.75, hornR, 0.25, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                const eyeY = head.h * 0.52;
+                const eyeRX = head.w * morph.eyeWidth;
+                const eyeRY = head.h * morph.eyeHeight * eyeOpen;
+                const eyeLX = head.w * (0.50 - morph.eyeGap);
+                const eyeRXPos = head.w * (0.50 + morph.eyeGap);
+
+                ctx.fillStyle = rgba(col.eye);
                 ctx.beginPath();
-                ctx.ellipse(head.w * 0.22, head.h * 0.65, head.w * 0.08, head.h * 0.04, 0, 0, Math.PI * 2);
-                ctx.ellipse(head.w * 0.78, head.h * 0.65, head.w * 0.08, head.h * 0.04, 0, 0, Math.PI * 2);
+                ctx.ellipse(eyeLX, eyeY, eyeRX, eyeRY, 0, 0, Math.PI * 2);
+                ctx.ellipse(eyeRXPos, eyeY, eyeRX, eyeRY, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = rgba(col.brow);
+                ctx.lineWidth = Math.max(2, head.w * 0.02);
+                ctx.lineCap = "round";
+                ctx.beginPath();
+                ctx.moveTo(eyeLX - eyeRX * 0.9, eyeY - eyeRY * 2.0);
+                ctx.lineTo(eyeLX + eyeRX * 0.9, eyeY - eyeRY * (2.0 + morph.browTilt));
+                ctx.moveTo(eyeRXPos - eyeRX * 0.9, eyeY - eyeRY * (2.0 + morph.browTilt));
+                ctx.lineTo(eyeRXPos + eyeRX * 0.9, eyeY - eyeRY * 2.0);
+                ctx.stroke();
+
+                ctx.fillStyle = rgba(col.blush);
+                ctx.beginPath();
+                ctx.ellipse(head.w * 0.22, head.h * 0.66, head.w * morph.blushWidth, head.h * morph.blushHeight, 0, 0, Math.PI * 2);
+                ctx.ellipse(head.w * 0.78, head.h * 0.66, head.w * morph.blushWidth, head.h * morph.blushHeight, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                const mouthW = head.w * morph.mouthWidth * (1 + skinState.motion * 0.18);
+                const mouthH = head.h * morph.mouthHeight * (0.50 + mouthDrive);
+                const mouthY = head.h * morph.mouthY;
+
+                ctx.fillStyle = rgba(col.mouth);
+                roundRect(head.w * 0.5 - mouthW * 0.5, mouthY - mouthH * 0.5, mouthW, mouthH, mouthH * 0.75);
                 ctx.fill();
 
                 ctx.restore();
@@ -742,7 +1621,7 @@
                 ctx.textBaseline = "middle";
 
                 keys.forEach(k => {
-                    // ✅ flip key position on BOTH axes
+                    // âœ… flip key position on BOTH axes
                     const flipped = flipRect180InBox({ x: k.x, y: k.y, w: k.w, h: k.h }, kb);
 
                     const press = clamp(k.press, 0, 1);
@@ -753,7 +1632,7 @@
                     roundRect(flipped.x, flipped.y + dy, k.w, k.h, k.h * 0.25);
                     ctx.fill();
 
-                    // ✅ label upside-down too (rotate text 180° around its center)
+                    // âœ… label upside-down too (rotate text 180Â° around its center)
                     const cx = flipped.x + k.w / 2;
                     const cy = flipped.y + dy + k.h / 2;
 
@@ -783,7 +1662,7 @@
 
                 ctx.save();
                 ctx.translate(cx, cy);
-                ctx.scale(-1, 1);
+                ctx.rotate(Math.PI);
                 ctx.translate(-cx, -cy);
 
                 ctx.fillStyle = "rgba(255,255,255,0.06)";
@@ -838,6 +1717,7 @@
 
             // ===== UPDATE / DRAW LOOP
             function update(dt) {
+                sceneTime += dt;
                 mouseMoveTimer = Math.max(0, mouseMoveTimer - dt);
 
                 keys.forEach(k => {
@@ -916,6 +1796,47 @@
                 headBob.v *= Math.pow(0.01, dt);
                 headBob.y += headBob.v * dt;
                 headBob.y = clamp(headBob.y, -18, 18);
+
+                const heldKeyCount = Array.from(pressed.values()).filter(t => t.type === "key" && t.held).length;
+                const mouseHeld = activeMouseHeld() ? 1 : 0;
+                const activity = clamp(((armL.impact + armR.impact) * 0.55) + heldKeyCount * 0.09 + mouseHeld * 0.20, 0, 1.3);
+                updateSkin(dt, activity);
+
+                if (!debugOn) return;
+                debugTicker += dt;
+                if (debugTicker < 0.12) return;
+                debugTicker = 0;
+
+                const active = currentSkinDef();
+                const keyHeld = Array.from(pressed.values()).filter((t) => t.type === "key" && t.held).length;
+                const mouseButtons = [
+                    mTargets?.left?.held ? "L" : "-",
+                    mTargets?.middle?.held ? "M" : "-",
+                    mTargets?.right?.held ? "R" : "-"
+                ].join("");
+                const fmtArm = (name, arm) => {
+                    if (!arm) return `${name}: n/a`;
+                    const tgt = arm.assignedId || "-";
+                    return `${name}: ${arm.phase} tgt=${tgt} impact=${arm.impact.toFixed(2)}`;
+                };
+
+                let assetLine = "asset: procedural";
+                if (active.mode === "asset") {
+                    const st = getInspectorState(active);
+                    const loadedCount = Object.keys(st.images).length;
+                    const expectedCount = st.visibleSet ? st.visibleSet.size : 0;
+                    assetLine = `asset: ${active.id} loaded=${loadedCount}/${expectedCount} failed=${st.failed.length}`;
+                }
+
+                debugText.textContent =
+                    `fps: ${fpsSmoothed.toFixed(1)}\n` +
+                    `skin: ${skinState.activeId} -> ${skinState.targetId} mode=${active.mode || "procedural"}\n` +
+                    `${assetLine}\n` +
+                    `mouse: x=${mouseCenter.x.toFixed(1)} y=${mouseCenter.y.toFixed(1)} btn=${mouseButtons} moveTimer=${mouseMoveTimer.toFixed(2)}\n` +
+                    `inputs: keysHeld=${keyHeld} pressedTargets=${Array.from(pressed.values()).filter(t => t.held).length}\n` +
+                    `${fmtArm("armL", armL)}\n` +
+                    `${fmtArm("armR", armR)}\n` +
+                    `typing: ${isTyping() ? "yes" : "no"} activeEl=${document.activeElement?.id || document.activeElement?.tagName || "?"}`;
             }
 
             function draw() {
@@ -931,22 +1852,50 @@
                 drawKeyboard(LAYOUT);
                 drawMouse(LAYOUT);
 
-                drawArm(armL);
-                drawArm(armR);
+                const active = currentSkinDef();
+                const hideDefaultArms = !!(active.mode === "asset" && active.hideDefaultArms);
+                if (!hideDefaultArms) {
+                    drawArm(armL);
+                    drawArm(armR);
+                }
             }
 
             function loop(now) {
                 const dt = Math.min(0.033, (now - lastTime) / 1000);
                 lastTime = now;
+                const fps = 1 / Math.max(dt, 0.0001);
+                fpsSmoothed = lerp(fpsSmoothed, fps, 0.12);
                 update(dt);
                 draw();
                 requestAnimationFrame(loop);
             }
 
+            function populateCharacterSelect() {
+                charSelect.innerHTML = "";
+                Object.entries(skinLibrary).forEach(([id, def]) => {
+                    const opt = document.createElement("option");
+                    opt.value = id;
+                    opt.textContent = def.label;
+                    charSelect.appendChild(opt);
+                });
+            }
+
             // ===== INIT
-            function init() {
+            async function init() {
                 resize();
                 const LAYOUT = layout();
+                setPanelOpen(panelOpen);
+                setActiveTab("input");
+                debugText.style.display = debugOn ? "block" : "none";
+
+                await loadManifestSkins();
+                populateCharacterSelect();
+                charSelect.value = skinState.activeId;
+                charSelect.addEventListener("change", () => {
+                    switchSkin(charSelect.value);
+                    refreshPartsInspector();
+                });
+                refreshPartsInspector();
 
                 keys = buildKeyRects(LAYOUT.keyboard);
 
