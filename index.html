@@ -1753,7 +1753,7 @@
                     id,
                     label: m.label || id,
                     mode: "asset",
-                    root: `_skins/${id}`,
+                    root: `skin/${id}`,
                     parts,
                     visibleParts: Array.isArray(m.visibleParts) ? canonicalizePartList(m.visibleParts) : DEFAULT_VISIBLE_PARTS.slice(),
                     drawOrder: normalizeLayerOrder(keys, Array.isArray(m.drawOrder) ? m.drawOrder : keys),
@@ -1766,7 +1766,7 @@
 
             async function loadManifestSkins() {
                 try {
-                    const res = await fetch("_skins/index.json", { cache: "no-store" });
+                    const res = await fetch("skin/index.json", { cache: "no-store" });
                     if (!res.ok) return;
                     const data = await res.json();
                     const ids = Array.isArray(data) ? data : Array.isArray(data?.skins) ? data.skins : [];
@@ -1774,7 +1774,7 @@
                         const id = String(idRaw || "").trim();
                         if (!id) continue;
                         try {
-                            const manifestRes = await fetch(`_skins/${id}/manifest.json`, { cache: "no-store" });
+                            const manifestRes = await fetch(`skin/${id}/manifest.json`, { cache: "no-store" });
                             if (!manifestRes.ok) continue;
                             const manifest = await manifestRes.json();
                             const skin = normalizeAssetSkin(id, manifest);
