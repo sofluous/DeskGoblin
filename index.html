@@ -57,6 +57,11 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            --sidebar-size: 52px;
+            --panel-slot: min(420px, 36vw);
+            background:
+                radial-gradient(1200px 600px at 50% 20%, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.0)),
+                radial-gradient(900px 500px at 10% 80%, rgba(110, 231, 255, 0.05), rgba(255, 255, 255, 0.0));
         }
 
         #c {
@@ -84,72 +89,115 @@
             border-radius: 999px;
         }
 
-        .panel-toggle {
-            position: absolute;
-            right: clamp(10px, 2vw, 20px);
-            top: clamp(10px, 2vh, 20px);
-            z-index: 24;
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            background: rgba(10, 14, 21, 0.9);
+        .canvas-host {
+            min-width: 0;
+            min-height: 0;
+        }
+
+        .sidebar-nav {
+            width: var(--sidebar-size);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(8, 12, 20, 0.75);
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 10px 8px;
+            box-sizing: border-box;
+        }
+
+        .nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-group.meta {
+            margin-top: auto;
+        }
+
+        .nav-btn {
+            width: 34px;
+            height: 34px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
             color: var(--text);
-            border-radius: 10px;
-            padding: 6px 10px;
-            font-size: 12px;
+            font-size: 16px;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
         }
 
+        .nav-btn.active {
+            border-color: rgba(110, 231, 255, 0.55);
+            color: #dff9ff;
+            background: rgba(110, 231, 255, 0.12);
+        }
+
         .side-panel {
-            position: absolute;
-            right: clamp(10px, 2vw, 20px);
-            top: clamp(48px, 8vh, 64px);
-            bottom: clamp(10px, 2vh, 16px);
-            width: min(390px, 44vw);
             min-width: 290px;
-            max-width: 62vw;
-            z-index: 23;
+            width: var(--panel-slot);
+            max-width: 52vw;
             background: rgba(8, 12, 20, 0.88);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            border-radius: 12px;
-            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+            border-left: 1px solid rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(6px);
-            display: grid;
-            grid-template-rows: auto auto 1fr;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
-            resize: horizontal;
+            transition: transform 180ms ease, opacity 180ms ease;
+            transform: translateX(0);
+            opacity: 1;
         }
 
         .side-panel.collapsed {
-            display: none;
+            pointer-events: none;
         }
 
         .panel-head {
-            padding: 10px 12px 8px 12px;
+            padding: 10px 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 12px;
             color: var(--muted);
         }
 
-        .tabs {
-            display: flex;
-            gap: 6px;
-            padding: 8px 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        .panel-title {
+            flex: 1;
+            text-align: center;
         }
 
-        .tab-btn {
+        .panel-head.collapse-left .panel-title {
+            order: 2;
+        }
+
+        .panel-head.collapse-left #panelCollapseBtn {
+            order: 1;
+        }
+
+        .panel-head.collapse-right .panel-title {
+            order: 1;
+        }
+
+        .panel-head.collapse-right #panelCollapseBtn {
+            order: 2;
+            margin-left: auto;
+        }
+
+        #panelCollapseBtn {
             border: 1px solid rgba(255, 255, 255, 0.18);
             background: rgba(255, 255, 255, 0.06);
             color: var(--text);
             border-radius: 8px;
-            padding: 4px 8px;
-            font-size: 12px;
+            width: 28px;
+            height: 28px;
+            font-size: 14px;
             cursor: pointer;
-        }
-
-        .tab-btn.active {
-            border-color: rgba(110, 231, 255, 0.55);
-            color: #dff9ff;
-            background: rgba(110, 231, 255, 0.12);
         }
 
         .tab-body {
@@ -295,35 +343,100 @@
             /* will be overridden by JS via visualViewport */
         }
 
-        .stage.split-mobile {
-            display: grid;
-            grid-template-rows: 1fr min(42vh, 360px);
+        .canvas-host {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
         }
 
-        .stage.split-mobile #c {
-            grid-row: 1;
+        .sidebar-nav {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            z-index: 40;
         }
 
-        .stage.split-mobile.panel-collapsed {
-            grid-template-rows: 1fr;
+        .stage.side-right .sidebar-nav {
+            right: 0;
         }
 
-        .stage.split-mobile .panel-toggle {
-            right: 10px;
-            top: 10px;
+        .stage.side-left .sidebar-nav {
+            left: 0;
         }
 
-        .stage.split-mobile .side-panel {
-            position: relative;
-            right: auto;
-            top: auto;
-            bottom: auto;
-            width: 100%;
+        .side-panel {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            z-index: 30;
+        }
+
+        .stage.side-right .side-panel {
+            right: var(--sidebar-size);
+        }
+
+        .stage.side-left .side-panel {
+            left: var(--sidebar-size);
+        }
+
+        .stage.side-right.panel-collapsed .side-panel {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        .stage.side-left.panel-collapsed .side-panel {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        .stage.nav-top .canvas-host {
+            inset: 0 0 var(--sidebar-size) 0;
+        }
+
+        .stage.nav-top .sidebar-nav {
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: auto;
+            height: var(--sidebar-size);
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            flex-direction: row;
+            justify-content: flex-start;
+            padding: 8px 10px;
+            overflow-x: auto;
+        }
+
+        .stage.nav-top .nav-group {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .stage.nav-top .nav-group.meta {
+            margin-top: 0;
+            margin-left: auto;
+        }
+
+        .stage.nav-top .side-panel {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: var(--sidebar-size);
             min-width: 0;
+            width: auto;
             max-width: none;
+            min-height: min(42vh, 360px);
+            border-left: none;
+            border-top: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             resize: none;
-            border-radius: 12px 12px 0 0;
-            grid-row: 2;
+        }
+
+        .stage.nav-top.panel-collapsed .side-panel {
+            transform: translateY(100%);
+            opacity: 0;
         }
     </style>
 </head>
@@ -336,15 +449,23 @@
                 slides on a mousepad.</div>
         </header>
 
-        <div class="stage">
-            <canvas id="c"></canvas>
-            <button id="panelToggle" class="panel-toggle" type="button">Hide Panel</button>
+        <div class="stage side-right">
+            <div class="canvas-host">
+                <canvas id="c"></canvas>
+            </div>
+            <nav class="sidebar-nav" aria-label="Panel tabs">
+                <div class="nav-group main">
+                    <button type="button" class="nav-btn active" data-tab="input" title="Input" aria-label="Input">📝</button>
+                </div>
+                <div class="nav-group meta">
+                    <button type="button" class="nav-btn" data-tab="debug" title="Debug" aria-label="Debug">🧪</button>
+                    <button type="button" class="nav-btn" data-tab="options" title="Options" aria-label="Options">⚙</button>
+                </div>
+            </nav>
             <aside id="sidePanel" class="side-panel">
-                <div class="panel-head">Desk Goblin Panel</div>
-                <div class="tabs">
-                    <button type="button" class="tab-btn active" data-tab="input">Input</button>
-                    <button type="button" class="tab-btn" data-tab="debug">Debug</button>
-                    <button type="button" class="tab-btn" data-tab="options">Options</button>
+                <div id="panelHead" class="panel-head">
+                    <span id="panelTitle" class="panel-title">Input</span>
+                    <button id="panelCollapseBtn" type="button" title="Collapse panel" aria-label="Collapse panel">‹</button>
                 </div>
                 <div class="tab-body">
                     <section class="tab-pane active" data-pane="input">
@@ -391,6 +512,13 @@
                             <label for="charSelect">Character:</label>
                             <select id="charSelect"></select>
                         </div>
+                        <div class="panel-row">
+                            <label for="panelSide">Panel Side:</label>
+                            <select id="panelSide">
+                                <option value="right">Right</option>
+                                <option value="left">Left</option>
+                            </select>
+                        </div>
                     </section>
                 </div>
             </aside>
@@ -409,11 +537,14 @@
             const ctx = canvas.getContext("2d");
             const thought = document.getElementById("thought");
             const charSelect = document.getElementById("charSelect");
-            const panelToggle = document.getElementById("panelToggle");
+            const panelSideEl = document.getElementById("panelSide");
+            const panelHead = document.getElementById("panelHead");
+            const panelCollapseBtn = document.getElementById("panelCollapseBtn");
+            const panelTitle = document.getElementById("panelTitle");
             const sidePanel = document.getElementById("sidePanel");
             const debugEnabled = document.getElementById("debugEnabled");
             const debugText = document.getElementById("debugText");
-            const tabButtons = Array.from(document.querySelectorAll(".tab-btn"));
+            const tabButtons = Array.from(document.querySelectorAll(".nav-btn"));
             const tabPanes = Array.from(document.querySelectorAll(".tab-pane"));
             const partInspector = document.getElementById("partInspector");
             const partKeyEl = document.getElementById("partKey");
@@ -458,38 +589,100 @@
             canvas.addEventListener("pointerdown", () => canvas.focus());
 
             function isTyping() { return document.activeElement === thought; }
+            function updateCollapseAffordance() {
+                const collapseToward = panelSide === "left" ? "left" : "right";
+                const isCollapsed = !panelOpen;
+                panelHead.classList.toggle("collapse-left", panelSide === "right");
+                panelHead.classList.toggle("collapse-right", panelSide === "left");
+
+                if (collapseToward === "left") {
+                    panelCollapseBtn.textContent = isCollapsed ? "\u2192" : "\u2190";
+                } else {
+                    panelCollapseBtn.textContent = isCollapsed ? "\u2190" : "\u2192";
+                }
+                panelCollapseBtn.title = isCollapsed ? "Expand panel" : `Collapse panel ${collapseToward}`;
+                panelCollapseBtn.setAttribute("aria-label", panelCollapseBtn.title);
+            }
+
             function setPanelOpen(open) {
                 sidePanel.classList.toggle("collapsed", !open);
                 stageEl.classList.toggle("panel-collapsed", !open);
-                panelToggle.textContent = open ? "Hide Panel" : "Show Panel";
+                updateCollapseAffordance();
+            }
+
+            function setPanelSide(side) {
+                const s = (side === "left") ? "left" : "right";
+                stageEl.classList.toggle("side-left", s === "left");
+                stageEl.classList.toggle("side-right", s === "right");
+                panelSideEl.value = s;
+                updateCollapseAffordance();
             }
 
             function setActiveTab(tab) {
-                tabButtons.forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === tab));
-                tabPanes.forEach((pane) => pane.classList.toggle("active", pane.dataset.pane === tab));
+                tabButtons.forEach((btn) => {
+                    const active = !!tab && btn.dataset.tab === tab;
+                    btn.classList.toggle("active", active);
+                    btn.setAttribute("aria-pressed", active ? "true" : "false");
+                });
+                tabPanes.forEach((pane) => pane.classList.toggle("active", !!tab && pane.dataset.pane === tab));
+                const labelMap = { input: "Input", debug: "Debug", options: "Options" };
+                panelTitle.textContent = labelMap[tab] || "Panel";
+            }
+
+            function closePanelWithNoTab() {
+                panelOpen = false;
+                currentTab = null;
+                setPanelOpen(false);
+                setActiveTab(null);
+            }
+
+            function openPanelWithTab(tab) {
+                const next = tab || lastTab || "input";
+                currentTab = next;
+                lastTab = next;
+                panelOpen = true;
+                setPanelOpen(true);
+                setActiveTab(next);
             }
 
             function updatePanelLayoutMode() {
                 const vv = window.visualViewport;
                 const w = vv ? vv.width : window.innerWidth;
                 const h = vv ? vv.height : window.innerHeight;
-                const splitMobile = w <= 900 && h > w;
-                stageEl.classList.toggle("split-mobile", splitMobile);
+                const navTop = w <= 900 && h > w;
+                stageEl.classList.toggle("nav-top", navTop);
             }
 
             let panelOpen = true;
             let debugOn = true;
             let selectedPartKey = "";
-            panelToggle.addEventListener("click", () => {
-                panelOpen = !panelOpen;
-                setPanelOpen(panelOpen);
+            let panelSide = "right";
+            let currentTab = "input";
+            let lastTab = "input";
+            panelCollapseBtn.addEventListener("click", () => {
+                if (panelOpen) {
+                    closePanelWithNoTab();
+                } else {
+                    openPanelWithTab(lastTab);
+                }
+            });
+            panelSideEl.addEventListener("change", () => {
+                panelSide = panelSideEl.value === "left" ? "left" : "right";
+                setPanelSide(panelSide);
             });
             debugEnabled.addEventListener("change", () => {
                 debugOn = !!debugEnabled.checked;
                 debugText.style.display = debugOn ? "block" : "none";
             });
             tabButtons.forEach((btn) => {
-                btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
+                btn.addEventListener("click", () => {
+                    const tab = btn.dataset.tab;
+                    if (panelOpen && currentTab === tab) {
+                        closePanelWithNoTab();
+                        return;
+                    }
+                    openPanelWithTab(tab);
+                });
             });
             partKeyEl.addEventListener("change", () => {
                 selectedPartKey = partKeyEl.value;
@@ -1884,8 +2077,8 @@
             async function init() {
                 resize();
                 const LAYOUT = layout();
-                setPanelOpen(panelOpen);
-                setActiveTab("input");
+                setPanelSide(panelSide);
+                openPanelWithTab("input");
                 debugText.style.display = debugOn ? "block" : "none";
 
                 await loadManifestSkins();
