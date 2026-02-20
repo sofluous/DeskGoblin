@@ -27,27 +27,27 @@
     "bodyFill",
     "bodyLine",
     "tailFill",
+    "charRightEarFill",
+    "charRightEarLine",
     "tailLine",
     "headFill",
     "headLine",
     "charLeftEarFill",
     "charLeftEarLine",
     "charLeftEarInner",
-    "charRightEarFill",
-    "charRightEarLine",
-    "charLeftArmDownFill",
-    "charLeftArmDownLine",
-    "charLeftArmUpFill",
-    "charLeftArmUpLine",
-    "charRightArmDownFill",
-    "charRightArmDownLine",
-    "charRightArmUpFill",
-    "charRightArmUpLine",
     "charLeftEye",
     "charRightEye",
     "charLeftBrow",
     "charRightBrow",
-    "mouth"
+    "mouth",
+    "charRightArmDownFill",
+    "charRightArmDownLine",
+    "charRightArmUpLine",
+    "charRightArmUpFill",
+    "charLeftArmUpFill",
+    "charLeftArmUpLine",
+    "charLeftArmDownLine",
+    "charLeftArmDownFill"
   ],
   "parts": {
     "bodyFill": "BodyFillParts/Body fill.PNG",
@@ -117,6 +117,72 @@
       "y": -111,
       "w": 0,
       "h": 0
+    },
+    "headFill": {
+      "x": 0,
+      "y": -37,
+      "w": 32,
+      "h": 32
+    },
+    "headLine": {
+      "x": 0,
+      "y": -36,
+      "w": 34,
+      "h": 34
+    },
+    "charRightEarFill": {
+      "x": 0,
+      "y": -61,
+      "w": 58,
+      "h": 58
+    },
+    "charRightEarLine": {
+      "x": 0,
+      "y": -62,
+      "w": 59,
+      "h": 59
+    },
+    "charLeftEarFill": {
+      "x": 0,
+      "y": -47,
+      "w": 63,
+      "h": 63
+    },
+    "charLeftEarLine": {
+      "x": 0,
+      "y": -56,
+      "w": 60,
+      "h": 60
+    },
+    "charLeftEye": {
+      "x": -14,
+      "y": 6,
+      "w": 67,
+      "h": 67
+    },
+    "charRightEye": {
+      "x": -17,
+      "y": 0,
+      "w": 69,
+      "h": 69
+    },
+    "charLeftBrow": {
+      "x": -14,
+      "y": -19,
+      "w": -52,
+      "h": -52
+    },
+    "charRightBrow": {
+      "x": -14,
+      "y": -20,
+      "w": -49,
+      "h": -49
+    },
+    "mouth": {
+      "x": -16,
+      "y": 0,
+      "w": -17,
+      "h": -17
     }
   }
 }
