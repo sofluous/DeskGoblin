@@ -1,16 +1,54 @@
-﻿{
-  "id": "fox",
-  "label": "Fox",
+{
   "visibleParts": [
     "headFill",
     "headLine",
-    "leftEye",
-    "rightEye",
-    "leftBrow",
-    "rightBrow",
+    "charLeftEye",
+    "charRightEye",
+    "charLeftBrow",
+    "charRightBrow",
+    "mouth",
+    "charLeftEarFill",
+    "charLeftEarLine",
+    "charLeftEarInner",
+    "charRightEarFill",
+    "charRightEarLine",
+    "charLeftArmDownFill",
+    "charLeftArmDownLine",
+    "charLeftArmUpFill",
+    "charLeftArmUpLine",
+    "charRightArmDownFill",
+    "charRightArmDownLine",
+    "charRightArmUpFill",
+    "charRightArmUpLine",
+    "tailLine",
+    "tailFill"
+  ],
+  "drawOrder": [
+    "bodyFill",
+    "bodyLine",
+    "tailFill",
+    "tailLine",
+    "headFill",
+    "headLine",
+    "charLeftEarFill",
+    "charLeftEarLine",
+    "charLeftEarInner",
+    "charRightEarFill",
+    "charRightEarLine",
+    "charLeftArmDownFill",
+    "charLeftArmDownLine",
+    "charLeftArmUpFill",
+    "charLeftArmUpLine",
+    "charRightArmDownFill",
+    "charRightArmDownLine",
+    "charRightArmUpFill",
+    "charRightArmUpLine",
+    "charLeftEye",
+    "charRightEye",
+    "charLeftBrow",
+    "charRightBrow",
     "mouth"
   ],
-  "hideDefaultArms": false,
   "parts": {
     "bodyFill": "BodyFillParts/Body fill.PNG",
     "bodyLine": "BodyFillParts/Body.PNG",
@@ -18,15 +56,67 @@
     "tailLine": "TailParts/Tail.PNG",
     "headFill": "HeadBase/HeadFill.PNG",
     "headLine": "HeadBase/Head.PNG",
-    "leftEarFill": "L_EarParts/L_EarFill.PNG",
-    "leftEarLine": "L_EarParts/L_Ear.PNG",
-    "leftEarInner": "L_EarParts/InnerEarLine.PNG",
-    "rightEarFill": "R_EarParts/R_EarFill.PNG",
-    "rightEarLine": "R_EarParts/R_Ear.PNG",
-    "leftEye": "Face/L_Eye.PNG",
-    "rightEye": "Face/R_Eye.PNG",
-    "leftBrow": "Face/L_Eyebrow.PNG",
-    "rightBrow": "Face/R_Eyebrow.PNG",
+    "charLeftEarFill": "L_EarParts/L_EarFill.PNG",
+    "charLeftEarLine": "L_EarParts/L_Ear.PNG",
+    "charLeftEarInner": "L_EarParts/InnerEarLine.PNG",
+    "charRightEarFill": "R_EarParts/R_EarFill.PNG",
+    "charRightEarLine": "R_EarParts/R_Ear.PNG",
+    "charLeftArmDownFill": "L_ArmDownParts/L_ArmFill.PNG",
+    "charLeftArmDownLine": "L_ArmDownParts/L_ArmLower.PNG",
+    "charLeftArmUpFill": "L_ArmUpParts/L_ArmUpFill.PNG",
+    "charLeftArmUpLine": "L_ArmUpParts/L_ArmUp.PNG",
+    "charRightArmDownFill": "R_ArmDownParts/R_ArmFill.PNG",
+    "charRightArmDownLine": "R_ArmDownParts/R_Arm.PNG",
+    "charRightArmUpFill": "R_ArmDownParts/R_ArmFill.PNG",
+    "charRightArmUpLine": "R_ArmDownParts/R_Arm.PNG",
+    "charLeftEye": "Face/L_Eye.PNG",
+    "charRightEye": "Face/R_Eye.PNG",
+    "charLeftBrow": "Face/L_Eyebrow.PNG",
+    "charRightBrow": "Face/R_Eyebrow.PNG",
     "mouth": "Face/Mouth.PNG"
+  },
+  "partTweaks": {
+    "charLeftArmUpLine": {
+      "x": 0,
+      "y": -67,
+      "w": 0,
+      "h": 0
+    },
+    "charLeftArmUpFill": {
+      "x": 0,
+      "y": -220,
+      "w": 0,
+      "h": 0
+    },
+    "charLeftArmDownLine": {
+      "x": 0,
+      "y": -181,
+      "w": 0,
+      "h": 0
+    },
+    "charLeftArmDownFill": {
+      "x": 0,
+      "y": -183,
+      "w": 0,
+      "h": 0
+    },
+    "charRightArmDownFill": {
+      "x": 0,
+      "y": -176,
+      "w": 0,
+      "h": 0
+    },
+    "charRightArmDownLine": {
+      "x": 0,
+      "y": -183,
+      "w": 0,
+      "h": 0
+    },
+    "charRightArmUpFill": {
+      "x": 0,
+      "y": -111,
+      "w": 0,
+      "h": 0
+    }
   }
 }
