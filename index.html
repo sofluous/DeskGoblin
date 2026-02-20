@@ -23,6 +23,34 @@
             overflow: hidden;
         }
 
+        select,
+        input,
+        textarea,
+        button {
+            color-scheme: dark;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(110, 231, 255, 0.38) rgba(255, 255, 255, 0.06);
+        }
+
+        *::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        *::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background: rgba(110, 231, 255, 0.35);
+            border-radius: 8px;
+            border: 2px solid rgba(15, 17, 22, 0.9);
+        }
+
         .wrap {
             height: 100%;
         }
@@ -257,6 +285,7 @@
 
         .panel-row select {
             background: rgba(255, 255, 255, 0.09);
+            background-color: rgba(255, 255, 255, 0.09);
             color: var(--text);
             border: 1px solid rgba(255, 255, 255, 0.20);
             border-radius: 8px;
@@ -264,6 +293,16 @@
             font-size: 12px;
             outline: none;
             max-width: 230px;
+            appearance: none;
+            padding-right: 26px;
+            background-image:
+                linear-gradient(45deg, transparent 50%, rgba(214, 221, 232, 0.8) 50%),
+                linear-gradient(135deg, rgba(214, 221, 232, 0.8) 50%, transparent 50%);
+            background-position:
+                calc(100% - 15px) calc(50% - 2px),
+                calc(100% - 10px) calc(50% - 2px);
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
         }
 
         .panel-row button {
@@ -313,6 +352,16 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 8px;
+        }
+
+        .inspector-head button {
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
         }
 
         .inspector-head .spacer {
@@ -380,6 +429,43 @@
 
         .slider-row input[type="range"] {
             width: 100%;
+            appearance: none;
+            height: 18px;
+            background: transparent;
+        }
+
+        .slider-row input[type="range"]::-webkit-slider-runnable-track {
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .slider-row input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            margin-top: -5px;
+            border-radius: 50%;
+            background: #dff9ff;
+            border: 1px solid rgba(110, 231, 255, 0.8);
+            box-shadow: 0 0 0 2px rgba(110, 231, 255, 0.2);
+        }
+
+        .slider-row input[type="range"]::-moz-range-track {
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .slider-row input[type="range"]::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #dff9ff;
+            border: 1px solid rgba(110, 231, 255, 0.8);
+            box-shadow: 0 0 0 2px rgba(110, 231, 255, 0.2);
         }
 
         .slider-val {
@@ -399,6 +485,7 @@
             padding: 4px 6px;
             font-size: 12px;
             outline: none;
+            appearance: none;
         }
 
         .inspector-actions {
@@ -459,7 +546,7 @@
 
         .layer-table th,
         .layer-table td {
-            padding: 6px 8px;
+            padding: 8px 9px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             text-align: left;
             vertical-align: middle;
@@ -485,8 +572,44 @@
         }
 
         .layer-table .col-vis {
-            width: 56px;
+            width: 80px;
             text-align: center;
+        }
+
+        .map-select,
+        .file-input {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.08);
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 8px;
+            padding: 5px 7px;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .map-select {
+            appearance: none;
+            padding-right: 24px;
+            background-image:
+                linear-gradient(45deg, transparent 50%, rgba(214, 221, 232, 0.8) 50%),
+                linear-gradient(135deg, rgba(214, 221, 232, 0.8) 50%, transparent 50%);
+            background-position:
+                calc(100% - 14px) calc(50% - 2px),
+                calc(100% - 9px) calc(50% - 2px);
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+        }
+
+        .file-input {
+            font-family: Consolas, Menlo, monospace;
+        }
+
+        select option {
+            background: #111827;
+            color: #d6dde8;
         }
 
         .layer-idx {
@@ -534,6 +657,118 @@
         .layer-table tr.drop-target {
             outline: 1px dashed rgba(110, 231, 255, 0.75);
             outline-offset: -2px;
+        }
+
+        .hint-info {
+            margin-left: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 999px;
+            width: 16px;
+            height: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #b9d7ff;
+            background: rgba(255, 255, 255, 0.06);
+            cursor: help;
+            position: relative;
+        }
+
+        .hint-info .hint-pop {
+            display: none;
+            position: absolute;
+            top: 20px;
+            left: 0;
+            min-width: 210px;
+            max-width: 280px;
+            padding: 8px;
+            font-size: 11px;
+            line-height: 1.25;
+            color: #d8e6fa;
+            background: rgba(10, 16, 28, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 8px;
+            z-index: 5;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            text-align: left;
+        }
+
+        .hint-info:hover .hint-pop {
+            display: block;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-flex;
+            width: 42px;
+            height: 24px;
+            flex: 0 0 auto;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+
+        .toggle-ui {
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 140ms ease;
+        }
+
+        .toggle-ui::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            transition: transform 140ms ease;
+        }
+
+        .toggle input:checked+.toggle-ui {
+            background: rgba(110, 231, 255, 0.35);
+            border-color: rgba(110, 231, 255, 0.55);
+        }
+
+        .toggle input:checked+.toggle-ui::after {
+            transform: translateX(18px);
+            background: #e9fbff;
+        }
+
+        .vis-toggle {
+            width: 36px;
+            height: 20px;
+            margin: 0;
+        }
+
+        .vis-toggle .toggle-ui::after {
+            width: 14px;
+            height: 14px;
+            top: 2px;
+            left: 2px;
+        }
+
+        .vis-toggle input:checked+.toggle-ui::after {
+            transform: translateX(16px);
         }
 
         /* mobile soft keyboard friendliness */
@@ -685,8 +920,8 @@
             <nav class="sidebar-nav" aria-label="Panel tabs">
                 <div class="nav-group main">
                     <button type="button" class="nav-btn active" data-tab="info" title="Info" aria-label="Info">ℹ</button>
-                    <button type="button" class="nav-btn" data-tab="input" title="Input" aria-label="Input">📝</button>
-                    <button type="button" class="nav-btn" data-tab="editor" title="Editor" aria-label="Editor">🧩</button>
+                    <button type="button" class="nav-btn" data-tab="input" title="Thoughts" aria-label="Thoughts">📝</button>
+                    <button type="button" class="nav-btn" data-tab="editor" title="Goblin Editor" aria-label="Goblin Editor">🧩</button>
                 </div>
                 <div class="nav-group meta">
                     <button type="button" class="nav-btn" data-tab="debug" title="Debug" aria-label="Debug">🧪</button>
@@ -700,26 +935,18 @@
                 </div>
                 <div class="tab-body">
                     <section class="tab-pane active" data-pane="info">
-                        <div class="pane-label">About</div>
                         <div><b>Desk Goblin Mash</b></div>
                         <div class="sub">A browser buddy that adds a little whimsy while you type and click.</div>
-                        <div class="sub">Controls: type in the Input tab, hold keys, click mouse buttons, and switch skins in Editor/Options.</div>
+                        <div class="sub">Controls: type in the Thoughts tab, hold keys, click mouse buttons, and switch skins in Goblin/Options.</div>
                         <div class="sub">Perspective note: left/right asset naming is model-space (character left/right), not viewer-space.</div>
                     </section>
                     <section class="tab-pane" data-pane="input">
-                        <div class="pane-label">Thoughts</div>
                         <textarea id="thought" class="panel-textarea" placeholder="Type... (the goblin will mash while you type)"></textarea>
                     </section>
                     <section class="tab-pane" data-pane="debug">
-                        <div class="panel-row">
-                            <label><input id="debugEnabled" type="checkbox" checked /> Show debug text</label>
-                        </div>
-                        <div class="panel-row">
-                            <label><input id="skeletonEnabled" type="checkbox" /> Show skeleton overlay</label>
-                        </div>
-                        <div class="panel-row">
-                            <label><input id="semanticEnabled" type="checkbox" checked /> Semantic labels (model-space)</label>
-                        </div>
+                        <label class="toggle-row"><span>Show debug text</span><span class="toggle"><input id="debugEnabled" type="checkbox" checked /><span class="toggle-ui"></span></span></label>
+                        <label class="toggle-row"><span>Show skeleton overlay</span><span class="toggle"><input id="skeletonEnabled" type="checkbox" /><span class="toggle-ui"></span></span></label>
+                        <label class="toggle-row"><span>Semantic labels (model-space)</span><span class="toggle"><input id="semanticEnabled" type="checkbox" checked /><span class="toggle-ui"></span></span></label>
                         <pre id="debugText">Debug ready...</pre>
                     </section>
                     <section class="tab-pane" data-pane="editor">
@@ -733,7 +960,7 @@
                                     <thead>
                                         <tr>
                                             <th class="col-layer">Layer</th>
-                                            <th>Part Mapping</th>
+                                            <th>Part Mapping <span class="hint-info">i<span class="hint-pop">Model left/right is from the character's perspective. Model-left appears on viewer-right.</span></span></th>
                                             <th>File</th>
                                             <th class="col-vis">Show</th>
                                         </tr>
@@ -761,15 +988,16 @@
                                             <input id="partDy" type="range" min="-220" max="220" step="1" value="0" />
                                             <span id="partDyVal" class="slider-val">0</span>
                                         </label>
-                                        <label class="slider-row">dW
-                                            <input id="partDw" type="range" min="-220" max="220" step="1" value="0" />
+                                        <label class="slider-row">sX%
+                                            <input id="partDw" type="range" min="-95" max="300" step="1" value="0" />
                                             <span id="partDwVal" class="slider-val">0</span>
                                         </label>
-                                        <label class="slider-row">dH
-                                            <input id="partDh" type="range" min="-220" max="220" step="1" value="0" />
+                                        <label class="slider-row">sY%
+                                            <input id="partDh" type="range" min="-95" max="300" step="1" value="0" />
                                             <span id="partDhVal" class="slider-val">0</span>
                                         </label>
                                     </div>
+                                    <label class="toggle-row"><span>Lock aspect</span><span class="toggle"><input id="aspectLockEnabled" type="checkbox" checked /><span class="toggle-ui"></span></span></label>
                                 </div>
                                 <div id="inspectorPaneJson" class="inspector-pane">
                                     <div class="inspector-actions">
@@ -814,6 +1042,7 @@
             const debugEnabled = document.getElementById("debugEnabled");
             const skeletonEnabled = document.getElementById("skeletonEnabled");
             const semanticEnabled = document.getElementById("semanticEnabled");
+            const aspectLockEnabled = document.getElementById("aspectLockEnabled");
             const debugText = document.getElementById("debugText");
             const tabButtons = Array.from(document.querySelectorAll(".nav-btn"));
             const tabPanes = Array.from(document.querySelectorAll(".tab-pane"));
@@ -907,7 +1136,7 @@
                     btn.setAttribute("aria-pressed", active ? "true" : "false");
                 });
                 tabPanes.forEach((pane) => pane.classList.toggle("active", !!tab && pane.dataset.pane === tab));
-                const labelMap = { info: "Info", input: "Input", editor: "Editor", debug: "Debug", options: "Options" };
+                const labelMap = { info: "Info", input: "Thoughts", editor: "Goblin Editor", debug: "Debug", options: "Options" };
                 panelTitle.textContent = labelMap[tab] || "Panel";
             }
 
@@ -939,6 +1168,7 @@
             let debugOn = true;
             let skeletonOn = false;
             let semanticOn = true;
+            let aspectLockOn = true;
             let selectedPartKey = "";
             let inspectorPane = "inputs";
             let panelSide = "left";
@@ -966,6 +1196,18 @@
                 semanticOn = !!semanticEnabled.checked;
                 refreshPartsInspector();
             });
+            aspectLockEnabled.addEventListener("change", () => {
+                aspectLockOn = !!aspectLockEnabled.checked;
+                if (aspectLockOn) {
+                    partDhEl.value = partDwEl.value;
+                    const def = getActiveAssetSkinDef();
+                    if (def && selectedPartKey) {
+                        const st = getInspectorState(def);
+                        st.partTweaks[selectedPartKey] = readPartBoxInputs();
+                        refreshPartsInspector();
+                    }
+                }
+            });
             tabButtons.forEach((btn) => {
                 btn.addEventListener("click", () => {
                     const tab = btn.dataset.tab;
@@ -989,6 +1231,10 @@
                 el.addEventListener("input", () => {
                     const def = getActiveAssetSkinDef();
                     if (!def || !selectedPartKey) return;
+                    if (aspectLockOn && (el === partDwEl || el === partDhEl)) {
+                        if (el === partDwEl) partDhEl.value = partDwEl.value;
+                        if (el === partDhEl) partDwEl.value = partDhEl.value;
+                    }
                     const st = getInspectorState(def);
                     st.partTweaks[selectedPartKey] = readPartBoxInputs();
                     refreshPartsInspector();
@@ -1007,6 +1253,7 @@
                 const st = getInspectorState(def);
                 const parts = { ...DEFAULT_ASSET_PARTS, ...canonicalizePartMap(def.parts || {}) };
                 const keys = Object.keys(parts);
+                st.partsMap = { ...parts };
                 st.partTweaks = clonePartTweaks(def.partTweaks || {});
                 st.visibleSet = new Set(def.visibleParts || DEFAULT_VISIBLE_PARTS);
                 st.drawOrder = normalizeLayerOrder(keys, def.drawOrder || keys);
@@ -1142,6 +1389,14 @@
                 charLeftEarInner: ["charLeftEarInner", "leftEarInner"],
                 charRightEarFill: ["charRightEarFill", "rightEarFill"],
                 charRightEarLine: ["charRightEarLine", "rightEarLine"],
+                charLeftArmDownFill: ["charLeftArmDownFill", "leftArmDownFill", "leftArmFill"],
+                charLeftArmDownLine: ["charLeftArmDownLine", "leftArmDownLine", "leftArmLine", "leftArmLower"],
+                charLeftArmUpFill: ["charLeftArmUpFill", "leftArmUpFill"],
+                charLeftArmUpLine: ["charLeftArmUpLine", "leftArmUpLine"],
+                charRightArmDownFill: ["charRightArmDownFill", "rightArmDownFill", "rightArmFill"],
+                charRightArmDownLine: ["charRightArmDownLine", "rightArmDownLine", "rightArmLine"],
+                charRightArmUpFill: ["charRightArmUpFill", "rightArmUpFill"],
+                charRightArmUpLine: ["charRightArmUpLine", "rightArmUpLine"],
                 charLeftEye: ["charLeftEye", "leftEye"],
                 charRightEye: ["charRightEye", "rightEye"],
                 charLeftBrow: ["charLeftBrow", "leftBrow"],
@@ -1167,6 +1422,14 @@
                 charLeftEarInner: "L_EarParts/InnerEarLine.PNG",
                 charRightEarFill: "R_EarParts/R_EarFill.PNG",
                 charRightEarLine: "R_EarParts/R_Ear.PNG",
+                charLeftArmDownFill: "L_ArmDownParts/L_ArmFill.PNG",
+                charLeftArmDownLine: "L_ArmDownParts/L_ArmLower.PNG",
+                charLeftArmUpFill: "L_ArmUpParts/L_ArmUpFill.PNG",
+                charLeftArmUpLine: "L_ArmUpParts/L_ArmUp.PNG",
+                charRightArmDownFill: "R_ArmDownParts/R_ArmFill.PNG",
+                charRightArmDownLine: "R_ArmDownParts/R_Arm.PNG",
+                charRightArmUpFill: "R_ArmDownParts/R_ArmFill.PNG",
+                charRightArmUpLine: "R_ArmDownParts/R_Arm.PNG",
                 charLeftEye: "Face/L_Eye.PNG",
                 charRightEye: "Face/R_Eye.PNG",
                 charLeftBrow: "Face/L_Eyebrow.PNG",
@@ -1536,7 +1799,15 @@
                     charLeftEarLine: "charLeftEarLine (model-left / viewer-right)",
                     charLeftEarInner: "charLeftEarInner (model-left / viewer-right)",
                     charRightEarFill: "charRightEarFill (model-right / viewer-left)",
-                    charRightEarLine: "charRightEarLine (model-right / viewer-left)"
+                    charRightEarLine: "charRightEarLine (model-right / viewer-left)",
+                    charLeftArmDownFill: "charLeftArmDownFill (model-left / viewer-right)",
+                    charLeftArmDownLine: "charLeftArmDownLine (model-left / viewer-right)",
+                    charLeftArmUpFill: "charLeftArmUpFill (model-left / viewer-right)",
+                    charLeftArmUpLine: "charLeftArmUpLine (model-left / viewer-right)",
+                    charRightArmDownFill: "charRightArmDownFill (model-right / viewer-left)",
+                    charRightArmDownLine: "charRightArmDownLine (model-right / viewer-left)",
+                    charRightArmUpFill: "charRightArmUpFill (model-right / viewer-left)",
+                    charRightArmUpLine: "charRightArmUpLine (model-right / viewer-left)"
                 };
                 if (map[key]) return map[key];
                 if (key.startsWith("charLeft")) return `${key} (model-left / viewer-right)`;
@@ -1562,11 +1833,13 @@
                 const parts = { ...DEFAULT_ASSET_PARTS, ...canonicalizePartMap(def.parts || {}) };
                 const keys = Object.keys(parts);
                 if (!st.inspectorReady) {
+                    st.partsMap = { ...parts };
                     st.partTweaks = clonePartTweaks(def.partTweaks || {});
                     st.visibleSet = new Set(def.visibleParts || DEFAULT_VISIBLE_PARTS);
                     st.drawOrder = normalizeLayerOrder(keys, def.drawOrder || keys);
                     st.inspectorReady = true;
                 } else {
+                    st.partsMap = { ...parts, ...(st.partsMap || {}) };
                     st.drawOrder = normalizeLayerOrder(keys, st.drawOrder || keys);
                 }
                 return st;
@@ -1582,7 +1855,7 @@
             function ensurePartLoaded(def, key) {
                 const st = getInspectorState(def);
                 if (st.images[key]) return;
-                const parts = { ...DEFAULT_ASSET_PARTS, ...canonicalizePartMap(def.parts || {}) };
+                const parts = st.partsMap || { ...DEFAULT_ASSET_PARTS, ...canonicalizePartMap(def.parts || {}) };
                 const rel = parts[key];
                 if (!rel) return;
                 const src = def.root ? `${def.root}/${rel}` : rel;
@@ -1633,7 +1906,7 @@
                 partInspector.style.opacity = "1";
 
                 const st = getInspectorState(def);
-                const parts = { ...DEFAULT_ASSET_PARTS, ...canonicalizePartMap(def.parts || {}) };
+                const parts = st.partsMap || { ...DEFAULT_ASSET_PARTS, ...canonicalizePartMap(def.parts || {}) };
                 const keys = Object.keys(parts);
                 st.drawOrder = normalizeLayerOrder(keys, st.drawOrder || keys);
                 if (!keys.includes(selectedPartKey)) selectedPartKey = st.drawOrder[0] || "";
@@ -1643,10 +1916,13 @@
                 st.drawOrder.forEach((k, idx) => {
                     const tr = document.createElement("tr");
                     tr.classList.add("draggable");
-                    tr.draggable = true;
+                    tr.draggable = false;
                     tr.dataset.key = k;
                     if (selectedPartKey === k) tr.classList.add("selected");
-                    tr.addEventListener("click", () => {
+                    tr.addEventListener("click", (ev) => {
+                        if (ev.target && ev.target.closest && ev.target.closest("input, select, button, label, .toggle, .file-input")) {
+                            return;
+                        }
                         selectedPartKey = k;
                         refreshPartsInspector();
                     });
@@ -1654,14 +1930,63 @@
                     const label = semanticOn ? semanticPartLabel(k) : k;
                     const file = parts[k] || "";
                     const vis = st.visibleSet.has(k);
+                    const mappingOptions = keys.map((opt) =>
+                        `<option value="${opt}" ${opt === k ? "selected" : ""}>${semanticOn ? semanticPartLabel(opt) : opt}</option>`
+                    ).join("");
 
                     tr.innerHTML =
                         `<td class="col-layer"><span class="layer-idx">${idx + 1}</span><span class="layer-drag" title="Drag to reorder">☰☰</span></td>` +
-                        `<td><div>${label}</div><code>${k}</code></td>` +
-                        `<td><code title="${file}">${fileNameFromPath(file)}</code></td>` +
-                        `<td class="col-vis"><input type="checkbox" ${vis ? "checked" : ""} /></td>`;
+                        `<td><select class="map-select">${mappingOptions}</select></td>` +
+                        `<td><input class="file-input" type="text" value="${file.replace(/"/g, "&quot;")}" /></td>` +
+                        `<td class="col-vis"><label class="toggle vis-toggle"><input type="checkbox" ${vis ? "checked" : ""} /><span class="toggle-ui"></span></label></td>`;
 
-                    const visEl = tr.querySelector("input");
+                    const mapEl = tr.querySelector(".map-select");
+                    const fileEl = tr.querySelector(".file-input");
+                    const layerDragEl = tr.querySelector(".layer-drag");
+                    const visWrapEl = tr.querySelector(".vis-toggle");
+                    const visEl = tr.querySelector(".vis-toggle input");
+                    layerDragEl.draggable = true;
+                    layerDragEl.addEventListener("dragstart", (ev) => {
+                        tr.classList.add("dragging");
+                        ev.dataTransfer.effectAllowed = "move";
+                        ev.dataTransfer.setData("text/plain", k);
+                    });
+                    layerDragEl.addEventListener("dragend", () => {
+                        tr.classList.remove("dragging");
+                        Array.from(layerTableBody.querySelectorAll("tr.drop-target"))
+                            .forEach((row) => row.classList.remove("drop-target"));
+                    });
+                    mapEl.addEventListener("click", (ev) => ev.stopPropagation());
+                    mapEl.addEventListener("change", () => {
+                        const target = mapEl.value;
+                        if (!target || target === k) return;
+                        const currentFile = parts[k];
+                        const targetFile = parts[target];
+                        parts[target] = currentFile;
+                        parts[k] = targetFile;
+                        const iA = st.drawOrder.indexOf(k);
+                        const iB = st.drawOrder.indexOf(target);
+                        if (iA >= 0 && iB >= 0) {
+                            st.drawOrder[iA] = target;
+                            st.drawOrder[iB] = k;
+                        }
+                        if (selectedPartKey === k) selectedPartKey = target;
+                        else if (selectedPartKey === target) selectedPartKey = k;
+                        st.requested = false;
+                        st.loaded = false;
+                        st.images = {};
+                        loadAssetSkin(def);
+                        refreshPartsInspector();
+                    });
+                    fileEl.addEventListener("click", (ev) => ev.stopPropagation());
+                    fileEl.addEventListener("change", () => {
+                        parts[k] = (fileEl.value || "").trim();
+                        delete st.images[k];
+                        if (st.visibleSet.has(k)) ensurePartLoaded(def, k);
+                        refreshPartsInspector();
+                    });
+                    visWrapEl.addEventListener("pointerdown", (ev) => ev.stopPropagation());
+                    visWrapEl.addEventListener("click", (ev) => ev.stopPropagation());
                     visEl.addEventListener("click", (ev) => ev.stopPropagation());
                     visEl.addEventListener("change", () => {
                         if (visEl.checked) {
@@ -1673,16 +1998,6 @@
                         refreshPartsInspector();
                     });
 
-                    tr.addEventListener("dragstart", (ev) => {
-                        tr.classList.add("dragging");
-                        ev.dataTransfer.effectAllowed = "move";
-                        ev.dataTransfer.setData("text/plain", k);
-                    });
-                    tr.addEventListener("dragend", () => {
-                        tr.classList.remove("dragging");
-                        Array.from(layerTableBody.querySelectorAll("tr.drop-target"))
-                            .forEach((row) => row.classList.remove("drop-target"));
-                    });
                     tr.addEventListener("dragover", (ev) => {
                         ev.preventDefault();
                         ev.dataTransfer.dropEffect = "move";
@@ -1712,6 +2027,7 @@
                 partJsonEl.value = JSON.stringify({
                     visibleParts: Array.from(st.visibleSet),
                     drawOrder: st.drawOrder,
+                    parts: parts,
                     partTweaks: st.partTweaks
                 }, null, 2);
             }
@@ -1720,7 +2036,7 @@
                 const state = getInspectorState(def);
                 if (state.requested) return;
                 state.requested = true;
-                const parts = { ...DEFAULT_ASSET_PARTS, ...canonicalizePartMap(def.parts || {}) };
+                const parts = state.partsMap || { ...DEFAULT_ASSET_PARTS, ...canonicalizePartMap(def.parts || {}) };
                 const root = def.root || "";
                 const loadKeys = Array.from(state.visibleSet).filter((k) => !!parts[k]);
 
@@ -2073,7 +2389,7 @@
                 const img = state.images;
                 const visible = state.visibleSet;
                 const tweaks = state.partTweaks || {};
-                const parts = { ...DEFAULT_ASSET_PARTS, ...canonicalizePartMap(skinDef.parts || {}) };
+                const parts = state.partsMap || { ...DEFAULT_ASSET_PARTS, ...canonicalizePartMap(skinDef.parts || {}) };
                 const keys = Object.keys(parts);
                 state.drawOrder = normalizeLayerOrder(keys, state.drawOrder || keys);
                 const orderMap = new Map(state.drawOrder.map((k, i) => [k, i]));
@@ -2097,13 +2413,27 @@
                 const drawPart = (key, x, y, w, h) => {
                     if (!visible.has(key)) return;
                     const t = tweaks[key] || { x: 0, y: 0, w: 0, h: 0 };
-                    const bx = x + t.x;
-                    const by = y + t.y;
-                    const bw = Math.max(2, w + t.w);
-                    const bh = Math.max(2, h + t.h);
+                    const partImg = img[key];
+                    const nW = Math.max(1, partImg?.naturalWidth || partImg?.width || w || 1);
+                    const nH = Math.max(1, partImg?.naturalHeight || partImg?.height || h || 1);
+
+                    // Keep native part proportions: fit image into its default slot without distortion.
+                    const contain = Math.min(w / nW, h / nH);
+                    const fitW = Math.max(2, nW * contain);
+                    const fitH = Math.max(2, nH * contain);
+                    const fitX = x + (w - fitW) * 0.5;
+                    const fitY = y + (h - fitH) * 0.5;
+
+                    // Tweaks are relative scale percentages from the natural fit size.
+                    const sx = Math.max(0.05, 1 + (t.w / 100));
+                    const sy = Math.max(0.05, 1 + (t.h / 100));
+                    const bw = Math.max(2, fitW * sx);
+                    const bh = Math.max(2, fitH * sy);
+                    const bx = fitX + (fitW - bw) * 0.5 + t.x;
+                    const by = fitY + (fitH - bh) * 0.5 + t.y;
                     queue.push({
                         key,
-                        img: img[key],
+                        img: partImg,
                         x: bx,
                         y: by,
                         w: bw,
@@ -2127,6 +2457,37 @@
                 drawPart("tailLine", tailX, tailY, tailW, tailH);
                 drawPart("bodyFill", bodyX, bodyY, bodyW, bodyH);
                 drawPart("bodyLine", bodyX, bodyY, bodyW, bodyH);
+
+                const leftImpact = clamp(armR ? armR.impact : 0, 0, 1);
+                const rightImpact = clamp(armL ? armL.impact : 0, 0, 1);
+                const armDownLeft = leftImpact < 0.45;
+                const armDownRight = rightImpact < 0.45;
+                const leftArmBaseX = head.x + head.w * 0.64;
+                const leftArmBaseY = LAYOUT.deskTopY - head.h * 0.02;
+                const rightArmBaseX = head.x - head.w * 0.44;
+                const rightArmBaseY = LAYOUT.deskTopY - head.h * 0.02;
+                const armW = head.w * 0.95;
+                const armH = head.h * 1.02;
+                if (armDownLeft) {
+                    const downStretch = 1 + leftImpact * 0.12;
+                    drawPart("charLeftArmDownFill", leftArmBaseX, leftArmBaseY - head.h * 0.03 * leftImpact, armW, armH * downStretch);
+                    drawPart("charLeftArmDownLine", leftArmBaseX, leftArmBaseY - head.h * 0.03 * leftImpact, armW, armH * downStretch);
+                } else {
+                    const lift = head.h * (0.16 + leftImpact * 0.12);
+                    const squeeze = 1 - leftImpact * 0.12;
+                    drawPart("charLeftArmUpFill", leftArmBaseX + head.w * 0.01 * leftImpact, leftArmBaseY - lift, armW * squeeze, armH * (1 + leftImpact * 0.10));
+                    drawPart("charLeftArmUpLine", leftArmBaseX + head.w * 0.01 * leftImpact, leftArmBaseY - lift, armW * squeeze, armH * (1 + leftImpact * 0.10));
+                }
+                if (armDownRight) {
+                    const downStretch = 1 + rightImpact * 0.12;
+                    drawPart("charRightArmDownFill", rightArmBaseX, rightArmBaseY - head.h * 0.03 * rightImpact, armW, armH * downStretch);
+                    drawPart("charRightArmDownLine", rightArmBaseX, rightArmBaseY - head.h * 0.03 * rightImpact, armW, armH * downStretch);
+                } else {
+                    const lift = head.h * (0.16 + rightImpact * 0.12);
+                    const squeeze = 1 - rightImpact * 0.12;
+                    drawPart("charRightArmUpFill", rightArmBaseX - head.w * 0.01 * rightImpact, rightArmBaseY - lift, armW * squeeze, armH * (1 + rightImpact * 0.10));
+                    drawPart("charRightArmUpLine", rightArmBaseX - head.w * 0.01 * rightImpact, rightArmBaseY - lift, armW * squeeze, armH * (1 + rightImpact * 0.10));
+                }
                 drawImmediateSorted(queueRoot);
 
                 ctx.save();
@@ -2135,11 +2496,13 @@
                 ctx.translate(-head.w * 0.5, -head.h * 0.5);
                 queue = queueHead;
 
-                const earW = head.w * 0.46;
-                const earH = head.h * 0.58;
+                const earBounce = Math.sin(sceneTime * 7.2) * 0.5 + 0.5;
+                const earWobble = clamp(Math.abs(headBob.y) / 18 + skinState.motion * 0.35, 0, 1);
+                const earW = head.w * (0.46 + earWobble * 0.04);
+                const earH = head.h * (0.58 - earWobble * 0.10);
                 const lEarX = head.w * -0.18;
                 const rEarX = head.w * 0.70;
-                const earY = head.h * -0.20;
+                const earY = head.h * (-0.20 + (earBounce - 0.5) * 0.03 + headBob.y * 0.0009);
 
                 // model-left appears viewer-right when character faces viewer.
                 drawPart("charLeftEarFill", rEarX, earY, earW, earH);
@@ -2538,7 +2901,19 @@
                 drawSkeletonOverlay(LAYOUT);
 
                 const active = currentSkinDef();
-                const hideDefaultArms = !!(active.mode === "asset" && active.hideDefaultArms);
+                const hideDefaultArms = !!(active.mode === "asset" && (
+                    active.hideDefaultArms ||
+                    (getAssetSkinState(active)?.visibleSet && (
+                        getAssetSkinState(active).visibleSet.has("charLeftArmDownFill") ||
+                        getAssetSkinState(active).visibleSet.has("charLeftArmDownLine") ||
+                        getAssetSkinState(active).visibleSet.has("charLeftArmUpFill") ||
+                        getAssetSkinState(active).visibleSet.has("charLeftArmUpLine") ||
+                        getAssetSkinState(active).visibleSet.has("charRightArmDownFill") ||
+                        getAssetSkinState(active).visibleSet.has("charRightArmDownLine") ||
+                        getAssetSkinState(active).visibleSet.has("charRightArmUpFill") ||
+                        getAssetSkinState(active).visibleSet.has("charRightArmUpLine")
+                    ))
+                ));
                 if (!hideDefaultArms) {
                     drawArm(armL);
                     drawArm(armR);
