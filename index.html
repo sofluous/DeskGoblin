@@ -1766,7 +1766,7 @@
 
             async function loadManifestSkins() {
                 try {
-                    const res = await fetch("skin/index.json", { cache: "no-store" });
+                    const res = await fetch("skins/index.json", { cache: "no-store" });
                     if (!res.ok) return;
                     const data = await res.json();
                     const ids = Array.isArray(data) ? data : Array.isArray(data?.skins) ? data.skins : [];
