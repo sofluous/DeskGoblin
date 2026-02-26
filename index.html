@@ -5,34 +5,34 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Desk Goblin Mash</title>
+    <link rel="stylesheet" href="./css/tokens.css" />
+    <link rel="stylesheet" href="./css/themes.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./theme.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css" />
     <style>
         :root {
-            --bg: #0f1116;
-            --text: #d6dde8;
-            --muted: #8a94a7;
-            --accent: #6ee7ff;
+            --bg: var(--ds-bg);
+            --text: var(--ds-text);
+            --muted: var(--ds-text-muted);
+            --accent: var(--ds-accent);
+            --goblin-bg-top: rgba(255, 255, 255, 0.06);
+            --goblin-bg-bottom: rgba(110, 231, 255, 0.05);
         }
 
         html,
         body {
             height: 100%;
             margin: 0;
-            background: var(--bg);
-            color: var(--text);
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: var(--ds-bg);
+            color: var(--ds-text);
+            font-family: var(--ds-font-sans);
             overflow: hidden;
-        }
-
-        select,
-        input,
-        textarea,
-        button {
-            color-scheme: dark;
         }
 
         * {
             scrollbar-width: thin;
-            scrollbar-color: rgba(110, 231, 255, 0.38) rgba(255, 255, 255, 0.06);
+            scrollbar-color: var(--ds-scrollbar-thumb) var(--ds-scrollbar-track);
         }
 
         *::-webkit-scrollbar {
@@ -41,14 +41,14 @@
         }
 
         *::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+            background: var(--ds-scrollbar-track);
+            border-radius: var(--ds-scrollbar-radius);
         }
 
         *::-webkit-scrollbar-thumb {
-            background: rgba(110, 231, 255, 0.35);
-            border-radius: 8px;
-            border: 2px solid rgba(15, 17, 22, 0.9);
+            background: var(--ds-scrollbar-thumb);
+            border-radius: var(--ds-scrollbar-radius);
+            border: 2px solid color-mix(in oklab, var(--ds-bg), transparent 20%);
         }
 
         .wrap {
@@ -90,8 +90,8 @@
             --canvas-right: var(--sidebar-size);
             --canvas-bottom: 0px;
             background:
-                radial-gradient(1200px 600px at 50% 20%, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.0)),
-                radial-gradient(900px 500px at 10% 80%, rgba(110, 231, 255, 0.05), rgba(255, 255, 255, 0.0));
+                radial-gradient(1200px 600px at 50% 20%, var(--goblin-bg-top), rgba(255, 255, 255, 0.0)),
+                radial-gradient(900px 500px at 10% 80%, var(--goblin-bg-bottom), rgba(255, 255, 255, 0.0));
         }
 
         #c {
@@ -99,8 +99,8 @@
             height: 100%;
             display: block;
             background:
-                radial-gradient(1200px 600px at 50% 20%, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.0)),
-                radial-gradient(900px 500px at 10% 80%, rgba(110, 231, 255, 0.05), rgba(255, 255, 255, 0.0));
+                radial-gradient(1200px 600px at 50% 20%, var(--goblin-bg-top), rgba(255, 255, 255, 0.0)),
+                radial-gradient(900px 500px at 10% 80%, var(--goblin-bg-bottom), rgba(255, 255, 255, 0.0));
         }
 
         .hint {
@@ -126,9 +126,9 @@
 
         .sidebar-nav {
             width: var(--sidebar-size);
-            border-left: 1px solid rgba(255, 255, 255, 0.08);
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(8, 12, 20, 0.75);
+            border-left: var(--ds-border-w) var(--ds-border-style) var(--ds-border);
+            border-right: var(--ds-border-w) var(--ds-border-style) var(--ds-border);
+            background: color-mix(in oklab, var(--ds-bg-elevated) 75%, transparent);
             display: flex;
             flex-direction: column;
             align-items: stretch;
@@ -150,11 +150,11 @@
         .nav-btn {
             width: 34px;
             height: 34px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
-            font-size: 16px;
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-btn-border);
+            border-radius: var(--ds-btn-radius);
+            background: var(--ds-btn-bg);
+            color: var(--ds-btn-text);
+            font-size: 0;
             line-height: 1;
             display: inline-flex;
             align-items: center;
@@ -162,18 +162,23 @@
             cursor: pointer;
         }
 
+        .nav-btn i {
+            font-size: 18px;
+            line-height: 1;
+        }
+
         .nav-btn.active {
-            border-color: rgba(110, 231, 255, 0.55);
-            color: #dff9ff;
-            background: rgba(110, 231, 255, 0.12);
+            border-color: color-mix(in oklab, var(--ds-accent) 60%, var(--ds-border));
+            color: var(--ds-accent);
+            background: color-mix(in oklab, var(--ds-accent) 14%, var(--ds-bg-raised));
         }
 
         .side-panel {
             min-width: 290px;
             width: var(--panel-slot);
             max-width: 52vw;
-            background: rgba(8, 12, 20, 0.88);
-            border-left: 1px solid rgba(255, 255, 255, 0.12);
+            background: color-mix(in oklab, var(--ds-bg-elevated) 86%, transparent);
+            border-left: var(--ds-border-w) var(--ds-border-style) var(--ds-border);
             backdrop-filter: blur(6px);
             display: flex;
             flex-direction: column;
@@ -189,7 +194,7 @@
 
         .panel-head {
             padding: 10px 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            border-bottom: var(--ds-border-w) var(--ds-border-style) var(--ds-border);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -220,14 +225,19 @@
         }
 
         #panelCollapseBtn {
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
-            border-radius: 8px;
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-btn-border);
+            background: var(--ds-btn-bg);
+            color: var(--ds-btn-text);
+            border-radius: var(--ds-btn-radius);
             width: 28px;
             height: 28px;
-            font-size: 14px;
+            font-size: 0;
             cursor: pointer;
+        }
+
+        #panelCollapseBtn i {
+            font-size: 14px;
+            line-height: 1;
         }
 
         .tab-body {
@@ -263,12 +273,12 @@
             height: auto;
             flex: 1;
             resize: none;
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            border-radius: 10px;
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-input-border);
+            border-radius: var(--ds-radius-2);
             outline: none;
             padding: 10px;
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text);
+            background: var(--ds-input-bg);
+            color: var(--ds-input-text);
             font-size: 14px;
             line-height: 1.35;
             box-sizing: border-box;
@@ -284,11 +294,11 @@
         }
 
         .panel-row select {
-            background: rgba(255, 255, 255, 0.09);
-            background-color: rgba(255, 255, 255, 0.09);
-            color: var(--text);
-            border: 1px solid rgba(255, 255, 255, 0.20);
-            border-radius: 8px;
+            background: var(--ds-input-bg);
+            background-color: var(--ds-input-bg);
+            color: var(--ds-input-text);
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-input-border);
+            border-radius: var(--ds-radius-2);
             padding: 4px 8px;
             font-size: 12px;
             outline: none;
@@ -296,8 +306,8 @@
             appearance: none;
             padding-right: 26px;
             background-image:
-                linear-gradient(45deg, transparent 50%, rgba(214, 221, 232, 0.8) 50%),
-                linear-gradient(135deg, rgba(214, 221, 232, 0.8) 50%, transparent 50%);
+                linear-gradient(45deg, transparent 50%, color-mix(in oklab, var(--ds-text) 90%, transparent) 50%),
+                linear-gradient(135deg, color-mix(in oklab, var(--ds-text) 90%, transparent) 50%, transparent 50%);
             background-position:
                 calc(100% - 15px) calc(50% - 2px),
                 calc(100% - 10px) calc(50% - 2px);
@@ -306,10 +316,10 @@
         }
 
         .panel-row button {
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
-            border-radius: 8px;
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-btn-border);
+            background: var(--ds-btn-bg);
+            color: var(--ds-btn-text);
+            border-radius: var(--ds-btn-radius);
             padding: 4px 8px;
             font-size: 12px;
             cursor: pointer;
@@ -368,6 +378,16 @@
             flex: 1;
         }
 
+        .inspector-head button {
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-btn-border);
+            background: var(--ds-btn-bg);
+            color: var(--ds-btn-text);
+            border-radius: var(--ds-btn-radius);
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
         .selected-part {
             margin-left: 6px;
             color: var(--muted);
@@ -381,12 +401,12 @@
         }
 
         .inspector-tabbtn {
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 8px;
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-btn-border);
+            border-radius: var(--ds-btn-radius);
             padding: 4px 8px;
             font-size: 12px;
-            color: var(--text);
-            background: rgba(255, 255, 255, 0.06);
+            color: var(--ds-btn-text);
+            background: var(--ds-btn-bg);
             cursor: pointer;
         }
 
@@ -478,10 +498,10 @@
         .inspector-grid select {
             width: 100%;
             box-sizing: border-box;
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            border-radius: 8px;
+            background: var(--ds-input-bg);
+            color: var(--ds-input-text);
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-input-border);
+            border-radius: var(--ds-radius-2);
             padding: 4px 6px;
             font-size: 12px;
             outline: none;
@@ -496,10 +516,10 @@
         }
 
         .inspector-actions button {
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
-            border-radius: 8px;
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-btn-border);
+            background: var(--ds-btn-bg);
+            color: var(--ds-btn-text);
+            border-radius: var(--ds-btn-radius);
             padding: 4px 8px;
             font-size: 12px;
             cursor: pointer;
@@ -580,11 +600,11 @@
         .file-input {
             width: 100%;
             box-sizing: border-box;
-            background: rgba(255, 255, 255, 0.08);
-            background-color: rgba(255, 255, 255, 0.08);
-            color: var(--text);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            border-radius: 8px;
+            background: var(--ds-input-bg);
+            background-color: var(--ds-input-bg);
+            color: var(--ds-input-text);
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-input-border);
+            border-radius: var(--ds-radius-2);
             padding: 5px 7px;
             font-size: 12px;
             outline: none;
@@ -594,8 +614,8 @@
             appearance: none;
             padding-right: 24px;
             background-image:
-                linear-gradient(45deg, transparent 50%, rgba(214, 221, 232, 0.8) 50%),
-                linear-gradient(135deg, rgba(214, 221, 232, 0.8) 50%, transparent 50%);
+                linear-gradient(45deg, transparent 50%, color-mix(in oklab, var(--ds-text) 90%, transparent) 50%),
+                linear-gradient(135deg, color-mix(in oklab, var(--ds-text) 90%, transparent) 50%, transparent 50%);
             background-position:
                 calc(100% - 14px) calc(50% - 2px),
                 calc(100% - 9px) calc(50% - 2px);
@@ -608,8 +628,8 @@
         }
 
         select option {
-            background: #111827;
-            color: #d6dde8;
+            background: var(--ds-bg-elevated);
+            color: var(--ds-text);
         }
 
         .layer-idx {
@@ -619,7 +639,11 @@
         .layer-drag {
             display: none;
             color: #dff9ff;
-            letter-spacing: 1px;
+            font-size: 0;
+        }
+
+        .layer-drag i {
+            font-size: 13px;
         }
 
         .layer-table tr.draggable:hover .layer-idx {
@@ -661,18 +685,22 @@
 
         .hint-info {
             margin-left: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-border);
             border-radius: 999px;
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
-            color: #b9d7ff;
-            background: rgba(255, 255, 255, 0.06);
+            font-size: 0;
+            color: var(--ds-accent);
+            background: var(--ds-bg-raised);
             cursor: help;
             position: relative;
+        }
+
+        .hint-info i {
+            font-size: 12px;
         }
 
         .hint-info .hint-pop {
@@ -727,8 +755,8 @@
             position: absolute;
             inset: 0;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.16);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: var(--ds-bg-raised);
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-border);
             transition: all 140ms ease;
         }
 
@@ -740,18 +768,22 @@
             width: 18px;
             height: 18px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.95);
+            background: color-mix(in oklab, var(--ds-text) 85%, var(--ds-bg-elevated));
             transition: transform 140ms ease;
         }
 
         .toggle input:checked+.toggle-ui {
-            background: rgba(110, 231, 255, 0.35);
-            border-color: rgba(110, 231, 255, 0.55);
+            background: color-mix(in oklab, var(--ds-accent) 32%, var(--ds-bg-raised));
+            border-color: color-mix(in oklab, var(--ds-accent) 62%, var(--ds-border));
         }
 
         .toggle input:checked+.toggle-ui::after {
             transform: translateX(18px);
-            background: #e9fbff;
+            background: var(--ds-accent);
+        }
+
+        input[type="range"] {
+            accent-color: var(--ds-accent);
         }
 
         .vis-toggle {
@@ -919,19 +951,19 @@
             </div>
             <nav class="sidebar-nav" aria-label="Panel tabs">
                 <div class="nav-group main">
-                    <button type="button" class="nav-btn active" data-tab="info" title="Info" aria-label="Info">ℹ</button>
-                    <button type="button" class="nav-btn" data-tab="input" title="Thoughts" aria-label="Thoughts">📝</button>
-                    <button type="button" class="nav-btn" data-tab="editor" title="Goblin Editor" aria-label="Goblin Editor">🧩</button>
+                    <button type="button" class="nav-btn active" data-tab="info" title="Info" aria-label="Info"><i class="iconoir-info-circle"></i></button>
+                    <button type="button" class="nav-btn" data-tab="input" title="Thoughts" aria-label="Thoughts"><i class="iconoir-edit-pencil"></i></button>
+                    <button type="button" class="nav-btn" data-tab="editor" title="Goblin Editor" aria-label="Goblin Editor"><i class="iconoir-tools"></i></button>
                 </div>
                 <div class="nav-group meta">
-                    <button type="button" class="nav-btn" data-tab="debug" title="Debug" aria-label="Debug">🧪</button>
-                    <button type="button" class="nav-btn" data-tab="options" title="Options" aria-label="Options">⚙</button>
+                    <button type="button" class="nav-btn" data-tab="debug" title="Debug" aria-label="Debug"><i class="iconoir-bug"></i></button>
+                    <button type="button" class="nav-btn" data-tab="options" title="Options" aria-label="Options"><i class="iconoir-settings"></i></button>
                 </div>
             </nav>
             <aside id="sidePanel" class="side-panel">
                 <div id="panelHead" class="panel-head">
                     <span id="panelTitle" class="panel-title">Info</span>
-                    <button id="panelCollapseBtn" type="button" title="Collapse panel" aria-label="Collapse panel">‹</button>
+                    <button id="panelCollapseBtn" type="button" title="Collapse panel" aria-label="Collapse panel"><i id="panelCollapseIcon" class="iconoir-nav-arrow-left"></i></button>
                 </div>
                 <div class="tab-body">
                     <section class="tab-pane active" data-pane="info">
@@ -960,7 +992,7 @@
                                     <thead>
                                         <tr>
                                             <th class="col-layer">Layer</th>
-                                            <th>Part Mapping <span class="hint-info">i<span class="hint-pop">Model left/right is from the character's perspective. Model-left appears on viewer-right.</span></span></th>
+                                            <th>Part Mapping <span class="hint-info"><i class="iconoir-info-empty"></i><span class="hint-pop">Model left/right is from the character's perspective. Model-left appears on viewer-right.</span></span></th>
                                             <th>File</th>
                                             <th class="col-vis">Show</th>
                                         </tr>
@@ -1010,6 +1042,14 @@
                     </section>
                     <section class="tab-pane" data-pane="options">
                         <div class="panel-row">
+                            <label for="themeSelect">Theme:</label>
+                            <select id="themeSelect"></select>
+                        </div>
+                        <div class="panel-row">
+                            <label for="canvasPaletteSelect">Canvas Palette:</label>
+                            <select id="canvasPaletteSelect"></select>
+                        </div>
+                        <div class="panel-row">
                             <label for="panelSide">Panel Side:</label>
                             <select id="panelSide">
                                 <option value="right">Right</option>
@@ -1034,9 +1074,12 @@
             const thought = document.getElementById("thought");
             const charSelect = document.getElementById("charSelect");
             const editorSkinSelect = document.getElementById("editorSkinSelect");
+            const themeSelect = document.getElementById("themeSelect");
+            const canvasPaletteSelect = document.getElementById("canvasPaletteSelect");
             const panelSideEl = document.getElementById("panelSide");
             const panelHead = document.getElementById("panelHead");
             const panelCollapseBtn = document.getElementById("panelCollapseBtn");
+            const panelCollapseIcon = document.getElementById("panelCollapseIcon");
             const panelTitle = document.getElementById("panelTitle");
             const sidePanel = document.getElementById("sidePanel");
             const debugEnabled = document.getElementById("debugEnabled");
@@ -1102,12 +1145,10 @@
                 const isCollapsed = !panelOpen;
                 panelHead.classList.toggle("collapse-left", panelSide === "right");
                 panelHead.classList.toggle("collapse-right", panelSide === "left");
-
-                if (collapseToward === "left") {
-                    panelCollapseBtn.textContent = isCollapsed ? "\u2192" : "\u2190";
-                } else {
-                    panelCollapseBtn.textContent = isCollapsed ? "\u2190" : "\u2192";
-                }
+                const collapseIconClass = (collapseToward === "left")
+                    ? (isCollapsed ? "iconoir-nav-arrow-right" : "iconoir-nav-arrow-left")
+                    : (isCollapsed ? "iconoir-nav-arrow-left" : "iconoir-nav-arrow-right");
+                panelCollapseIcon.className = collapseIconClass;
                 panelCollapseBtn.title = isCollapsed ? "Expand panel" : `Collapse panel ${collapseToward}`;
                 panelCollapseBtn.setAttribute("aria-label", panelCollapseBtn.title);
             }
@@ -1169,11 +1210,184 @@
             let skeletonOn = false;
             let semanticOn = true;
             let aspectLockOn = true;
+            const THEME_STORAGE_KEY = "deskgoblin.theme";
+            const CANVAS_PALETTE_STORAGE_KEY = "deskgoblin.canvasPalette";
+            const THEMES = [
+                { id: "", label: "System" },
+                { id: "steel-night", label: "Steel Night" },
+                { id: "paper-mint", label: "Paper Mint" },
+                { id: "amber-terminal", label: "Amber Terminal" },
+                { id: "neon-grid", label: "Neon Grid" },
+                { id: "mono-slate", label: "Mono Slate" },
+                { id: "tech-grid", label: "Tech Grid" },
+                { id: "skeuo-panel", label: "Skeuo Panel" },
+                { id: "industrial-terminal", label: "Industrial Terminal" }
+            ];
+            const CANVAS_PALETTES = {
+                cute: {
+                    label: "Cute Pop",
+                    bgTop: "rgba(255, 199, 244, 0.18)",
+                    bgBottom: "rgba(197, 230, 255, 0.14)",
+                    sceneOverlay: "rgba(34, 20, 36, 0.08)",
+                    deskBase: "rgb(53, 39, 59)",
+                    deskLip: "rgba(255, 198, 236, 0.45)",
+                    deskShadeTop: "rgba(255,255,255,0.04)",
+                    deskShadeBottom: "rgba(24, 12, 28, 0.24)",
+                    keyboardBase: "rgba(255, 214, 241, 0.18)",
+                    keyboardKey: "rgba(255, 238, 250, 0.32)",
+                    keyboardLabel: "rgba(255, 255, 255, 0.78)",
+                    mousePad: "rgba(255, 210, 240, 0.10)",
+                    mousePadStroke: "rgba(255, 230, 248, 0.32)",
+                    mouseBody: "rgba(255, 223, 244, 0.22)",
+                    mouseButton: "rgba(255, 245, 252, 0.35)",
+                    armStroke: "rgba(255, 212, 240, 0.40)",
+                    armHand: "rgba(255, 235, 248, 0.48)"
+                },
+                pastel: {
+                    label: "Pastel Bloom",
+                    bgTop: "rgba(224, 235, 255, 0.18)",
+                    bgBottom: "rgba(206, 246, 240, 0.13)",
+                    sceneOverlay: "rgba(42, 49, 58, 0.08)",
+                    deskBase: "rgb(58, 69, 82)",
+                    deskLip: "rgba(185, 214, 255, 0.35)",
+                    deskShadeTop: "rgba(255,255,255,0.05)",
+                    deskShadeBottom: "rgba(22, 30, 44, 0.24)",
+                    keyboardBase: "rgba(206, 229, 255, 0.16)",
+                    keyboardKey: "rgba(232, 244, 255, 0.27)",
+                    keyboardLabel: "rgba(244, 248, 255, 0.72)",
+                    mousePad: "rgba(200, 219, 255, 0.08)",
+                    mousePadStroke: "rgba(214, 235, 255, 0.26)",
+                    mouseBody: "rgba(224, 236, 255, 0.18)",
+                    mouseButton: "rgba(239, 246, 255, 0.28)",
+                    armStroke: "rgba(213, 230, 255, 0.30)",
+                    armHand: "rgba(230, 241, 255, 0.36)"
+                },
+                ethereal: {
+                    label: "Ethereal Mist",
+                    bgTop: "rgba(178, 224, 255, 0.15)",
+                    bgBottom: "rgba(160, 196, 255, 0.10)",
+                    sceneOverlay: "rgba(16, 22, 34, 0.10)",
+                    deskBase: "rgb(26, 34, 48)",
+                    deskLip: "rgba(149, 226, 255, 0.26)",
+                    deskShadeTop: "rgba(211, 242, 255, 0.04)",
+                    deskShadeBottom: "rgba(6, 10, 18, 0.30)",
+                    keyboardBase: "rgba(133, 198, 230, 0.12)",
+                    keyboardKey: "rgba(175, 232, 255, 0.16)",
+                    keyboardLabel: "rgba(210, 245, 255, 0.58)",
+                    mousePad: "rgba(118, 186, 218, 0.07)",
+                    mousePadStroke: "rgba(175, 228, 252, 0.20)",
+                    mouseBody: "rgba(149, 211, 236, 0.14)",
+                    mouseButton: "rgba(188, 237, 255, 0.20)",
+                    armStroke: "rgba(180, 227, 245, 0.24)",
+                    armHand: "rgba(196, 236, 250, 0.30)"
+                },
+                natural: {
+                    label: "Natural Grove",
+                    bgTop: "rgba(213, 199, 152, 0.14)",
+                    bgBottom: "rgba(151, 173, 127, 0.12)",
+                    sceneOverlay: "rgba(20, 20, 14, 0.08)",
+                    deskBase: "rgb(56, 48, 37)",
+                    deskLip: "rgba(194, 166, 118, 0.36)",
+                    deskShadeTop: "rgba(255, 238, 210, 0.04)",
+                    deskShadeBottom: "rgba(16, 12, 8, 0.24)",
+                    keyboardBase: "rgba(178, 154, 119, 0.15)",
+                    keyboardKey: "rgba(210, 188, 151, 0.22)",
+                    keyboardLabel: "rgba(255, 241, 215, 0.65)",
+                    mousePad: "rgba(153, 126, 92, 0.08)",
+                    mousePadStroke: "rgba(214, 188, 140, 0.24)",
+                    mouseBody: "rgba(189, 164, 125, 0.18)",
+                    mouseButton: "rgba(227, 204, 160, 0.25)",
+                    armStroke: "rgba(216, 189, 146, 0.30)",
+                    armHand: "rgba(235, 210, 172, 0.36)"
+                },
+                sakura: {
+                    label: "Sakura Dawn",
+                    bgTop: "rgba(255, 208, 226, 0.18)",
+                    bgBottom: "rgba(223, 206, 255, 0.12)",
+                    sceneOverlay: "rgba(44, 26, 36, 0.08)",
+                    deskBase: "rgb(66, 47, 61)",
+                    deskLip: "rgba(255, 190, 225, 0.40)",
+                    deskShadeTop: "rgba(255, 240, 248, 0.05)",
+                    deskShadeBottom: "rgba(26, 15, 24, 0.26)",
+                    keyboardBase: "rgba(255, 205, 230, 0.16)",
+                    keyboardKey: "rgba(255, 229, 242, 0.27)",
+                    keyboardLabel: "rgba(255, 244, 250, 0.76)",
+                    mousePad: "rgba(255, 192, 222, 0.09)",
+                    mousePadStroke: "rgba(255, 219, 237, 0.27)",
+                    mouseBody: "rgba(255, 214, 235, 0.20)",
+                    mouseButton: "rgba(255, 238, 248, 0.30)",
+                    armStroke: "rgba(255, 202, 229, 0.34)",
+                    armHand: "rgba(255, 225, 241, 0.42)"
+                },
+                ocean: {
+                    label: "Ocean Breeze",
+                    bgTop: "rgba(129, 202, 255, 0.16)",
+                    bgBottom: "rgba(121, 229, 213, 0.11)",
+                    sceneOverlay: "rgba(16, 30, 44, 0.08)",
+                    deskBase: "rgb(26, 49, 68)",
+                    deskLip: "rgba(124, 214, 255, 0.30)",
+                    deskShadeTop: "rgba(220, 244, 255, 0.04)",
+                    deskShadeBottom: "rgba(8, 18, 29, 0.24)",
+                    keyboardBase: "rgba(115, 184, 219, 0.14)",
+                    keyboardKey: "rgba(152, 214, 245, 0.21)",
+                    keyboardLabel: "rgba(220, 245, 255, 0.70)",
+                    mousePad: "rgba(102, 170, 208, 0.08)",
+                    mousePadStroke: "rgba(165, 221, 247, 0.24)",
+                    mouseBody: "rgba(136, 199, 230, 0.18)",
+                    mouseButton: "rgba(184, 231, 252, 0.26)",
+                    armStroke: "rgba(156, 215, 243, 0.30)",
+                    armHand: "rgba(187, 233, 252, 0.36)"
+                }
+            };
+            let canvasPaletteId = "cute";
+            let canvasPalette = CANVAS_PALETTES.cute;
             let selectedPartKey = "";
             let inspectorPane = "inputs";
             let panelSide = "left";
             let currentTab = "info";
             let lastTab = "info";
+
+            function applyTheme(themeId) {
+                const id = String(themeId || "");
+                if (!id) {
+                    document.documentElement.removeAttribute("data-theme");
+                    localStorage.removeItem(THEME_STORAGE_KEY);
+                } else {
+                    document.documentElement.setAttribute("data-theme", id);
+                    localStorage.setItem(THEME_STORAGE_KEY, id);
+                }
+                if (themeSelect.value !== id) themeSelect.value = id;
+            }
+
+            function setupThemeSelector() {
+                themeSelect.innerHTML = THEMES
+                    .map((t) => `<option value="${t.id}">${t.label}</option>`)
+                    .join("");
+                const saved = localStorage.getItem(THEME_STORAGE_KEY) || "";
+                const valid = THEMES.some((t) => t.id === saved) ? saved : "";
+                applyTheme(valid);
+                themeSelect.addEventListener("change", () => applyTheme(themeSelect.value));
+            }
+
+            function applyCanvasPalette(paletteId) {
+                const id = String(paletteId || "");
+                const validId = CANVAS_PALETTES[id] ? id : "cute";
+                canvasPaletteId = validId;
+                canvasPalette = CANVAS_PALETTES[validId];
+                document.documentElement.style.setProperty("--goblin-bg-top", canvasPalette.bgTop);
+                document.documentElement.style.setProperty("--goblin-bg-bottom", canvasPalette.bgBottom);
+                localStorage.setItem(CANVAS_PALETTE_STORAGE_KEY, validId);
+                if (canvasPaletteSelect.value !== validId) canvasPaletteSelect.value = validId;
+            }
+
+            function setupCanvasPaletteSelector() {
+                canvasPaletteSelect.innerHTML = Object.entries(CANVAS_PALETTES)
+                    .map(([id, p]) => `<option value="${id}">${p.label}</option>`)
+                    .join("");
+                const saved = localStorage.getItem(CANVAS_PALETTE_STORAGE_KEY) || "cute";
+                applyCanvasPalette(saved);
+                canvasPaletteSelect.addEventListener("change", () => applyCanvasPalette(canvasPaletteSelect.value));
+            }
             panelCollapseBtn.addEventListener("click", () => {
                 if (panelOpen) {
                     closePanelWithNoTab();
@@ -1451,7 +1665,7 @@
                 const h = vv ? Math.floor(vv.height) : window.innerHeight;
                 stageEl.style.height = h + "px";
                 updatePanelLayoutMode();
-                // Keep content pinned (prevents weird â€œkeyboard pushes pageâ€ behavior)
+                // Keep content pinned (prevents weird "keyboard pushes page" behavior)
                 window.scrollTo(0, 0);
                 resize(); // re-run canvas sizing
             }
@@ -1546,13 +1760,13 @@
                 const w = DESIGN.w;
                 const h = DESIGN.h;
 
-                const deskTopY = h * 0.56;
+                const deskTopY = h * 0.61;
 
-                // âœ… stable keyboard proportions (design space)
+                // Stable keyboard proportions (design space)
                 const kbW = w * 0.46;
-                const kbH = h * 0.20;
+                const kbH = h * 0.235;
                 const kbX = (w - kbW) * 0.50;
-                const kbY = deskTopY + h * 0.075;
+                const kbY = deskTopY + h * 0.038;
 
                 // mousepad + mouse: slimmer/taller mouse
                 const padW = w * 0.18;
@@ -1561,14 +1775,14 @@
                 const padX = kbX - w * 0.03 - padW;
                 const padY = kbY;
 
-                // make mouse more â€œmouse-likeâ€
+                // Make mouse more "mouse-like"
                 const mouseW = w * 0.075;  // narrower
                 const mouseH = h * 0.145;  // taller
 
                 const headW = w * 0.22;
                 const headH = headW * 0.95;
                 const headX = w * 0.50 - headW * 0.5;
-                const headY = deskTopY - headH * 0.82;
+                const headY = deskTopY - headH * 0.74;
 
                 // shoulders at head edges (design space)
                 const shoulderY = deskTopY + 2;
@@ -1935,7 +2149,7 @@
                     ).join("");
 
                     tr.innerHTML =
-                        `<td class="col-layer"><span class="layer-idx">${idx + 1}</span><span class="layer-drag" title="Drag to reorder">☰☰</span></td>` +
+                        `<td class="col-layer"><span class="layer-idx">${idx + 1}</span><span class="layer-drag" title="Drag to reorder"><i class="iconoir-menu-scale"></i></span></td>` +
                         `<td><select class="map-select">${mappingOptions}</select></td>` +
                         `<td><input class="file-input" type="text" value="${file.replace(/"/g, "&quot;")}" /></td>` +
                         `<td class="col-vis"><label class="toggle vis-toggle"><input type="checkbox" ${vis ? "checked" : ""} /><span class="toggle-ui"></span></label></td>`;
@@ -2354,7 +2568,7 @@
 
             // ===== DRAW HELPERS
             function flipRect180InBox(rect, box) {
-                // 180Â° flip around the box center:
+                // 180-degree flip around the box center:
                 // x' = box.x + box.w - (x - box.x) - w
                 // y' = box.y + box.h - (y - box.y) - h
                 return {
@@ -2365,13 +2579,13 @@
 
             function drawDesk(LAYOUT) {
                 const { w, h, deskTopY } = LAYOUT;
-                ctx.fillStyle = "rgb(18, 20, 26)";
+                ctx.fillStyle = canvasPalette.deskBase;
                 ctx.fillRect(0, deskTopY, w, h - deskTopY);
-                ctx.fillStyle = "rgba(255,255,255,0.07)";
+                ctx.fillStyle = canvasPalette.deskLip;
                 ctx.fillRect(0, deskTopY - 3, w, 3);
                 const g = ctx.createLinearGradient(0, deskTopY, 0, h);
-                g.addColorStop(0, "rgba(255,255,255,0.03)");
-                g.addColorStop(1, "rgba(0,0,0,0.18)");
+                g.addColorStop(0, canvasPalette.deskShadeTop);
+                g.addColorStop(1, canvasPalette.deskShadeBottom);
                 ctx.fillStyle = g;
                 ctx.fillRect(0, deskTopY, w, h - deskTopY);
             }
@@ -2458,36 +2672,6 @@
                 drawPart("bodyFill", bodyX, bodyY, bodyW, bodyH);
                 drawPart("bodyLine", bodyX, bodyY, bodyW, bodyH);
 
-                const leftImpact = clamp(armR ? armR.impact : 0, 0, 1);
-                const rightImpact = clamp(armL ? armL.impact : 0, 0, 1);
-                const armDownLeft = leftImpact < 0.45;
-                const armDownRight = rightImpact < 0.45;
-                const leftArmBaseX = head.x + head.w * 0.64;
-                const leftArmBaseY = LAYOUT.deskTopY - head.h * 0.02;
-                const rightArmBaseX = head.x - head.w * 0.44;
-                const rightArmBaseY = LAYOUT.deskTopY - head.h * 0.02;
-                const armW = head.w * 0.95;
-                const armH = head.h * 1.02;
-                if (armDownLeft) {
-                    const downStretch = 1 + leftImpact * 0.12;
-                    drawPart("charLeftArmDownFill", leftArmBaseX, leftArmBaseY - head.h * 0.03 * leftImpact, armW, armH * downStretch);
-                    drawPart("charLeftArmDownLine", leftArmBaseX, leftArmBaseY - head.h * 0.03 * leftImpact, armW, armH * downStretch);
-                } else {
-                    const lift = head.h * (0.16 + leftImpact * 0.12);
-                    const squeeze = 1 - leftImpact * 0.12;
-                    drawPart("charLeftArmUpFill", leftArmBaseX + head.w * 0.01 * leftImpact, leftArmBaseY - lift, armW * squeeze, armH * (1 + leftImpact * 0.10));
-                    drawPart("charLeftArmUpLine", leftArmBaseX + head.w * 0.01 * leftImpact, leftArmBaseY - lift, armW * squeeze, armH * (1 + leftImpact * 0.10));
-                }
-                if (armDownRight) {
-                    const downStretch = 1 + rightImpact * 0.12;
-                    drawPart("charRightArmDownFill", rightArmBaseX, rightArmBaseY - head.h * 0.03 * rightImpact, armW, armH * downStretch);
-                    drawPart("charRightArmDownLine", rightArmBaseX, rightArmBaseY - head.h * 0.03 * rightImpact, armW, armH * downStretch);
-                } else {
-                    const lift = head.h * (0.16 + rightImpact * 0.12);
-                    const squeeze = 1 - rightImpact * 0.12;
-                    drawPart("charRightArmUpFill", rightArmBaseX - head.w * 0.01 * rightImpact, rightArmBaseY - lift, armW * squeeze, armH * (1 + rightImpact * 0.10));
-                    drawPart("charRightArmUpLine", rightArmBaseX - head.w * 0.01 * rightImpact, rightArmBaseY - lift, armW * squeeze, armH * (1 + rightImpact * 0.10));
-                }
                 drawImmediateSorted(queueRoot);
 
                 ctx.save();
@@ -2534,6 +2718,74 @@
                 drawImmediateSorted(queueHead);
                 ctx.restore();
                 lastAssetBoxes = boxes;
+            }
+
+            function drawCustomAssetArmsOverlay(LAYOUT, skinDef) {
+                const state = getInspectorState(skinDef);
+                const img = state.images;
+                const visible = state.visibleSet;
+                const tweaks = state.partTweaks || {};
+                const parts = state.partsMap || { ...DEFAULT_ASSET_PARTS, ...canonicalizePartMap(skinDef.parts || {}) };
+                const keys = Object.keys(parts);
+                state.drawOrder = normalizeLayerOrder(keys, state.drawOrder || keys);
+                const orderMap = new Map(state.drawOrder.map((k, i) => [k, i]));
+                const queue = [];
+                let seq = 0;
+                const head = LAYOUT.head;
+                const drawArmPart = (key, x, y, w, h) => {
+                    if (!visible.has(key)) return;
+                    const t = tweaks[key] || { x: 0, y: 0, w: 0, h: 0 };
+                    const partImg = img[key];
+                    const nW = Math.max(1, partImg?.naturalWidth || partImg?.width || w || 1);
+                    const nH = Math.max(1, partImg?.naturalHeight || partImg?.height || h || 1);
+                    const contain = Math.min(w / nW, h / nH);
+                    const fitW = Math.max(2, nW * contain);
+                    const fitH = Math.max(2, nH * contain);
+                    const fitX = x + (w - fitW) * 0.5;
+                    const fitY = y + (h - fitH) * 0.5;
+                    const sx = Math.max(0.05, 1 + (t.w / 100));
+                    const sy = Math.max(0.05, 1 + (t.h / 100));
+                    const bw = Math.max(2, fitW * sx);
+                    const bh = Math.max(2, fitH * sy);
+                    const bx = fitX + (fitW - bw) * 0.5 + t.x;
+                    const by = fitY + (fitH - bh) * 0.5 + t.y;
+                    queue.push({ key, img: partImg, x: bx, y: by, w: bw, h: bh, z: orderMap.has(key) ? orderMap.get(key) : 9999, s: seq++ });
+                };
+
+                const leftImpact = clamp(armR ? armR.impact : 0, 0, 1);
+                const rightImpact = clamp(armL ? armL.impact : 0, 0, 1);
+                const armDownLeft = leftImpact < 0.45;
+                const armDownRight = rightImpact < 0.45;
+                const leftArmBaseX = head.x + head.w * 0.64;
+                const leftArmBaseY = LAYOUT.deskTopY - head.h * 0.02;
+                const rightArmBaseX = head.x - head.w * 0.44;
+                const rightArmBaseY = LAYOUT.deskTopY - head.h * 0.02;
+                const armW = head.w * 0.95;
+                const armH = head.h * 1.02;
+
+                if (armDownLeft) {
+                    const downStretch = 1 + leftImpact * 0.12;
+                    drawArmPart("charLeftArmDownFill", leftArmBaseX, leftArmBaseY - head.h * 0.03 * leftImpact, armW, armH * downStretch);
+                    drawArmPart("charLeftArmDownLine", leftArmBaseX, leftArmBaseY - head.h * 0.03 * leftImpact, armW, armH * downStretch);
+                } else {
+                    const lift = head.h * (0.16 + leftImpact * 0.12);
+                    const squeeze = 1 - leftImpact * 0.12;
+                    drawArmPart("charLeftArmUpFill", leftArmBaseX + head.w * 0.01 * leftImpact, leftArmBaseY - lift, armW * squeeze, armH * (1 + leftImpact * 0.10));
+                    drawArmPart("charLeftArmUpLine", leftArmBaseX + head.w * 0.01 * leftImpact, leftArmBaseY - lift, armW * squeeze, armH * (1 + leftImpact * 0.10));
+                }
+                if (armDownRight) {
+                    const downStretch = 1 + rightImpact * 0.12;
+                    drawArmPart("charRightArmDownFill", rightArmBaseX, rightArmBaseY - head.h * 0.03 * rightImpact, armW, armH * downStretch);
+                    drawArmPart("charRightArmDownLine", rightArmBaseX, rightArmBaseY - head.h * 0.03 * rightImpact, armW, armH * downStretch);
+                } else {
+                    const lift = head.h * (0.16 + rightImpact * 0.12);
+                    const squeeze = 1 - rightImpact * 0.12;
+                    drawArmPart("charRightArmUpFill", rightArmBaseX - head.w * 0.01 * rightImpact, rightArmBaseY - lift, armW * squeeze, armH * (1 + rightImpact * 0.10));
+                    drawArmPart("charRightArmUpLine", rightArmBaseX - head.w * 0.01 * rightImpact, rightArmBaseY - lift, armW * squeeze, armH * (1 + rightImpact * 0.10));
+                }
+
+                queue.sort((a, b) => (a.z - b.z) || (a.s - b.s));
+                queue.forEach((q) => drawImageFit(q.img, q.x, q.y, q.w, q.h));
             }
 
             function drawHead(LAYOUT) {
@@ -2634,7 +2886,7 @@
                 const kb = LAYOUT.keyboard;
 
                 // base
-                ctx.fillStyle = "rgba(255,255,255,0.06)";
+                ctx.fillStyle = canvasPalette.keyboardBase;
                 roundRect(kb.x, kb.y, kb.w, kb.h, kb.h * 0.16);
                 ctx.fill();
 
@@ -2644,22 +2896,22 @@
                 ctx.textBaseline = "middle";
 
                 keys.forEach(k => {
-                    // âœ… flip key position on BOTH axes
+                    // Flip key position on both axes.
                     const flipped = flipRect180InBox({ x: k.x, y: k.y, w: k.w, h: k.h }, kb);
 
                     const press = clamp(k.press, 0, 1);
                     const dy = press * (k.h * 0.18);
 
                     // keycap
-                    ctx.fillStyle = "rgba(255,255,255,0.07)";
+                    ctx.fillStyle = canvasPalette.keyboardKey;
                     roundRect(flipped.x, flipped.y + dy, k.w, k.h, k.h * 0.25);
                     ctx.fill();
 
-                    // âœ… label upside-down too (rotate text 180Â° around its center)
+                    // Rotate key labels 180 degrees around each key center.
                     const cx = flipped.x + k.w / 2;
                     const cy = flipped.y + dy + k.h / 2;
 
-                    ctx.fillStyle = "rgba(255,255,255,0.18)";
+                    ctx.fillStyle = canvasPalette.keyboardLabel;
                     ctx.save();
                     ctx.translate(cx, cy);
                     ctx.rotate(Math.PI);
@@ -2672,10 +2924,10 @@
             function drawMouse(LAYOUT) {
                 const pad = LAYOUT.mousepad;
 
-                ctx.fillStyle = "rgba(255,255,255,0.03)";
+                ctx.fillStyle = canvasPalette.mousePad;
                 roundRect(pad.x, pad.y, pad.w, pad.h, 14);
                 ctx.fill();
-                ctx.strokeStyle = "rgba(255,255,255,0.06)";
+                ctx.strokeStyle = canvasPalette.mousePadStroke;
                 ctx.lineWidth = 1;
                 roundRect(pad.x, pad.y, pad.w, pad.h, 14);
                 ctx.stroke();
@@ -2683,7 +2935,7 @@
                 const cx = mouseCenter.x, cy = mouseCenter.y;
                 const w = mouseSize.w, h = mouseSize.h;
 
-                ctx.fillStyle = "rgba(255,255,255,0.06)";
+                ctx.fillStyle = canvasPalette.mouseBody;
                 roundRect(cx - w / 2, cy - h / 2, w, h, w * 0.45);
                 ctx.fill();
 
@@ -2691,7 +2943,7 @@
 
                 function drawBtn(btn) {
                     const dy = clamp(btn.press, 0, 1) * (btn.r * 0.55);
-                    ctx.fillStyle = "rgba(255,255,255,0.10)";
+                    ctx.fillStyle = canvasPalette.mouseButton;
                     ctx.beginPath();
                     ctx.ellipse(btn.x, btn.y + dy, btn.r * 1.25, btn.r, 0, 0, Math.PI * 2);
                     ctx.fill();
@@ -2701,7 +2953,7 @@
                 drawBtn(t.right);
 
                 const dy = clamp(t.middle.press, 0, 1) * (t.middle.r * 0.55);
-                ctx.fillStyle = "rgba(255,255,255,0.10)";
+                ctx.fillStyle = canvasPalette.mouseButton;
                 ctx.beginPath();
                 ctx.ellipse(t.middle.x, t.middle.y + dy, t.middle.r * 0.8, t.middle.r * 1.2, 0, 0, Math.PI * 2);
                 ctx.fill();
@@ -2745,8 +2997,12 @@
                 const nx = dx / dist, ny = dy / dist;
 
                 const th = 10 + arm.impact * 8;
+                const skin = skinState.renderedColors?.skin || [220, 230, 240, 0.4];
+                const tone = (v, mul) => Math.round(clamp(v * mul, 0, 255));
+                const armStroke = `rgba(${tone(skin[0], 0.80)}, ${tone(skin[1], 0.80)}, ${tone(skin[2], 0.84)}, 0.58)`;
+                const armHand = `rgba(${tone(skin[0], 1.02)}, ${tone(skin[1], 1.02)}, ${tone(skin[2], 1.02)}, 0.76)`;
 
-                ctx.strokeStyle = "rgba(255,255,255,0.18)";
+                ctx.strokeStyle = armStroke;
                 ctx.lineWidth = th;
                 ctx.lineCap = "round";
                 ctx.beginPath();
@@ -2754,7 +3010,7 @@
                 ctx.lineTo(px - nx * 10, py - ny * 10);
                 ctx.stroke();
 
-                ctx.fillStyle = "rgba(255,255,255,0.22)";
+                ctx.fillStyle = armHand;
                 ctx.beginPath();
                 ctx.ellipse(px, py, 18 + arm.impact * 6, 14 - arm.impact * 3, Math.atan2(dy, dx), 0, Math.PI * 2);
                 ctx.fill();
@@ -2891,19 +3147,17 @@
                 const { w, h } = LAYOUT;
 
                 ctx.clearRect(0, 0, w, h);
-                ctx.fillStyle = "rgba(0,0,0,0.08)";
+                ctx.fillStyle = canvasPalette.sceneOverlay;
                 ctx.fillRect(0, 0, w, h);
 
                 drawHead(LAYOUT);
                 drawDesk(LAYOUT);
                 drawKeyboard(LAYOUT);
                 drawMouse(LAYOUT);
-                drawSkeletonOverlay(LAYOUT);
 
                 const active = currentSkinDef();
-                const hideDefaultArms = !!(active.mode === "asset" && (
-                    active.hideDefaultArms ||
-                    (getAssetSkinState(active)?.visibleSet && (
+                const assetArmsVisible = !!(active.mode === "asset" && (
+                    getAssetSkinState(active)?.visibleSet && (
                         getAssetSkinState(active).visibleSet.has("charLeftArmDownFill") ||
                         getAssetSkinState(active).visibleSet.has("charLeftArmDownLine") ||
                         getAssetSkinState(active).visibleSet.has("charLeftArmUpFill") ||
@@ -2912,7 +3166,17 @@
                         getAssetSkinState(active).visibleSet.has("charRightArmDownLine") ||
                         getAssetSkinState(active).visibleSet.has("charRightArmUpFill") ||
                         getAssetSkinState(active).visibleSet.has("charRightArmUpLine")
-                    ))
+                    )
+                ));
+                if (assetArmsVisible && getAssetSkinState(active)?.loaded) {
+                    drawCustomAssetArmsOverlay(LAYOUT, active);
+                }
+
+                drawSkeletonOverlay(LAYOUT);
+
+                const hideDefaultArms = !!(active.mode === "asset" && (
+                    active.hideDefaultArms ||
+                    assetArmsVisible
                 ));
                 if (!hideDefaultArms) {
                     drawArm(armL);
@@ -2953,6 +3217,8 @@
             async function init() {
                 resize();
                 const LAYOUT = layout();
+                setupThemeSelector();
+                setupCanvasPaletteSelector();
                 setPanelSide(panelSide);
                 openPanelWithTab("info");
                 setInspectorPane(inspectorPane);
