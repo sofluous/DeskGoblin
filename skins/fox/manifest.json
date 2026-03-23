@@ -1,0 +1,452 @@
+﻿{
+  "visibleParts": [
+    "tailFill",
+    "tailLine",
+    "bodyFill",
+    "bodyLine",
+    "charRightEarFill",
+    "charRightEarLine",
+    "headFill",
+    "headLine",
+    "charLeftEarFill",
+    "charLeftEarLine",
+    "charLeftEarInner",
+    "charLeftEye",
+    "charRightEye",
+    "charLeftBrow",
+    "charRightBrow",
+    "mouth",
+    "charRightArmUpFill",
+    "charRightArmUpLine",
+    "charLeftArmUpFill",
+    "charLeftArmUpLine"
+  ],
+  "drawOrder": [
+    "tailFill",
+    "tailLine",
+    "bodyFill",
+    "bodyLine",
+    "charRightEarFill",
+    "charRightEarLine",
+    "headFill",
+    "headLine",
+    "charLeftEarFill",
+    "charLeftEarLine",
+    "charLeftEarInner",
+    "charLeftEye",
+    "charRightEye",
+    "charLeftBrow",
+    "charRightBrow",
+    "mouth",
+    "charRightArmDownFill",
+    "charRightArmDownLine",
+    "charRightArmUpFill",
+    "charRightArmUpLine",
+    "charLeftArmUpFill",
+    "charLeftArmUpLine",
+    "charLeftArmDownFill",
+    "charLeftArmDownLine"
+  ],
+  "parts": {
+    "bodyFill": "BodyFillParts/Body fill.PNG",
+    "bodyLine": "BodyFillParts/Body.PNG",
+    "tailFill": "TailParts/TailFill.PNG",
+    "tailLine": "TailParts/Tail.PNG",
+    "headFill": "HeadBase/HeadFill.PNG",
+    "headLine": "HeadBase/Head.PNG",
+    "charLeftEarFill": "L_EarParts/L_EarFill.PNG",
+    "charLeftEarLine": "L_EarParts/L_Ear.PNG",
+    "charLeftEarInner": "L_EarParts/InnerEarLine.PNG",
+    "charRightEarFill": "R_EarParts/R_EarFill.PNG",
+    "charRightEarLine": "R_EarParts/R_Ear.PNG",
+    "charLeftArmDownFill": "L_ArmDownParts/L_ArmFill.PNG",
+    "charLeftArmDownLine": "L_ArmDownParts/L_ArmLower.PNG",
+    "charLeftArmUpFill": "L_ArmUpParts/L_ArmUpFill.PNG",
+    "charLeftArmUpLine": "L_ArmUpParts/L_ArmUp.PNG",
+    "charRightArmDownFill": "R_ArmDownParts/R_ArmFill.PNG",
+    "charRightArmDownLine": "R_ArmDownParts/R_Arm.PNG",
+    "charRightArmUpFill": "R_ArmDownParts/R_ArmFill.PNG",
+    "charRightArmUpLine": "R_ArmDownParts/R_Arm.PNG",
+    "charLeftEye": "Face/L_Eye.PNG",
+    "charRightEye": "Face/R_Eye.PNG",
+    "charLeftBrow": "Face/L_Eyebrow.PNG",
+    "charRightBrow": "Face/R_Eyebrow.PNG",
+    "mouth": "Face/Mouth.PNG"
+  },
+  "partTweaks": {
+    "tailFill": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "tailLine": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "bodyFill": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "bodyLine": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charRightEarFill": {
+      "x": 0,
+      "y": -61,
+      "w": 58,
+      "h": 58
+    },
+    "charRightEarLine": {
+      "x": 0,
+      "y": -62,
+      "w": 59,
+      "h": 59
+    },
+    "headFill": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "headLine": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charLeftEarFill": {
+      "x": 0,
+      "y": -47,
+      "w": 63,
+      "h": 63
+    },
+    "charLeftEarLine": {
+      "x": 0,
+      "y": -56,
+      "w": 60,
+      "h": 60
+    },
+    "charLeftEarInner": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charLeftEye": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charRightEye": {
+      "x": -17,
+      "y": 0,
+      "w": 69,
+      "h": 69
+    },
+    "charLeftBrow": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charRightBrow": {
+      "x": -14,
+      "y": -20,
+      "w": -49,
+      "h": -49
+    },
+    "mouth": {
+      "x": -16,
+      "y": 0,
+      "w": -17,
+      "h": -17
+    },
+    "charRightArmDownFill": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charRightArmDownLine": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charRightArmUpFill": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charRightArmUpLine": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charLeftArmUpFill": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charLeftArmUpLine": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charLeftArmDownFill": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "charLeftArmDownLine": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    }
+  },
+  "slotTweaks": {
+    "body": {
+      "x": 109,
+      "y": 193,
+      "w": -211,
+      "h": -272
+    },
+    "tail": {
+      "x": -128,
+      "y": -272,
+      "w": 144,
+      "h": 171
+    },
+    "charRightArmUp": {
+      "x": 39,
+      "y": -27,
+      "w": -84,
+      "h": -79
+    },
+    "charLeftArmUp": {
+      "x": 26,
+      "y": -63,
+      "w": -103,
+      "h": -85
+    },
+    "head": {
+      "x": -52,
+      "y": -139,
+      "w": 89,
+      "h": 93
+    },
+    "charLeftEar": {
+      "x": -7,
+      "y": -59,
+      "w": 3,
+      "h": 24
+    },
+    "charLeftEye": {
+      "x": 4,
+      "y": -67,
+      "w": -28,
+      "h": 51
+    },
+    "charLeftBrow": {
+      "x": 6,
+      "y": -60,
+      "w": -34,
+      "h": -10
+    },
+    "charRightEar": {
+      "x": 6,
+      "y": -65,
+      "w": 10,
+      "h": 35
+    },
+    "charRightBrow": {
+      "x": -19,
+      "y": -43,
+      "w": -7,
+      "h": -1
+    },
+    "mouth": {
+      "x": -9,
+      "y": -60,
+      "w": -7,
+      "h": 2
+    },
+    "charRightEye": {
+      "x": -10,
+      "y": -41,
+      "w": -39,
+      "h": -7
+    }
+  },
+  "groupConfigs": {
+    "tail": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    },
+    "body": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    },
+    "charRightEar": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    },
+    "head": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    },
+    "charLeftEar": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    },
+    "charLeftEye": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    },
+    "charRightEye": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    },
+    "charLeftBrow": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    },
+    "charRightBrow": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    },
+    "mouth": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    },
+    "charRightArmDown": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    },
+    "charRightArmUp": {
+      "mode": "stretch",
+      "pivot": {
+        "x": 0.88,
+        "y": 0.26
+      },
+      "handAnchor": {
+        "x": 0,
+        "y": 1
+      }
+    },
+    "charLeftArmUp": {
+      "mode": "stretch",
+      "pivot": {
+        "x": 0.29,
+        "y": 0.82
+      },
+      "handAnchor": {
+        "x": 1,
+        "y": 0
+      }
+    },
+    "charLeftArmDown": {
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      }
+    }
+  }
+}
