@@ -1517,7 +1517,8 @@
                                 </div>
                                 <div id="inspectorPaneJson" class="inspector-pane">
                                     <div class="inspector-actions">
-                                        <button id="partCopyJson" class="ds-btn ds-btn-sm" type="button">Copy JSON</button>
+                                        <button id="partCopyJson" class="ds-btn ds-btn-sm" type="button">Copy Manifest</button>
+                                        <button id="partDownloadJson" class="ds-btn ds-btn-sm" type="button">Download Manifest</button>
                                     </div>
                                     <textarea id="partJson" class="ds-textarea" readonly></textarea>
                                 </div>
@@ -1625,6 +1626,7 @@
             const tModeBtn = document.getElementById("tModeBtn");
             const soloSelectedBtn = document.getElementById("soloSelectedBtn");
             const partCopyJsonEl = document.getElementById("partCopyJson");
+            const partDownloadJsonEl = document.getElementById("partDownloadJson");
             const partJsonEl = document.getElementById("partJson");
             const layerTableBody = document.getElementById("layerTableBody");
 
@@ -2180,6 +2182,19 @@
                     partJsonEl.setSelectionRange(0, 0);
                 }
             });
+            partDownloadJsonEl.addEventListener("click", () => {
+                const active = getActiveAssetSkinDef();
+                if (!active) return;
+                const blob = new Blob([partJsonEl.value || ""], { type: "application/json;charset=utf-8" });
+                const href = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = href;
+                a.download = `${active.id || "skin"}-manifest.json`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(() => URL.revokeObjectURL(href), 500);
+            });
 
             const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
             const lerp = (a, b, t) => a + (b - a) * t;
@@ -2411,38 +2426,6 @@
             const assetSkinCache = new Map();
 
             const stageEl = document.querySelector(".stage");
-            const EDITOR_STATE_STORAGE_PREFIX = "deskgoblin.skinState.";
-
-            function getEditorStateStorageKey(id) {
-                return `${EDITOR_STATE_STORAGE_PREFIX}${id}`;
-            }
-
-            function loadPersistedEditorState(id) {
-                try {
-                    const raw = localStorage.getItem(getEditorStateStorageKey(id));
-                    if (!raw) return null;
-                    return JSON.parse(raw);
-                } catch (_) {
-                    return null;
-                }
-            }
-
-            function savePersistedEditorState(def, st) {
-                if (!def?.id || !st) return;
-                try {
-                    const payload = {
-                        partsMap: st.partsMap || {},
-                        visibleParts: Array.from(st.visibleSet || []),
-                        drawOrder: st.drawOrder || [],
-                        partTweaks: st.partTweaks || {},
-                        slotTweaks: st.slotTweaks || {},
-                        groupConfigs: st.groupConfigs || {}
-                    };
-                    localStorage.setItem(getEditorStateStorageKey(def.id), JSON.stringify(payload));
-                } catch (_) {
-                    // ignore storage failures and keep editor usable
-                }
-            }
 
             function syncToVisualViewport() {
                 const vv = window.visualViewport;
@@ -3351,22 +3334,12 @@
                 const parts = { ...DEFAULT_ASSET_PARTS, ...(def.partsMap || {}) };
                 const keys = Object.keys(parts);
                 if (!st.inspectorReady) {
-                    const persisted = loadPersistedEditorState(def.id) || {};
-                    st.partsMap = { ...parts, ...(persisted.partsMap || {}) };
-                    st.partTweaks = {
-                        ...clonePartTweaks(def.partTweaks || {}),
-                        ...clonePartTweaks(persisted.partTweaks || {})
-                    };
-                    st.slotTweaks = {
-                        ...cloneSlotTweaks(def.slotTweaks || {}),
-                        ...cloneSlotTweaks(persisted.slotTweaks || {})
-                    };
-                    st.groupConfigs = {
-                        ...cloneGroupConfigs(def.groupConfigs || extractGroupConfigs(def.groupedParts || {})),
-                        ...cloneGroupConfigs(persisted.groupConfigs || {})
-                    };
-                    st.visibleSet = new Set(Array.isArray(persisted.visibleParts) ? persisted.visibleParts : (def.visibleParts || DEFAULT_VISIBLE_PARTS));
-                    st.drawOrder = normalizeLayerOrder(Object.keys(st.partsMap), persisted.drawOrder || def.drawOrder || keys);
+                    st.partsMap = { ...parts };
+                    st.partTweaks = clonePartTweaks(def.partTweaks || {});
+                    st.slotTweaks = cloneSlotTweaks(def.slotTweaks || {});
+                    st.groupConfigs = cloneGroupConfigs(def.groupConfigs || extractGroupConfigs(def.groupedParts || {}));
+                    st.visibleSet = new Set(def.visibleParts || DEFAULT_VISIBLE_PARTS);
+                    st.drawOrder = normalizeLayerOrder(Object.keys(st.partsMap), def.drawOrder || keys);
                     st.collapsedGroups = new Set();
                     st.inspectorReady = true;
                 } else {
@@ -3722,7 +3695,6 @@
                     slotTweaks: st.slotTweaks,
                     groupConfigs: st.groupConfigs
                 }, null, 2);
-                savePersistedEditorState(def, st);
             }
 
             function loadAssetSkin(def) {
@@ -3779,7 +3751,10 @@
                     version: manifestVersion,
                     partsMap: flattened.partsMap,
                     groupedParts: groupedData.groupedParts,
-                    groupConfigs: cloneGroupConfigs(extractGroupConfigs(groupedData.groupedParts)),
+                    groupConfigs: {
+                        ...cloneGroupConfigs(extractGroupConfigs(groupedData.groupedParts)),
+                        ...cloneGroupConfigs(m.groupConfigs || {})
+                    },
                     groupedDrawOrder: normalizeGroupedDrawOrder(Object.keys(groupedData.groupedParts), m.drawOrder || groupedData.groupedDrawOrder),
                     visibleParts: flattened.visibleParts,
                     drawOrder: normalizeLayerOrder(keys, flattened.layerOrder.length ? flattened.layerOrder : keys),

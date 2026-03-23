@@ -1,5 +1,7 @@
 ﻿{
   "visibleParts": [
+    "tailFill",
+    "tailLine",
     "bodyFill",
     "bodyLine",
     "charRightEarFill",
@@ -17,9 +19,7 @@
     "charRightArmUpFill",
     "charRightArmUpLine",
     "charLeftArmUpFill",
-    "charLeftArmUpLine",
-    "tailFill",
-    "tailLine"
+    "charLeftArmUpLine"
   ],
   "drawOrder": [
     "tailFill",
@@ -227,16 +227,16 @@
       "h": -272
     },
     "tail": {
-      "x": -128,
-      "y": -272,
+      "x": -129,
+      "y": -270,
       "w": 144,
       "h": 171
     },
     "charRightArmUp": {
-      "x": 39,
-      "y": -27,
-      "w": -84,
-      "h": -79
+      "x": 20,
+      "y": -5,
+      "w": -67,
+      "h": -109
     },
     "charLeftArmUp": {
       "x": 26,
@@ -418,19 +418,19 @@
     "charRightArmUp": {
       "mode": "stretch",
       "pivot": {
-        "x": 0.88,
-        "y": 0.26
+        "x": 1,
+        "y": 0.46
       },
       "handAnchor": {
         "x": 0,
-        "y": 1
+        "y": 0
       }
     },
     "charLeftArmUp": {
       "mode": "stretch",
       "pivot": {
-        "x": 0.29,
-        "y": 0.82
+        "x": 0,
+        "y": 0.94
       },
       "handAnchor": {
         "x": 1,
