@@ -227,6 +227,206 @@
             min-height: 0;
         }
 
+        .pasteboard-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 6;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .pasteboard-scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1000px;
+            height: 700px;
+            transform-origin: top left;
+            pointer-events: none;
+        }
+
+        .sticky-note {
+            position: absolute;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: var(--ds-space-2);
+            padding: var(--ds-space-3);
+            border-radius: var(--ds-radius-3);
+            border: var(--ds-border-w) var(--ds-border-style) color-mix(in oklab, #ffd27a 58%, var(--ds-border));
+            background:
+                linear-gradient(180deg, rgba(255, 252, 214, 0.98), rgba(255, 239, 172, 0.94));
+            box-shadow: 0 18px 28px rgba(0, 0, 0, 0.18);
+            color: #5b4420;
+            pointer-events: auto;
+            user-select: none;
+            overflow: hidden;
+            transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+            cursor: grab;
+        }
+
+        .sticky-note.is-image {
+            background:
+                linear-gradient(180deg, rgba(255, 248, 224, 0.98), rgba(255, 235, 189, 0.95));
+        }
+
+        .sticky-note:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.20);
+            border-color: color-mix(in oklab, #ffca66 66%, var(--ds-accent-strong) 34%);
+        }
+
+        .sticky-note::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            width: 44px;
+            height: 16px;
+            transform: translateX(-50%) rotate(-2deg);
+            border-radius: 4px;
+            background: rgba(255, 236, 169, 0.75);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
+        }
+
+        .sticky-note-head {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: var(--ds-space-2);
+            min-width: 0;
+        }
+
+        .sticky-note:active {
+            cursor: grabbing;
+        }
+
+        .sticky-note-kind {
+            font-size: var(--ds-fs-1);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: rgba(91, 68, 32, 0.72);
+            min-width: 0;
+        }
+
+        .sticky-note-thumb {
+            min-height: 0;
+            overflow: hidden;
+            border-radius: var(--ds-radius-2);
+            background: rgba(255, 255, 255, 0.30);
+            border: 1px solid rgba(91, 68, 32, 0.12);
+            display: block;
+        }
+
+        .sticky-note-thumb img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sticky-note-text {
+            height: 100%;
+            padding: var(--ds-space-2);
+            font-size: var(--ds-fs-1);
+            line-height: 1.35;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #5b4420;
+        }
+
+        .sticky-note-actions {
+            position: absolute;
+            right: var(--ds-space-3);
+            bottom: var(--ds-space-3);
+            display: inline-flex;
+            gap: var(--ds-space-1);
+            justify-content: flex-end;
+            opacity: 0;
+            transform: translateY(4px);
+            pointer-events: none;
+            transition: opacity 140ms ease, transform 140ms ease;
+        }
+
+        .sticky-note:hover .sticky-note-actions,
+        .sticky-note:focus-within .sticky-note-actions {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .sticky-note-actions .ds-btn {
+            min-height: 24px;
+            min-width: 24px;
+            padding-inline: 0;
+            font-size: var(--ds-fs-micro);
+            background: rgba(255, 255, 255, 0.35);
+            border-color: rgba(91, 68, 32, 0.16);
+            color: #5b4420;
+        }
+
+        .sticky-note-actions .ds-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            border-color: rgba(91, 68, 32, 0.24);
+        }
+
+        .sticky-note-delete {
+            position: absolute;
+            top: var(--ds-space-3);
+            right: var(--ds-space-3);
+            min-width: 24px;
+            min-height: 24px;
+            padding: 0;
+            background: transparent;
+            border-color: transparent;
+            color: rgba(91, 68, 32, 0.7);
+            opacity: 0;
+            transform: translateY(-4px);
+            pointer-events: none;
+            transition: opacity 140ms ease, transform 140ms ease, background 140ms ease, border-color 140ms ease;
+        }
+
+        .sticky-note:hover .sticky-note-delete,
+        .sticky-note:focus-within .sticky-note-delete {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .sticky-note-delete:hover,
+        .sticky-note-delete:focus-visible {
+            background: rgba(255, 255, 255, 0.38);
+            border-color: rgba(91, 68, 32, 0.16);
+            color: #5b4420;
+        }
+
+        .stage-menu {
+            position: absolute;
+            z-index: 70;
+            min-width: 160px;
+            display: grid;
+            gap: var(--ds-space-2);
+            padding: var(--ds-space-2);
+            border-radius: var(--ds-radius-2);
+            border: var(--ds-border-w) var(--ds-border-style) var(--ds-border);
+            background: color-mix(in oklab, var(--ds-bg-elevated) 92%, black 8%);
+            box-shadow: var(--ds-shadow-md);
+        }
+
+        .stage-menu[hidden] {
+            display: none;
+        }
+
+        .stage-menu-note {
+            font-size: var(--ds-fs-1);
+            color: var(--ds-text-muted);
+            line-height: 1.3;
+        }
+
+        .info-intro {
+            display: grid;
+            gap: var(--ds-space-1);
+        }
+
         .sidebar-nav {
             width: var(--sidebar-size);
             border-left: var(--ds-border-w) var(--ds-border-style) var(--ds-border);
@@ -247,6 +447,11 @@
             width: 100%;
             gap: var(--ds-space-2);
             align-items: center;
+        }
+
+        .nav-group + .nav-group {
+            padding-top: var(--ds-space-3);
+            border-top: 1px solid color-mix(in oklab, var(--ds-border) 72%, transparent);
         }
 
         .nav-group.meta {
@@ -1113,6 +1318,13 @@
             width: auto;
         }
 
+        .stage.nav-top .nav-group + .nav-group {
+            padding-top: 0;
+            padding-left: var(--ds-space-3);
+            border-top: none;
+            border-left: 1px solid color-mix(in oklab, var(--ds-border) 72%, transparent);
+        }
+
         .stage.nav-top .nav-group.meta {
             margin-top: 0;
             margin-left: auto;
@@ -1143,18 +1355,27 @@
 
 <body>
     <div class="wrap">
-        <div class="stage side-left">
+        <div id="stageRoot" class="stage side-left">
             <div class="canvas-host">
                 <canvas id="c"></canvas>
             </div>
+            <div id="pasteboardLayer" class="pasteboard-layer" aria-hidden="true">
+                <div id="pasteboardScene" class="pasteboard-scene"></div>
+            </div>
+            <div id="stageMenu" class="stage-menu ds-card" hidden>
+                <button id="pasteStickyBtn" class="ds-btn ds-btn-sm" type="button">Paste Sticky</button>
+                <div id="stageMenuNote" class="stage-menu-note">Paste a clipboard image or text snippet onto the wall.</div>
+            </div>
             <nav class="sidebar-nav ds-card" aria-label="Panel tabs">
-                <div class="nav-group main">
+                <div class="nav-group info">
                     <button type="button" class="nav-btn ds-btn ds-btn-icon ds-btn-sm active" data-tab="info" title="Info" aria-label="Info" aria-pressed="true" aria-controls="pane-info"><i class="iconoir-info-circle"></i></button>
+                </div>
+                <div class="nav-group utility">
                     <button type="button" class="nav-btn ds-btn ds-btn-icon ds-btn-sm" data-tab="input" title="Thoughts" aria-label="Thoughts" aria-pressed="false" aria-controls="pane-input"><i class="iconoir-edit-pencil"></i></button>
                     <button type="button" class="nav-btn ds-btn ds-btn-icon ds-btn-sm" data-tab="timer" title="Timer" aria-label="Timer" aria-pressed="false" aria-controls="pane-timer"><i class="iconoir-timer"></i></button>
-                    <button type="button" class="nav-btn ds-btn ds-btn-icon ds-btn-sm" data-tab="editor" title="Goblin Editor" aria-label="Goblin Editor" aria-pressed="false" aria-controls="pane-editor"><i class="iconoir-tools"></i></button>
                 </div>
                 <div class="nav-group meta">
+                    <button type="button" class="nav-btn ds-btn ds-btn-icon ds-btn-sm" data-tab="editor" title="Goblin Editor" aria-label="Goblin Editor" aria-pressed="false" aria-controls="pane-editor"><i class="iconoir-tools"></i></button>
                     <button type="button" class="nav-btn ds-btn ds-btn-icon ds-btn-sm" data-tab="debug" title="Debug" aria-label="Debug" aria-pressed="false" aria-controls="pane-debug"><i class="iconoir-bug"></i></button>
                     <button type="button" class="nav-btn ds-btn ds-btn-icon ds-btn-sm" data-tab="options" title="Options" aria-label="Options" aria-pressed="false" aria-controls="pane-options"><i class="iconoir-settings"></i></button>
                 </div>
@@ -1170,10 +1391,15 @@
                 <div class="tab-body">
                     <section id="pane-info" class="tab-pane ds-panel-scroll active" data-pane="info">
                         <div class="ds-pane-stack-compact">
-                            <div><b>Desk Goblin Mash</b></div>
-                            <div class="sub">A browser buddy that adds a little whimsy while you type and click.</div>
-                            <div class="sub">Controls: type in the Thoughts tab, hold keys, click mouse buttons, and switch skins in Goblin/Options.</div>
-                            <div class="sub">Perspective note: left/right asset naming is model-space (character left/right), not viewer-space.</div>
+                            <div class="info-intro">
+                                <div><b>Desk Goblin Mash</b></div>
+                                <div class="sub">A browser buddy that adds a little whimsy while you type and click.</div>
+                                <div class="sub">Controls: type in the Thoughts tab, hold keys, click mouse buttons, and switch skins in Goblin/Options.</div>
+                            </div>
+                            <div class="panel-row ds-field-row ds-field-row-compact">
+                                <label class="ds-label" for="charSelectInfo">Character</label>
+                                <select id="charSelectInfo" class="ds-select control-input"></select>
+                            </div>
                             <div id="skinRuntimeNoteInfo" class="sub" hidden></div>
                         </div>
                     </section>
@@ -1332,9 +1558,17 @@
     <script src="./js/theme-selector.js"></script>
     <script>
         (() => {
+            const STICKY_STORAGE_KEY = "deskgoblin.stickies";
             const canvas = document.getElementById("c");
             const ctx = canvas.getContext("2d");
+            const stageRoot = document.getElementById("stageRoot");
+            const pasteboardLayer = document.getElementById("pasteboardLayer");
+            const pasteboardScene = document.getElementById("pasteboardScene");
+            const stageMenu = document.getElementById("stageMenu");
+            const pasteStickyBtn = document.getElementById("pasteStickyBtn");
+            const stageMenuNote = document.getElementById("stageMenuNote");
             const thought = document.getElementById("thought");
+            const charSelectInfo = document.getElementById("charSelectInfo");
             const charSelect = document.getElementById("charSelect");
             const editorSkinSelect = document.getElementById("editorSkinSelect");
             const themeSelect = document.getElementById("themeSelect");
@@ -1439,6 +1673,7 @@
 
                 // include dpr in the transform
                 applySceneTransform();
+                syncPasteboardTransform();
             }
 
             window.addEventListener("resize", resize);
@@ -1446,6 +1681,18 @@
             canvas.tabIndex = 0;
             canvas.style.outline = "none";
             canvas.addEventListener("pointerdown", () => canvas.focus());
+            stageRoot.addEventListener("pointerdown", (ev) => {
+                if (stageMenuState.open && !ev.target.closest("#stageMenu")) hideStageMenu();
+            });
+            stageRoot.addEventListener("contextmenu", (ev) => {
+                if (ev.target.closest(".side-panel, .sidebar-nav")) return;
+                ev.preventDefault();
+                const pt = clientToScene(ev.clientX, ev.clientY);
+                showStageMenu(ev.clientX, ev.clientY, pt.x, pt.y);
+            });
+            pasteStickyBtn?.addEventListener("click", () => {
+                pasteStickyAt(stageMenuState.sceneX, stageMenuState.sceneY);
+            });
             canvas.addEventListener("pointerdown", (ev) => {
                 const pt = clientToScene(ev.clientX, ev.clientY);
                 if (hitTestFly(pt.x, pt.y)) {
@@ -1495,6 +1742,22 @@
             });
             canvas.addEventListener("pointerup", () => {
                 slotDragState.active = false;
+            });
+            window.addEventListener("pointermove", (ev) => {
+                if (!stickyDrag) return;
+                const note = stickyNotes.find((entry) => entry.id === stickyDrag.id);
+                if (!note) return;
+                const dx = (ev.clientX - stickyDrag.startX) / Math.max(VIEW.scale, 0.0001);
+                const dy = (ev.clientY - stickyDrag.startY) / Math.max(VIEW.scale, 0.0001);
+                const pos = clampStickyPosition(note, stickyDrag.noteX + dx, stickyDrag.noteY + dy);
+                note.x = pos.x;
+                note.y = pos.y;
+                renderStickyNotes();
+            });
+            window.addEventListener("pointerup", () => {
+                if (!stickyDrag) return;
+                stickyDrag = null;
+                persistStickyNotes();
             });
 
             function isTyping() { return document.activeElement === thought; }
@@ -2466,6 +2729,9 @@
                 remaining: 5 * 60,
                 running: false
             };
+            let stickyNotes = [];
+            let stickyDrag = null;
+            let stageMenuState = { open: false, sceneX: 0, sceneY: 0 };
 
             const skinState = {
                 activeId: "test",
@@ -2540,6 +2806,244 @@
                 timerState.running = false;
                 timerState.remaining = timerState.durationSec;
                 syncTimerUI();
+            }
+
+            function sceneToStagePoint(x, y) {
+                return {
+                    x: VIEW.ox + x * VIEW.scale,
+                    y: VIEW.oy + y * VIEW.scale
+                };
+            }
+
+            function getStickyWallBounds(noteW = 0, noteH = 0) {
+                const bounds = getSceneViewportBounds();
+                const LAYOUT = layout();
+                const wallBottom = Math.min(LAYOUT.deskTopY - noteH - 18, bounds.top + 210);
+                return {
+                    left: bounds.left + 18,
+                    top: bounds.top + 18,
+                    right: bounds.right - noteW - 18,
+                    bottom: wallBottom
+                };
+            }
+
+            function clampStickyPosition(note, x, y) {
+                const bounds = getStickyWallBounds(note.w, note.h);
+                return {
+                    x: clamp(x, bounds.left, Math.max(bounds.left, bounds.right)),
+                    y: clamp(y, bounds.top, Math.max(bounds.top, bounds.bottom))
+                };
+            }
+
+            function persistStickyNotes() {
+                try {
+                    localStorage.setItem(STICKY_STORAGE_KEY, JSON.stringify(stickyNotes));
+                } catch (_) {
+                    // Ignore quota and private-mode failures for this lightweight feature.
+                }
+            }
+
+            function loadStickyNotes() {
+                try {
+                    const raw = localStorage.getItem(STICKY_STORAGE_KEY);
+                    if (!raw) return [];
+                    const parsed = JSON.parse(raw);
+                    if (!Array.isArray(parsed)) return [];
+                    return parsed.map((note) => ({
+                        id: String(note.id || `sticky_${Date.now()}`),
+                        kind: note.kind === "image" ? "image" : "text",
+                        x: +note.x || 120,
+                        y: +note.y || 100,
+                        w: Math.max(120, +note.w || 152),
+                        h: Math.max(100, +note.h || 128),
+                        text: String(note.text || ""),
+                        dataUrl: typeof note.dataUrl === "string" ? note.dataUrl : "",
+                        createdAt: +note.createdAt || Date.now()
+                    }));
+                } catch (_) {
+                    return [];
+                }
+            }
+
+            function syncPasteboardTransform() {
+                if (!pasteboardScene) return;
+                pasteboardScene.style.transform = `translate(${VIEW.ox}px, ${VIEW.oy}px) scale(${VIEW.scale})`;
+            }
+
+            function hideStageMenu() {
+                stageMenuState.open = false;
+                if (stageMenu) stageMenu.hidden = true;
+            }
+
+            function showStageMenu(clientX, clientY, sceneX, sceneY) {
+                stageMenuState = { open: true, sceneX, sceneY };
+                stageMenu.hidden = false;
+                const menuRect = stageMenu.getBoundingClientRect();
+                const menuLeft = Math.min(clientX, Math.max(8, window.innerWidth - menuRect.width - 8));
+                const menuTop = Math.min(clientY, Math.max(8, window.innerHeight - menuRect.height - 8));
+                stageMenu.style.left = `${menuLeft}px`;
+                stageMenu.style.top = `${menuTop}px`;
+                pasteStickyBtn.disabled = false;
+                stageMenuNote.textContent = "Paste a clipboard image or text snippet onto the wall.";
+            }
+
+            function escapeHtml(value) {
+                return String(value || "")
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/\"/g, "&quot;");
+            }
+
+            function describeSticky(note) {
+                return note.kind === "image" ? "Image Clip" : "Text Note";
+            }
+
+            function renderStickyNotes() {
+                if (!pasteboardScene) return;
+                pasteboardScene.innerHTML = "";
+                stickyNotes.forEach((note) => {
+                    const el = document.createElement("article");
+                    el.className = `sticky-note ${note.kind === "image" ? "is-image" : "is-text"}`;
+                    el.dataset.id = note.id;
+                    el.style.left = `${note.x}px`;
+                    el.style.top = `${note.y}px`;
+                    el.style.width = `${note.w}px`;
+                    el.style.height = `${note.h}px`;
+                    el.innerHTML =
+                        `<div class="sticky-note-head">` +
+                        `<div class="sticky-note-kind">${escapeHtml(describeSticky(note))}</div>` +
+                        `<button type="button" class="sticky-note-delete ds-btn ds-btn-icon ds-btn-sm" data-action="delete" aria-label="Delete sticky" title="Delete sticky"><i class="iconoir-trash"></i></button>` +
+                        `</div>` +
+                        `<div class="sticky-note-thumb">${note.kind === "image"
+                            ? `<img src="${escapeHtml(note.dataUrl)}" alt="Sticky clipboard preview" />`
+                            : `<div class="sticky-note-text">${escapeHtml((note.text || "").slice(0, 240))}</div>`}</div>` +
+                        `<div class="sticky-note-actions">` +
+                        `<button type="button" class="ds-btn ds-btn-icon ds-btn-sm" data-action="copy" aria-label="Copy sticky" title="Copy sticky"><i class="iconoir-copy"></i></button>` +
+                        `<button type="button" class="ds-btn ds-btn-icon ds-btn-sm" data-action="export" aria-label="Export sticky" title="Export sticky"><i class="iconoir-download"></i></button>` +
+                        `</div>`;
+
+                    el.addEventListener("pointerdown", (ev) => {
+                        if (ev.button !== 0) return;
+                        if (ev.target.closest("button, a, input, textarea, select")) return;
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                        stickyDrag = {
+                            id: note.id,
+                            startX: ev.clientX,
+                            startY: ev.clientY,
+                            noteX: note.x,
+                            noteY: note.y
+                        };
+                    });
+
+                    el.querySelectorAll("[data-action]").forEach((btn) => {
+                        btn.addEventListener("click", async (ev) => {
+                            ev.stopPropagation();
+                            const action = btn.dataset.action;
+                            if (action === "delete") {
+                                stickyNotes = stickyNotes.filter((entry) => entry.id !== note.id);
+                                persistStickyNotes();
+                                renderStickyNotes();
+                                return;
+                            }
+                            if (action === "export") {
+                                const filename = note.kind === "image" ? `sticky-${note.id}.png` : `sticky-${note.id}.txt`;
+                                const href = note.kind === "image"
+                                    ? note.dataUrl
+                                    : URL.createObjectURL(new Blob([note.text || ""], { type: "text/plain;charset=utf-8" }));
+                                const a = document.createElement("a");
+                                a.href = href;
+                                a.download = filename;
+                                document.body.appendChild(a);
+                                a.click();
+                                a.remove();
+                                if (note.kind !== "image") setTimeout(() => URL.revokeObjectURL(href), 500);
+                                return;
+                            }
+                            if (action === "copy") {
+                                try {
+                                    if (note.kind === "image" && navigator.clipboard?.write && window.ClipboardItem) {
+                                        const blob = await fetch(note.dataUrl).then((res) => res.blob());
+                                        await navigator.clipboard.write([new ClipboardItem({ [blob.type || "image/png"]: blob })]);
+                                    } else if (navigator.clipboard?.writeText) {
+                                        await navigator.clipboard.writeText(note.kind === "image" ? note.dataUrl : note.text || "");
+                                    }
+                                } catch (_) {
+                                    // Leave failures silent for now; clipboard permissions vary by browser.
+                                }
+                            }
+                        });
+                    });
+
+                    pasteboardScene.appendChild(el);
+                });
+            }
+
+            async function readClipboardStickyData() {
+                if (navigator.clipboard?.read) {
+                    try {
+                        const items = await navigator.clipboard.read();
+                        for (const item of items) {
+                            const imageType = item.types.find((type) => type.startsWith("image/"));
+                            if (imageType) {
+                                const blob = await item.getType(imageType);
+                                const dataUrl = await new Promise((resolve, reject) => {
+                                    const reader = new FileReader();
+                                    reader.onload = () => resolve(String(reader.result || ""));
+                                    reader.onerror = () => reject(reader.error);
+                                    reader.readAsDataURL(blob);
+                                });
+                                return { kind: "image", dataUrl };
+                            }
+                            if (item.types.includes("text/plain")) {
+                                const blob = await item.getType("text/plain");
+                                const text = await blob.text();
+                                if (text.trim()) return { kind: "text", text };
+                            }
+                        }
+                    } catch (_) {
+                        // Fall back to readText below.
+                    }
+                }
+
+                if (navigator.clipboard?.readText) {
+                    const text = await navigator.clipboard.readText();
+                    if (text.trim()) return { kind: "text", text };
+                }
+
+                throw new Error("Clipboard did not contain an image or text snippet.");
+            }
+
+            async function pasteStickyAt(sceneX, sceneY) {
+                try {
+                    pasteStickyBtn.disabled = true;
+                    stageMenuNote.textContent = "Reading clipboard…";
+                    const clip = await readClipboardStickyData();
+                    const base = clip.kind === "image"
+                        ? { w: 156, h: 146, dataUrl: clip.dataUrl, text: "" }
+                        : { w: 152, h: 126, dataUrl: "", text: clip.text || "" };
+                    const id = `sticky_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+                    const pos = clampStickyPosition(base, sceneX - base.w * 0.5, sceneY - base.h * 0.5);
+                    stickyNotes.push({
+                        id,
+                        kind: clip.kind,
+                        x: pos.x,
+                        y: pos.y,
+                        w: base.w,
+                        h: base.h,
+                        text: base.text,
+                        dataUrl: base.dataUrl,
+                        createdAt: Date.now()
+                    });
+                    persistStickyNotes();
+                    renderStickyNotes();
+                    hideStageMenu();
+                    triggerFaceReaction("perk", 1.0);
+                } catch (err) {
+                    stageMenuNote.textContent = err?.message || "Clipboard access was blocked.";
+                    pasteStickyBtn.disabled = false;
+                }
             }
 
             function loadImage(src) {
@@ -3666,6 +4170,7 @@
                     suppressNextMouseDown = false;
                     return;
                 }
+                if (stickyDrag || e.target?.closest?.(".sticky-note, #stageMenu")) return;
                 if (!mTargets) return;
                 let btn = null;
                 if (e.button === 0) btn = mTargets.left;
@@ -3679,6 +4184,7 @@
             });
 
             window.addEventListener("mouseup", (e) => {
+                if (e.target?.closest?.(".sticky-note, #stageMenu")) return;
                 if (!mTargets) return;
                 let id = null;
                 if (e.button === 0) id = "mouse_left";
@@ -3696,11 +4202,10 @@
                 assignTargets();
             });
 
-            window.addEventListener("contextmenu", (e) => e.preventDefault());
-
             // Mouse movement -> slide mouse on pad
             let lastClientX = null, lastClientY = null;
             window.addEventListener("mousemove", (e) => {
+                if (stickyDrag) return;
                 if (!mousePad || !mouseSize) return;
 
                 if (lastClientX == null) { lastClientX = e.clientX; lastClientY = e.clientY; return; }
@@ -4826,6 +5331,7 @@
 
             function populateCharacterSelect() {
                 const fillSelect = (el) => {
+                    if (!el) return;
                     el.innerHTML = "";
                     Object.entries(skinLibrary).forEach(([id, def]) => {
                         const opt = document.createElement("option");
@@ -4834,11 +5340,13 @@
                         el.appendChild(opt);
                     });
                 };
+                fillSelect(charSelectInfo);
                 fillSelect(charSelect);
                 fillSelect(editorSkinSelect);
             }
 
             function syncSkinSelects(id) {
+                if (charSelectInfo && charSelectInfo.value !== id) charSelectInfo.value = id;
                 if (charSelect.value !== id) charSelect.value = id;
                 if (editorSkinSelect.value !== id) editorSkinSelect.value = id;
             }
@@ -4854,11 +5362,19 @@
                 openPanelWithTab("info");
                 setInspectorPane(inspectorPane);
                 debugText.style.display = debugOn ? "block" : "none";
+                stickyNotes = loadStickyNotes();
+                syncPasteboardTransform();
+                renderStickyNotes();
 
                 await loadManifestSkins();
                 syncSkinRuntimeNotice();
                 populateCharacterSelect();
                 syncSkinSelects(skinState.activeId);
+                charSelectInfo?.addEventListener("change", () => {
+                    switchSkin(charSelectInfo.value);
+                    syncSkinSelects(charSelectInfo.value);
+                    refreshPartsInspector();
+                });
                 charSelect.addEventListener("change", () => {
                     switchSkin(charSelect.value);
                     syncSkinSelects(charSelect.value);

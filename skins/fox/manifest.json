@@ -1,7 +1,5 @@
 ﻿{
   "visibleParts": [
-    "tailFill",
-    "tailLine",
     "bodyFill",
     "bodyLine",
     "charRightEarFill",
@@ -19,7 +17,9 @@
     "charRightArmUpFill",
     "charRightArmUpLine",
     "charLeftArmUpFill",
-    "charLeftArmUpLine"
+    "charLeftArmUpLine",
+    "tailFill",
+    "tailLine"
   ],
   "drawOrder": [
     "tailFill",
