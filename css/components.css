@@ -110,6 +110,42 @@ p {
   align-items: center;
 }
 
+.ds-toolbar-compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-toolbar-compact-gap);
+  align-items: center;
+}
+
+.ds-toolbar-compact > .ds-btn,
+.ds-toolbar-compact > .ds-select,
+.ds-toolbar-compact > .ds-input {
+  min-width: 0;
+}
+
+.ds-panel-scroll {
+  min-height: 0;
+  overflow: auto;
+  scrollbar-gutter: stable;
+  padding: var(--ds-panel-scroll-pad-y) var(--ds-panel-scroll-pad-x);
+}
+
+.ds-panel-scroll.ds-stack {
+  gap: var(--ds-panel-scroll-gap);
+}
+
+.ds-pane-stack-compact {
+  display: grid;
+  grid-auto-rows: max-content;
+  align-content: start;
+  gap: var(--ds-pane-stack-gap-compact);
+  min-width: 0;
+}
+
+.ds-pane-stack-compact > * {
+  margin: 0;
+}
+
 .ds-scroll-inline-strip {
   overflow-x: auto;
   overflow-y: hidden;
@@ -447,6 +483,25 @@ p {
   justify-content: flex-end;
   min-width: var(--ds-field-action-w);
   width: auto;
+}
+
+.ds-field-row-compact {
+  grid-template-columns:
+    minmax(110px, var(--ds-field-label-w))
+    minmax(0, 1fr);
+  min-height: calc(var(--ds-control-h-sm) + (var(--ds-field-row-pad-y) * 2));
+  padding: var(--ds-field-row-pad-y) var(--ds-field-row-pad-x);
+  border-radius: var(--ds-field-row-radius);
+}
+
+.ds-field-row-compact > .control-input,
+.ds-field-row-compact > .ds-field-control,
+.ds-field-row-compact > .ds-input,
+.ds-field-row-compact > .ds-select,
+.ds-field-row-compact > .ds-textarea {
+  width: 100%;
+  min-width: 0;
+  justify-self: stretch;
 }
 
 .ds-section-header {
@@ -1044,6 +1099,38 @@ input[type="range"]::-moz-range-thumb {
 
 .ds-table tr:hover td {
   background: var(--ds-bg-soft);
+}
+
+.ds-table-dense {
+  min-width: 0;
+}
+
+.ds-table-dense th,
+.ds-table-dense td {
+  padding: var(--ds-table-dense-cell-pad-y) var(--ds-table-dense-cell-pad-x);
+  font-size: var(--ds-table-dense-font-size);
+}
+
+.ds-table-dense th {
+  font-size: var(--ds-table-dense-header-font-size);
+}
+
+.ds-table-dense .ds-table-utility-col,
+.ds-table-dense .ds-table-utility-cell {
+  width: var(--ds-table-utility-col-w);
+  min-width: var(--ds-table-utility-col-w);
+  max-width: var(--ds-table-utility-col-w);
+  white-space: nowrap;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.ds-table-dense .ds-table-utility-col {
+  text-align: center;
+}
+
+.ds-table-dense .ds-table-row-selected td {
+  background: color-mix(in oklab, var(--ds-accent) 14%, var(--ds-bg-raised));
 }
 
 .ds-progress,

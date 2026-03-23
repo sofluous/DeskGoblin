@@ -75,6 +75,21 @@
   --ds-field-action-w: calc(var(--ds-control-h-sm) + 8px);
   --ds-field-row-gap: var(--ds-space-2);
   --ds-section-head-h: var(--ds-control-h-sm);
+  --ds-toolbar-compact-gap: 6px;
+  --ds-toolbar-compact-pad-x: var(--ds-space-2);
+  --ds-toolbar-compact-pad-y: 6px;
+  --ds-pane-stack-gap-compact: var(--ds-space-1);
+  --ds-panel-scroll-pad-x: var(--ds-space-3);
+  --ds-panel-scroll-pad-y: var(--ds-space-3);
+  --ds-panel-scroll-gap: var(--ds-space-3);
+  --ds-field-row-pad-x: var(--ds-space-2);
+  --ds-field-row-pad-y: var(--ds-space-1);
+  --ds-field-row-radius: var(--ds-radius-2);
+  --ds-table-dense-cell-pad-y: 6px;
+  --ds-table-dense-cell-pad-x: 8px;
+  --ds-table-dense-font-size: var(--ds-fs-1);
+  --ds-table-dense-header-font-size: var(--ds-fs-micro);
+  --ds-table-utility-col-w: 28px;
 
   --ds-bg: #0f141c;
   --ds-bg-elevated: #141b26;
