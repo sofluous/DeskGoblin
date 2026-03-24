@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Desk Goblin Mash</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' font-size='48'%3E%F0%9F%91%BA%3C/text%3E%3C/svg%3E" />
+    <meta name="app-version" content="0.11" />
     <link rel="stylesheet" href="./theme.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css" />
     <style>
@@ -91,10 +92,11 @@
 
         .timer-pane {
             display: grid;
-            justify-items: center;
+            justify-items: stretch;
             align-content: start;
-            gap: var(--ds-space-4);
+            gap: var(--ds-space-3);
             min-height: 100%;
+            min-width: 0;
         }
 
         .timer-presets {
@@ -176,6 +178,11 @@
             flex-wrap: wrap;
             gap: var(--ds-space-2);
             justify-content: center;
+            width: 100%;
+        }
+
+        .timer-actions .ds-btn {
+            min-width: 104px;
         }
 
         .timer-preset-btn[aria-pressed="true"] {
@@ -534,7 +541,10 @@
 
         .panel-title {
             flex: 1;
-            text-align: center;
+            text-align: left;
+            font-size: var(--ds-fs-2);
+            font-weight: 600;
+            color: var(--ds-text);
         }
 
         .panel-actions {
@@ -599,7 +609,7 @@
         }
 
         .tab-pane.ds-panel-scroll {
-            padding: var(--ds-panel-scroll-pad-y) var(--ds-panel-scroll-pad-x);
+            padding: 0;
         }
 
         .tab-pane.active {
@@ -609,6 +619,16 @@
 
         .tab-pane > .ds-pane-stack-compact {
             min-width: 0;
+        }
+
+        #pane-input > .panel-textarea,
+        #pane-editor > .editor-layout,
+        #pane-timer > .timer-pane {
+            min-width: 0;
+        }
+
+        #pane-editor > .editor-layout {
+            flex: 1;
         }
 
         .pane-label {
@@ -659,6 +679,88 @@
             min-height: var(--ds-control-h-sm);
         }
 
+        .editor-toolbar {
+            display: flex;
+            align-items: center;
+            gap: var(--ds-space-2);
+            flex-wrap: wrap;
+            border: var(--ds-border-w) var(--ds-border-style) color-mix(in oklab, var(--ds-border) 72%, transparent);
+            box-shadow: inset 0 1px 0 color-mix(in oklab, white 6%, transparent);
+        }
+
+        .editor-toolbar > .ds-select {
+            flex: 1 1 220px;
+            min-width: 180px;
+        }
+
+        .editor-toolbar > .ds-btn {
+            flex: 0 0 auto;
+        }
+
+        .editor-toolbar > #partsResetAll {
+            margin-left: auto;
+        }
+
+        .editor-toolbar > .ds-btn[aria-pressed="true"] {
+            background: color-mix(in oklab, var(--ds-accent) 18%, var(--ds-bg-raised));
+            border-color: color-mix(in oklab, var(--ds-accent) 36%, transparent);
+            color: var(--ds-text);
+        }
+
+        .utility-section {
+            display: grid;
+            gap: var(--ds-space-2);
+            padding: var(--ds-card-pad);
+            background: color-mix(in oklab, var(--ds-bg-elevated) 76%, transparent);
+        }
+
+        .utility-section > h4 {
+            margin: 0;
+            font-size: var(--ds-fs-2);
+            color: var(--ds-text);
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        .utility-section-body > .sub:first-child {
+            margin-top: calc(var(--ds-space-1) * -1);
+        }
+
+        .info-character-card .ds-field-row {
+            margin-top: var(--ds-space-1);
+        }
+
+        .info-selector-note {
+            font-size: var(--ds-fs-1);
+            color: var(--dg-subtle-text);
+        }
+
+        .utility-section-body {
+            display: grid;
+            gap: var(--ds-space-2);
+            min-width: 0;
+        }
+
+        .utility-section-note {
+            display: grid;
+            gap: var(--ds-space-1);
+            padding-top: var(--ds-space-2);
+            border-top: var(--ds-border-w) var(--ds-border-style) color-mix(in oklab, var(--ds-border) 72%, transparent);
+        }
+
+        .timer-card {
+            justify-items: stretch;
+        }
+
+        .timer-card > h4 {
+            text-align: center;
+        }
+
+        .timer-card .utility-section-body {
+            justify-items: center;
+            gap: var(--ds-space-3);
+        }
+
         #debugText {
             margin: 0;
             flex: 1;
@@ -682,7 +784,7 @@
 
         .inspector h4 {
             margin: 0;
-            font-size: var(--ds-fs-1);
+            font-size: var(--ds-fs-2);
             color: var(--ds-text);
             font-weight: 600;
             line-height: 1.25;
@@ -692,8 +794,8 @@
             display: flex;
             align-items: center;
             gap: var(--ds-space-2);
-            margin-bottom: var(--ds-space-4);
-            padding-bottom: var(--ds-space-2);
+            margin-bottom: var(--ds-space-2);
+            padding-bottom: var(--ds-space-1);
             border-bottom: var(--ds-border-w) var(--ds-border-style) color-mix(in oklab, var(--ds-border) 78%, transparent);
             flex-wrap: wrap;
         }
@@ -709,28 +811,46 @@
         .selection-chip {
             margin-left: var(--ds-space-2);
             color: var(--ds-text);
-            font-weight: 600;
+            font-weight: 500;
             background: color-mix(in oklab, var(--ds-accent) 16%, transparent);
             border: 1px solid color-mix(in oklab, var(--ds-accent) 34%, transparent);
             border-radius: 999px;
-            padding: 2px var(--ds-space-2);
+            padding: 1px var(--ds-space-2);
             display: inline-flex;
             align-items: center;
+            font-size: var(--ds-fs-1);
         }
 
         .inspector-tabbar {
             display: flex;
-            gap: var(--ds-space-2);
-            margin-bottom: var(--ds-space-4);
-            padding: var(--ds-space-1) 0 var(--ds-space-2);
+            align-items: center;
+            gap: var(--ds-space-1);
+            margin-bottom: var(--ds-space-2);
+            padding: 0 0 var(--ds-space-1);
+            border-bottom: var(--ds-border-w) var(--ds-border-style) color-mix(in oklab, var(--ds-border) 78%, transparent);
         }
 
         .inspector-tabbar.ds-toolbar-compact {
-            gap: var(--ds-toolbar-compact-gap);
+            gap: var(--ds-space-1);
         }
 
         .inspector-tabbtn {
             min-height: var(--ds-control-h-sm);
+            border-radius: var(--ds-radius-pill);
+        }
+
+        .inspector-tabbtn[aria-pressed="true"] {
+            background: color-mix(in oklab, var(--ds-accent) 18%, var(--ds-bg-raised));
+            border-color: color-mix(in oklab, var(--ds-accent) 34%, transparent);
+            color: var(--ds-text);
+        }
+
+        .inspector-tabbar .spacer {
+            flex: 1;
+        }
+
+        .inspector-reset-btn {
+            flex: 0 0 auto;
         }
 
         #partInspector .inspector-head,
@@ -747,7 +867,7 @@
         .inspector-pane.active {
             display: flex;
             flex-direction: column;
-            gap: var(--ds-space-3);
+            gap: var(--ds-space-2);
         }
 
         .inspector-grid {
@@ -759,18 +879,24 @@
 
         .slider-list {
             display: grid;
-            gap: var(--ds-space-3);
+            gap: var(--ds-space-2);
             margin-bottom: 0;
         }
 
         .slider-row {
             display: grid;
-            grid-template-columns: 34px 1fr 46px;
-            gap: var(--ds-space-2);
+            grid-template-columns: 36px 1fr 64px;
+            gap: var(--ds-space-1);
             align-items: center;
             font-size: var(--ds-fs-1);
             color: var(--muted);
-            padding: 0 var(--ds-space-1);
+            padding: 0;
+        }
+
+        .slider-row > :first-child {
+            font-weight: 600;
+            color: var(--dg-subtle-text);
+            letter-spacing: 0.01em;
         }
 
         .slider-row input[type="range"] {
@@ -815,9 +941,27 @@
         }
 
         .slider-val {
+            width: 100%;
+            min-width: 0;
             text-align: right;
             color: var(--ds-text);
             font: 11px/1.1 Consolas, Menlo, monospace;
+            border: none;
+            border-bottom: 1px solid color-mix(in oklab, var(--dg-border-soft) 86%, transparent);
+            background: transparent;
+            border-radius: 0;
+            padding: 2px 0;
+            box-shadow: none;
+        }
+
+        .slider-val[type="number"] {
+            appearance: textfield;
+        }
+
+        .slider-val[type="number"]::-webkit-outer-spin-button,
+        .slider-val[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
 
         .inspector-grid .ds-input,
@@ -828,7 +972,7 @@
         .inspector-actions {
             display: flex;
             gap: var(--ds-space-2);
-            flex-wrap: wrap;
+            justify-content: flex-end;
             margin-top: 0;
         }
 
@@ -838,10 +982,11 @@
 
         #partJson {
             width: 100%;
-            margin-top: var(--ds-space-3);
-            min-height: 90px;
-            max-height: 160px;
-            resize: vertical;
+            margin-top: 0;
+            min-height: 0;
+            max-height: none;
+            resize: none;
+            flex: 1;
             border: var(--ds-border-w) var(--ds-border-style) var(--dg-border-soft);
             border-radius: var(--ds-radius-2);
             background: var(--dg-surface-softer);
@@ -850,23 +995,52 @@
             padding: var(--ds-space-2);
         }
 
+        #inspectorPaneJson.active {
+            gap: var(--ds-space-2);
+        }
+
         .editor-layout {
-            display: flex;
-            flex-direction: column;
+            --dg-editor-layers-min: 260px;
+            --dg-editor-inspector-min: 260px;
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr);
             min-height: 0;
             height: 100%;
             overflow: hidden;
             gap: var(--ds-space-3);
         }
 
-        .table-wrap {
+        .editor-main {
+            display: grid;
+            grid-template-rows: minmax(var(--dg-editor-layers-min), 1.15fr) minmax(var(--dg-editor-inspector-min), 1fr);
             min-height: 0;
-            flex: 1;
+            overflow: hidden;
+            gap: var(--ds-space-3);
+        }
+
+        .table-wrap {
+            min-height: var(--dg-editor-layers-min);
+            min-width: 0;
             overflow: auto;
             background: var(--dg-surface-softer);
             border-radius: var(--ds-radius-2);
-            padding: var(--ds-space-1);
+            padding: 0 var(--ds-space-1) var(--ds-space-1);
             box-sizing: border-box;
+        }
+
+        #partInspector {
+            margin-top: 0;
+            min-height: var(--dg-editor-inspector-min);
+            display: grid;
+            grid-template-rows: auto auto minmax(0, 1fr);
+            overflow: hidden;
+            overscroll-behavior: contain;
+        }
+
+        #partInspector .inspector-pane {
+            min-height: 0;
+            overflow: auto;
+            padding-bottom: var(--ds-space-2);
         }
 
         .layer-table {
@@ -887,13 +1061,23 @@
         .layer-table th {
             position: sticky;
             top: 0;
-            z-index: 2;
+            z-index: 3;
             background: var(--dg-table-sticky);
             white-space: nowrap;
             color: var(--dg-subtle-text);
             font-size: var(--ds-table-dense-header-font-size);
             font-weight: 600;
-            letter-spacing: 0.01em;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            box-shadow: inset 0 -1px 0 color-mix(in oklab, var(--dg-border-soft) 88%, transparent);
+        }
+
+        .layer-table tbody tr {
+            transition: background-color 120ms ease, box-shadow 120ms ease;
+        }
+
+        .layer-table tbody tr:hover td {
+            background: color-mix(in oklab, var(--ds-bg-soft) 54%, transparent);
         }
 
         .layer-table tr.selected {
@@ -913,6 +1097,7 @@
             padding-top: calc(var(--ds-table-dense-cell-pad-y) + 1px);
             padding-bottom: calc(var(--ds-table-dense-cell-pad-y) + 1px);
             border-top: var(--ds-border-w) var(--ds-border-style) var(--dg-border-soft);
+            background: color-mix(in oklab, var(--ds-bg-elevated) 88%, transparent);
         }
 
         .layer-table tr.layer-row td {
@@ -999,6 +1184,7 @@
             font-weight: 600;
             color: var(--ds-text);
             min-height: var(--ds-control-h-sm);
+            letter-spacing: 0.01em;
         }
 
         .part-count {
@@ -1022,6 +1208,11 @@
             overflow: hidden;
             text-overflow: ellipsis;
             min-height: var(--ds-control-h-sm);
+        }
+
+        .layer-table td:nth-child(2),
+        .layer-table td:nth-child(3) {
+            border-left: 1px solid color-mix(in oklab, var(--dg-border-soft) 42%, transparent);
         }
 
         .layer-table th.col-mapping,
@@ -1192,11 +1383,11 @@
         }
 
         .hint-info {
-            margin-left: var(--ds-space-2);
+            margin-left: var(--ds-space-1);
             border: var(--ds-border-w) var(--ds-border-style) var(--ds-border);
             border-radius: var(--ds-radius-pill);
-            width: var(--ds-control-h-sm);
-            height: var(--ds-control-h-sm);
+            width: 18px;
+            height: 18px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -1205,10 +1396,19 @@
             background: var(--ds-bg-raised);
             cursor: help;
             position: relative;
+            vertical-align: middle;
+            flex: 0 0 auto;
         }
 
         .hint-info i {
-            font-size: var(--ds-fs-1);
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        #armRigControls.inspector {
+            margin-top: var(--ds-space-2);
+            padding: var(--ds-space-2) 0 0;
+            border-top: var(--ds-border-w) var(--ds-border-style) color-mix(in oklab, var(--ds-border) 72%, transparent);
         }
 
         .toggle-row {
@@ -1270,11 +1470,11 @@
         }
 
         .stage.side-right .side-panel {
-            right: var(--sidebar-size);
+            right: calc(var(--sidebar-size) + var(--ds-space-2));
         }
 
         .stage.side-left .side-panel {
-            left: var(--sidebar-size);
+            left: calc(var(--sidebar-size) + var(--ds-space-2));
         }
 
         .stage.side-right.panel-collapsed .side-panel {
@@ -1391,162 +1591,198 @@
                 <div class="tab-body">
                     <section id="pane-info" class="tab-pane ds-panel-scroll active" data-pane="info">
                         <div class="ds-pane-stack-compact">
-                            <div class="info-intro">
-                                <div><b>Desk Goblin Mash</b></div>
-                                <div class="sub">A browser buddy that adds a little whimsy while you type and click.</div>
-                                <div class="sub">Controls: type in the Thoughts tab, hold keys, click mouse buttons, and switch skins in Goblin/Options.</div>
+                            <div class="utility-section ds-card info-intro">
+                                <h4>Desk Goblin Mash</h4>
+                                <div class="utility-section-body">
+                                    <div class="sub">A browser buddy that adds a little whimsy while you type and click.</div>
+                                    <div class="sub">Controls: type in the Thoughts tab, hold keys, click mouse buttons, and switch skins in Goblin/Options.</div>
+                                </div>
                             </div>
-                            <div class="panel-row ds-field-row ds-field-row-compact">
-                                <label class="ds-label" for="charSelectInfo">Character</label>
-                                <select id="charSelectInfo" class="ds-select control-input"></select>
+                            <div class="utility-section ds-card info-character-card">
+                                <h4>Choose Character</h4>
+                                <div class="utility-section-body">
+                                    <div class="info-selector-note">Switch the desk buddy without leaving the main view.</div>
+                                    <div class="panel-row ds-field-row ds-field-row-compact">
+                                        <label class="ds-label" for="charSelectInfo">Character</label>
+                                        <select id="charSelectInfo" class="ds-select control-input"></select>
+                                    </div>
+                                    <div id="skinRuntimeNoteInfo" class="utility-section-note sub" hidden></div>
+                                </div>
                             </div>
-                            <div id="skinRuntimeNoteInfo" class="sub" hidden></div>
                         </div>
                     </section>
                     <section id="pane-input" class="tab-pane ds-panel-scroll" data-pane="input" data-surface="none" hidden>
                         <textarea id="thought" class="panel-textarea ds-textarea" placeholder="Type... (the goblin will mash while you type)"></textarea>
                     </section>
                     <section id="pane-timer" class="tab-pane ds-panel-scroll" data-pane="timer" hidden>
-                        <div class="timer-pane">
-                            <div class="timer-presets">
-                                <button id="timerPreset5" class="timer-preset-btn ds-btn ds-btn-sm" type="button" data-minutes="5" aria-pressed="true">5</button>
-                                <button id="timerPreset15" class="timer-preset-btn ds-btn ds-btn-sm" type="button" data-minutes="15" aria-pressed="false">15</button>
-                                <button id="timerPreset30" class="timer-preset-btn ds-btn ds-btn-sm" type="button" data-minutes="30" aria-pressed="false">30</button>
-                            </div>
-                            <div id="timerFace" class="timer-face">
-                                <div class="timer-center">
-                                    <div id="timerDuration" class="timer-duration">5 Minute Timer</div>
-                                    <div id="timerTime" class="timer-time">05:00</div>
-                                    <div id="timerSub" class="timer-sub">Ready to start</div>
+                        <div class="timer-pane ds-pane-stack-compact">
+                            <div class="utility-section ds-card timer-card">
+                                <h4>Focus Timer</h4>
+                                <div class="utility-section-body">
+                                    <div class="timer-presets">
+                                        <button id="timerPreset5" class="timer-preset-btn ds-btn ds-btn-sm" type="button" data-minutes="5" aria-pressed="true">5</button>
+                                        <button id="timerPreset15" class="timer-preset-btn ds-btn ds-btn-sm" type="button" data-minutes="15" aria-pressed="false">15</button>
+                                        <button id="timerPreset30" class="timer-preset-btn ds-btn ds-btn-sm" type="button" data-minutes="30" aria-pressed="false">30</button>
+                                    </div>
+                                    <div id="timerFace" class="timer-face">
+                                        <div class="timer-center">
+                                            <div id="timerDuration" class="timer-duration">5 Minute Timer</div>
+                                            <div id="timerTime" class="timer-time">05:00</div>
+                                            <div id="timerSub" class="timer-sub">Ready to start</div>
+                                        </div>
+                                    </div>
+                                    <div class="timer-actions">
+                                        <button id="timerToggle" class="ds-btn ds-btn-sm" type="button" aria-pressed="false">Start</button>
+                                        <button id="timerReset" class="ds-btn ds-btn-sm" type="button">Reset</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="timer-actions">
-                                <button id="timerToggle" class="ds-btn ds-btn-sm" type="button" aria-pressed="false">Start</button>
-                                <button id="timerReset" class="ds-btn ds-btn-sm" type="button">Reset</button>
                             </div>
                         </div>
                     </section>
                     <section id="pane-debug" class="tab-pane ds-panel-scroll" data-pane="debug" hidden>
                         <div class="ds-pane-stack-compact">
-                            <label class="toggle-row ds-switch-inline"><span class="ds-label">Show debug text</span><span class="toggle ds-switch"><input id="debugEnabled" type="checkbox" checked /><span class="toggle-ui ds-switch-track"></span></span></label>
-                            <label class="toggle-row ds-switch-inline"><span class="ds-label">Show skeleton overlay</span><span class="toggle ds-switch"><input id="skeletonEnabled" type="checkbox" /><span class="toggle-ui ds-switch-track"></span></span></label>
-                            <label class="toggle-row ds-switch-inline"><span class="ds-label">Semantic labels (model-space)</span><span class="toggle ds-switch"><input id="semanticEnabled" type="checkbox" checked /><span class="toggle-ui ds-switch-track"></span></span></label>
-                            <pre id="debugText">Debug ready...</pre>
+                            <div class="utility-section ds-card">
+                                <h4>Overlays</h4>
+                                <div class="utility-section-body">
+                                    <label class="toggle-row ds-switch-inline"><span class="ds-label">Show debug text</span><span class="toggle ds-switch"><input id="debugEnabled" type="checkbox" checked /><span class="toggle-ui ds-switch-track"></span></span></label>
+                                    <label class="toggle-row ds-switch-inline"><span class="ds-label">Show skeleton overlay</span><span class="toggle ds-switch"><input id="skeletonEnabled" type="checkbox" /><span class="toggle-ui ds-switch-track"></span></span></label>
+                                    <label class="toggle-row ds-switch-inline"><span class="ds-label">Semantic labels (model-space)</span><span class="toggle ds-switch"><input id="semanticEnabled" type="checkbox" checked /><span class="toggle-ui ds-switch-track"></span></span></label>
+                                </div>
+                            </div>
+                            <div class="utility-section ds-card">
+                                <h4>Debug Output</h4>
+                                <div class="utility-section-body">
+                                    <pre id="debugText">Debug ready...</pre>
+                                </div>
+                            </div>
                         </div>
                     </section>
                     <section id="pane-editor" class="tab-pane ds-panel-scroll" data-pane="editor" hidden>
                             <div class="editor-layout">
-                                <div class="panel-row ds-toolbar-compact">
+                                <div class="panel-row ds-toolbar-compact editor-toolbar">
                                     <select id="editorSkinSelect" class="ds-select control-input" aria-label="Editor skin"></select>
                                     <button id="tModeBtn" class="ds-btn ds-btn-sm" type="button" aria-pressed="false">Rig</button>
                                     <button id="soloSelectedBtn" class="ds-btn ds-btn-sm" type="button" aria-pressed="false">Isolate</button>
-                                    <button id="partsResetAll" class="ds-btn ds-btn-sm" type="button">Reset All</button>
+                                    <button id="partsResetAll" class="ds-btn ds-btn-icon ds-btn-sm" type="button" title="Reset all part properties" aria-label="Reset all part properties"><i class="iconoir-refresh-double"></i></button>
                                 </div>
-                                <div class="table-wrap ds-table-wrap">
-                                    <table class="layer-table ds-table ds-table-dense">
-                                    <colgroup>
-                                        <col class="col-layer ds-table-utility-col" />
-                                        <col class="col-mapping" />
-                                        <col class="col-asset" />
-                                        <col class="col-vis ds-table-utility-col" />
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th class="col-layer" aria-label="Layer controls"></th>
-                                            <th class="col-mapping">Mapping <span class="hint-info" title="Model left/right is from the character's perspective. Model-left appears on viewer-right." aria-label="Model left/right is from the character's perspective. Model-left appears on viewer-right."><i class="iconoir-info-empty"></i></span></th>
-                                            <th class="col-asset">Asset</th>
-                                            <th class="col-vis" aria-label="Visibility"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="layerTableBody"></tbody>
-                                </table>
-                            </div>
-                            <div id="partInspector" class="inspector ds-card">
-                                <div class="inspector-head ds-section-header">
-                                    <h4>Part Properties <span id="selectedPartLabel" class="selection-chip"></span></h4>
-                                    <span class="spacer"></span>
-                                    <button id="partReset" class="ds-btn ds-btn-sm" type="button">Reset</button>
+                                <div class="editor-main">
+                                    <div class="table-wrap ds-table-wrap">
+                                        <table class="layer-table ds-table ds-table-dense">
+                                        <colgroup>
+                                            <col class="col-layer ds-table-utility-col" />
+                                            <col class="col-mapping" />
+                                            <col class="col-asset" />
+                                            <col class="col-vis ds-table-utility-col" />
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th class="col-layer" aria-label="Layer controls"></th>
+                                                <th class="col-mapping">Slot <span class="hint-info" title="Model left/right is from the character's perspective. Model-left appears on viewer-right." aria-label="Model left/right is from the character's perspective. Model-left appears on viewer-right."><i class="iconoir-info-circle"></i></span></th>
+                                                <th class="col-asset">Asset</th>
+                                                <th class="col-vis" aria-label="Visibility"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="layerTableBody"></tbody>
+                                    </table>
                                 </div>
-                                <div class="inspector-tabbar ds-toolbar-compact">
-                                    <button id="inspectorTabInputs" class="inspector-tabbtn ds-btn ds-btn-sm active" type="button" aria-pressed="true">Inputs</button>
-                                    <button id="inspectorTabJson" class="inspector-tabbtn ds-btn ds-btn-sm" type="button" aria-pressed="false">JSON</button>
-                                </div>
-                                <div id="inspectorPaneInputs" class="inspector-pane active">
-                                    <div class="slider-list">
-                                        <label class="slider-row">dX
-                                            <input id="partDx" type="range" min="-220" max="220" step="1" value="0" />
-                                            <span id="partDxVal" class="slider-val">0</span>
-                                        </label>
-                                        <label class="slider-row">dY
-                                            <input id="partDy" type="range" min="-220" max="220" step="1" value="0" />
-                                            <span id="partDyVal" class="slider-val">0</span>
-                                        </label>
-                                        <label class="slider-row">sX%
-                                            <input id="partDw" type="range" min="-95" max="300" step="1" value="0" />
-                                            <span id="partDwVal" class="slider-val">0</span>
-                                        </label>
-                                        <label class="slider-row">sY%
-                                            <input id="partDh" type="range" min="-95" max="300" step="1" value="0" />
-                                            <span id="partDhVal" class="slider-val">0</span>
-                                        </label>
+                                <div id="partInspector" class="inspector ds-card">
+                                    <div class="inspector-head ds-section-header">
+                                        <h4>Part Properties <span id="selectedPartLabel" class="selection-chip"></span></h4>
                                     </div>
-                                    <label class="toggle-row ds-switch-inline"><span class="ds-label">Lock aspect</span><span class="toggle ds-switch"><input id="aspectLockEnabled" type="checkbox" checked /><span class="toggle-ui ds-switch-track"></span></span></label>
-                                    <div id="armRigControls" class="inspector" hidden>
-                                        <div class="inspector-head ds-section-header">
-                                            <h4>Arm Rig</h4>
-                                        </div>
+                                    <div class="inspector-tabbar ds-toolbar-compact">
+                                        <button id="inspectorTabInputs" class="inspector-tabbtn ds-btn ds-btn-sm active" type="button" aria-pressed="true">Inputs</button>
+                                        <button id="inspectorTabJson" class="inspector-tabbtn ds-btn ds-btn-sm" type="button" aria-pressed="false">JSON</button>
+                                        <span class="spacer"></span>
+                                        <button id="partReset" class="inspector-reset-btn ds-btn ds-btn-icon ds-btn-sm" type="button" title="Reset selected properties" aria-label="Reset selected properties"><i class="iconoir-refresh-circle"></i></button>
+                                    </div>
+                                    <div id="inspectorPaneInputs" class="inspector-pane active">
                                         <div class="slider-list">
-                                            <label class="slider-row">pX
-                                                <input id="armPivotX" type="range" min="0" max="1" step="0.01" value="0.5" />
-                                                <span id="armPivotXVal" class="slider-val">0.50</span>
+                                            <label class="slider-row">dX
+                                                <input id="partDx" type="range" min="-220" max="220" step="1" value="0" />
+                                                <input id="partDxVal" class="slider-val" type="number" min="-220" max="220" step="1" value="0" />
                                             </label>
-                                            <label class="slider-row">pY
-                                                <input id="armPivotY" type="range" min="0" max="1" step="0.01" value="0.1" />
-                                                <span id="armPivotYVal" class="slider-val">0.10</span>
+                                            <label class="slider-row">dY
+                                                <input id="partDy" type="range" min="-220" max="220" step="1" value="0" />
+                                                <input id="partDyVal" class="slider-val" type="number" min="-220" max="220" step="1" value="0" />
                                             </label>
-                                            <label class="slider-row">hX
-                                                <input id="armHandX" type="range" min="0" max="1" step="0.01" value="0.5" />
-                                                <span id="armHandXVal" class="slider-val">0.50</span>
+                                            <label class="slider-row">sX%
+                                                <input id="partDw" type="range" min="-95" max="300" step="1" value="0" />
+                                                <input id="partDwVal" class="slider-val" type="number" min="-95" max="300" step="1" value="0" />
                                             </label>
-                                            <label class="slider-row">hY
-                                                <input id="armHandY" type="range" min="0" max="1" step="0.01" value="0.96" />
-                                                <span id="armHandYVal" class="slider-val">0.96</span>
+                                            <label class="slider-row">sY%
+                                                <input id="partDh" type="range" min="-95" max="300" step="1" value="0" />
+                                                <input id="partDhVal" class="slider-val" type="number" min="-95" max="300" step="1" value="0" />
                                             </label>
+                                        </div>
+                                        <label class="toggle-row ds-switch-inline"><span class="ds-label">Lock aspect</span><span class="toggle ds-switch"><input id="aspectLockEnabled" type="checkbox" checked /><span class="toggle-ui ds-switch-track"></span></span></label>
+                                        <div id="armRigControls" class="inspector" hidden>
+                                            <div class="inspector-head ds-section-header">
+                                                <h4>Arm Rig</h4>
+                                            </div>
+                                            <div class="slider-list">
+                                                <label class="slider-row">pX
+                                                    <input id="armPivotX" type="range" min="0" max="1" step="0.01" value="0.5" />
+                                                    <input id="armPivotXVal" class="slider-val" type="number" min="0" max="1" step="0.01" value="0.50" />
+                                                </label>
+                                                <label class="slider-row">pY
+                                                    <input id="armPivotY" type="range" min="0" max="1" step="0.01" value="0.1" />
+                                                    <input id="armPivotYVal" class="slider-val" type="number" min="0" max="1" step="0.01" value="0.10" />
+                                                </label>
+                                                <label class="slider-row">hX
+                                                    <input id="armHandX" type="range" min="0" max="1" step="0.01" value="0.5" />
+                                                    <input id="armHandXVal" class="slider-val" type="number" min="0" max="1" step="0.01" value="0.50" />
+                                                </label>
+                                                <label class="slider-row">hY
+                                                    <input id="armHandY" type="range" min="0" max="1" step="0.01" value="0.96" />
+                                                    <input id="armHandYVal" class="slider-val" type="number" min="0" max="1" step="0.01" value="0.96" />
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="inspectorPaneJson" class="inspector-pane">
+                                        <textarea id="partJson" class="ds-textarea" readonly></textarea>
+                                        <div class="inspector-actions">
+                                            <button id="partCopyJson" class="ds-btn ds-btn-icon ds-btn-sm" type="button" title="Copy manifest" aria-label="Copy manifest"><i class="iconoir-copy"></i></button>
+                                            <button id="partDownloadJson" class="ds-btn ds-btn-icon ds-btn-sm" type="button" title="Download manifest" aria-label="Download manifest"><i class="iconoir-download-circle"></i></button>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="inspectorPaneJson" class="inspector-pane">
-                                    <div class="inspector-actions">
-                                        <button id="partCopyJson" class="ds-btn ds-btn-sm" type="button">Copy Manifest</button>
-                                        <button id="partDownloadJson" class="ds-btn ds-btn-sm" type="button">Download Manifest</button>
-                                    </div>
-                                    <textarea id="partJson" class="ds-textarea" readonly></textarea>
-                                </div>
+                            </div>
                             </div>
                         </div>
                     </section>
                     <section id="pane-options" class="tab-pane ds-panel-scroll" data-pane="options" hidden>
                         <div class="ds-pane-stack-compact">
-                            <div class="panel-row ds-field-row ds-field-row-compact">
-                                <label class="ds-label" for="themeSelect">Theme</label>
-                                <select id="themeSelect" class="ds-select control-input"></select>
+                            <div class="utility-section ds-card">
+                                <h4>Appearance</h4>
+                                <div class="utility-section-body">
+                                    <div class="panel-row ds-field-row ds-field-row-compact">
+                                        <label class="ds-label" for="themeSelect">Theme</label>
+                                        <select id="themeSelect" class="ds-select control-input"></select>
+                                    </div>
+                                    <div class="panel-row ds-field-row ds-field-row-compact">
+                                        <label class="ds-label" for="canvasPaletteSelect">Canvas Palette</label>
+                                        <select id="canvasPaletteSelect" class="ds-select control-input"></select>
+                                    </div>
+                                    <div class="panel-row ds-field-row ds-field-row-compact">
+                                        <label class="ds-label" for="panelSide">Panel Side</label>
+                                        <select id="panelSide" class="ds-select control-input">
+                                            <option value="right">Right</option>
+                                            <option value="left" selected>Left</option>
+                                        </select>
+                                    </div>
+                                    <div id="skinRuntimeNoteOptions" class="utility-section-note sub" hidden></div>
+                                </div>
                             </div>
-                            <div class="panel-row ds-field-row ds-field-row-compact">
-                                <label class="ds-label" for="canvasPaletteSelect">Canvas Palette</label>
-                                <select id="canvasPaletteSelect" class="ds-select control-input"></select>
+                            <div class="utility-section ds-card">
+                                <h4>Character</h4>
+                                <div class="utility-section-body">
+                                    <div class="panel-row ds-field-row ds-field-row-compact">
+                                        <label class="ds-label" for="charSelect">Character</label>
+                                        <select id="charSelect" class="ds-select control-input"></select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="panel-row ds-field-row ds-field-row-compact">
-                                <label class="ds-label" for="panelSide">Panel Side</label>
-                                <select id="panelSide" class="ds-select control-input">
-                                    <option value="right">Right</option>
-                                    <option value="left" selected>Left</option>
-                                </select>
-                            </div>
-                            <div class="panel-row ds-field-row ds-field-row-compact">
-                                <label class="ds-label" for="charSelect">Character</label>
-                                <select id="charSelect" class="ds-select control-input"></select>
-                            </div>
-                            <div id="skinRuntimeNoteOptions" class="sub" hidden></div>
                         </div>
                     </section>
                 </div>
@@ -1557,6 +1793,10 @@
 
     <script src="./js/theme-registry.js"></script>
     <script src="./js/theme-selector.js"></script>
+    <script src="./js/deskgoblin-features.js"></script>
+    <script src="./js/deskgoblin-skins.js"></script>
+    <script src="./js/deskgoblin-editor.js"></script>
+    <script src="./js/deskgoblin-ui.js"></script>
     <script>
         (() => {
             const STICKY_STORAGE_KEY = "deskgoblin.stickies";
@@ -1634,9 +1874,242 @@
             let VIEW = { w: 1000, h: 700, scale: 1, ox: 0, oy: 0, dpr: 1 };
             const IS_FILE_PROTOCOL = window.location.protocol === "file:";
             const slotDragState = { active: false, mode: "", slotId: "", scope: "", startPoint: null, startTweak: null };
+            let timerModule = null;
+            let pasteboard = null;
+            let ambient = null;
+            let uiShellModule = null;
+            let skinEditorModule = null;
+            const pasteboardState = { notes: [], drag: null, menu: { open: false, sceneX: 0, sceneY: 0 } };
 
             function applySceneTransform() {
                 ctx.setTransform(VIEW.dpr * VIEW.scale, 0, 0, VIEW.dpr * VIEW.scale, VIEW.dpr * VIEW.ox, VIEW.dpr * VIEW.oy);
+            }
+
+            function syncPasteboardTransform() {
+                return pasteboard?.syncPasteboardTransform?.();
+            }
+
+            function hideStageMenu() {
+                return pasteboard?.hideStageMenu?.();
+            }
+
+            function showStageMenu(clientX, clientY, sceneX, sceneY) {
+                return pasteboard?.showStageMenu?.(clientX, clientY, sceneX, sceneY);
+            }
+
+            function pasteStickyAt(sceneX, sceneY) {
+                return pasteboard?.pasteStickyAt?.(sceneX, sceneY);
+            }
+
+            function renderStickyNotes() {
+                return pasteboard?.renderStickyNotes?.();
+            }
+
+            function persistStickyNotes() {
+                return pasteboard?.persistStickyNotes?.();
+            }
+
+            function loadStickyNotes() {
+                return pasteboard?.loadStickyNotes?.() || [];
+            }
+
+            function syncTimerUI() {
+                return timerModule?.syncTimerUI?.();
+            }
+
+            function setTimerPreset(minutes) {
+                return timerModule?.setTimerPreset?.(minutes);
+            }
+
+            function resetTimer() {
+                return timerModule?.resetTimer?.();
+            }
+
+            function updateTimer(dt) {
+                return timerModule?.updateTimer?.(dt);
+            }
+
+            function resetFlyCooldown(min = 6, max = 14) {
+                return ambient?.resetFlyCooldown?.(min, max);
+            }
+
+            function spawnFly() {
+                return ambient?.spawnFly?.();
+            }
+
+            function hitTestFly(x, y) {
+                return ambient?.hitTestFly?.(x, y) || false;
+            }
+
+            function smashFlyAt(x, y) {
+                return ambient?.smashFlyAt?.(x, y) || false;
+            }
+
+            function updateFly(dt) {
+                return ambient?.updateFly?.(dt);
+            }
+
+            function updateCollapseAffordance() {
+                return uiShellModule?.updateCollapseAffordance?.();
+            }
+
+            function syncEditorModeButtons() {
+                tModeBtn.setAttribute("aria-pressed", tModeOn ? "true" : "false");
+                tModeBtn.classList.toggle("active", tModeOn);
+                tModeBtn.title = tModeOn ? "Exit rig mode" : "Enter rig mode";
+                tModeBtn.setAttribute("aria-label", tModeBtn.title);
+
+                soloSelectedBtn.setAttribute("aria-pressed", soloSelectedOn ? "true" : "false");
+                soloSelectedBtn.classList.toggle("active", soloSelectedOn);
+                soloSelectedBtn.title = soloSelectedOn ? "Stop isolating the current selection" : "Isolate the current selection";
+                soloSelectedBtn.setAttribute("aria-label", soloSelectedBtn.title);
+            }
+
+            function resetEditorTransientModes() {
+                const hadChanges = tModeOn || soloSelectedOn;
+                tModeOn = false;
+                soloSelectedOn = false;
+                syncEditorModeButtons();
+                if (hadChanges) refreshPartsInspector();
+            }
+
+            function setPanelOpen(open) {
+                return uiShellModule?.setPanelOpen?.(open);
+            }
+
+            function setPanelSide(side) {
+                return uiShellModule?.setPanelSide?.(side);
+            }
+
+            function setActiveTab(tab) {
+                if (tab !== "editor") resetEditorTransientModes();
+                return uiShellModule?.setActiveTab?.(tab);
+            }
+
+            function closePanelWithNoTab() {
+                resetEditorTransientModes();
+                return uiShellModule?.closePanelWithNoTab?.();
+            }
+
+            function openPanelWithTab(tab) {
+                if (tab !== "editor") resetEditorTransientModes();
+                return uiShellModule?.openPanelWithTab?.(tab);
+            }
+
+            function updatePanelLayoutMode() {
+                return uiShellModule?.updatePanelLayoutMode?.();
+            }
+
+            function setupThemeSelector() {
+                return uiShellModule?.setupThemeSelector?.();
+            }
+
+            function applyCanvasPalette(paletteId) {
+                return uiShellModule?.applyCanvasPalette?.(paletteId);
+            }
+
+            function setupCanvasPaletteSelector() {
+                return uiShellModule?.setupCanvasPaletteSelector?.();
+            }
+
+            function setInspectorPane(name) {
+                return uiShellModule?.setInspectorPane?.(name);
+            }
+
+            function populateCharacterSelect() {
+                return uiShellModule?.populateCharacterSelect?.();
+            }
+
+            function syncSkinSelects(id) {
+                return uiShellModule?.syncSkinSelects?.(id);
+            }
+
+            function getAssetSkinState(def) {
+                return skinEditorModule?.getAssetSkinState?.(def);
+            }
+
+            function getInspectorState(def) {
+                return skinEditorModule?.getInspectorState?.(def);
+            }
+
+            function groupLabelFromId(groupId) {
+                return skinEditorModule?.groupLabelFromId?.(groupId) || "";
+            }
+
+            function editorPartLabel(key) {
+                return skinEditorModule?.editorPartLabel?.(key) || String(key || "");
+            }
+
+            function editorLayerLabel(layer) {
+                return skinEditorModule?.editorLayerLabel?.(layer) || "Layer";
+            }
+
+            function getAssetOptionList(partsMap) {
+                return skinEditorModule?.getAssetOptionList?.(partsMap) || [];
+            }
+
+            function getEditorGroupRows(def, st) {
+                return skinEditorModule?.getEditorGroupRows?.(def, st) || [];
+            }
+
+            function setGroupVisibility(def, st, groupRow, visible) {
+                return skinEditorModule?.setGroupVisibility?.(def, st, groupRow, visible);
+            }
+
+            function getActiveAssetSkinDef() {
+                return skinEditorModule?.getActiveAssetSkinDef?.() || null;
+            }
+
+            function ensurePartLoaded(def, key) {
+                return skinEditorModule?.ensurePartLoaded?.(def, key);
+            }
+
+            function readPartBoxInputs() {
+                return skinEditorModule?.readPartBoxInputs?.() || { x: 0, y: 0, w: 0, h: 0 };
+            }
+
+            function writePartBoxInputs(v) {
+                return skinEditorModule?.writePartBoxInputs?.(v);
+            }
+
+            function getSelectedGroup(groupedParts, selectionKey) {
+                return skinEditorModule?.getSelectedGroup?.(groupedParts, selectionKey) || null;
+            }
+
+            function getSelectedStretchArmGroup(def, st) {
+                return skinEditorModule?.getSelectedStretchArmGroup?.(def, st) || null;
+            }
+
+            function writeArmRigInputs(group) {
+                return skinEditorModule?.writeArmRigInputs?.(group);
+            }
+
+            function refreshPartsInspector() {
+                return skinEditorModule?.refreshPartsInspector?.();
+            }
+
+            function loadAssetSkin(def) {
+                return skinEditorModule?.loadAssetSkin?.(def);
+            }
+
+            function getRenderGroupedModel(skinDef, state) {
+                return skinEditorModule?.getRenderGroupedModel?.(skinDef, state) || { groupedParts: {}, groupedDrawOrder: [] };
+            }
+
+            function findGroupIdForLayer(groupedParts, layerKey) {
+                return skinEditorModule?.findGroupIdForLayer?.(groupedParts, layerKey) || "";
+            }
+
+            function getSelectedGroupId(groupedParts, selectionKey) {
+                return skinEditorModule?.getSelectedGroupId?.(groupedParts, selectionKey) || "";
+            }
+
+            function isGroupSelection(groupedParts, selectionKey) {
+                return !!skinEditorModule?.isGroupSelection?.(groupedParts, selectionKey);
+            }
+
+            function getSoloRenderAlpha(groupedParts, layerKey) {
+                return skinEditorModule?.getSoloRenderAlpha?.(groupedParts, layerKey) ?? 1;
             }
 
             function clientToScene(clientX, clientY) {
@@ -1684,7 +2157,7 @@
             canvas.style.outline = "none";
             canvas.addEventListener("pointerdown", () => canvas.focus());
             stageRoot.addEventListener("pointerdown", (ev) => {
-                if (stageMenuState.open && !ev.target.closest("#stageMenu")) hideStageMenu();
+                if (pasteboardState.menu.open && !ev.target.closest("#stageMenu")) hideStageMenu();
             });
             stageRoot.addEventListener("contextmenu", (ev) => {
                 if (ev.target.closest(".side-panel, .sidebar-nav")) return;
@@ -1693,7 +2166,7 @@
                 showStageMenu(ev.clientX, ev.clientY, pt.x, pt.y);
             });
             pasteStickyBtn?.addEventListener("click", () => {
-                pasteStickyAt(stageMenuState.sceneX, stageMenuState.sceneY);
+                pasteStickyAt(pasteboardState.menu.sceneX, pasteboardState.menu.sceneY);
             });
             canvas.addEventListener("pointerdown", (ev) => {
                 const pt = clientToScene(ev.clientX, ev.clientY);
@@ -1746,104 +2219,13 @@
                 slotDragState.active = false;
             });
             window.addEventListener("pointermove", (ev) => {
-                if (!stickyDrag) return;
-                const note = stickyNotes.find((entry) => entry.id === stickyDrag.id);
-                if (!note) return;
-                const dx = (ev.clientX - stickyDrag.startX) / Math.max(VIEW.scale, 0.0001);
-                const dy = (ev.clientY - stickyDrag.startY) / Math.max(VIEW.scale, 0.0001);
-                const pos = clampStickyPosition(note, stickyDrag.noteX + dx, stickyDrag.noteY + dy);
-                note.x = pos.x;
-                note.y = pos.y;
-                renderStickyNotes();
+                pasteboard?.handlePointerMove?.(ev);
             });
             window.addEventListener("pointerup", () => {
-                if (!stickyDrag) return;
-                stickyDrag = null;
-                persistStickyNotes();
+                pasteboard?.handlePointerUp?.();
             });
 
             function isTyping() { return document.activeElement === thought; }
-            function updateCollapseAffordance() {
-                const collapseToward = panelSide === "left" ? "left" : "right";
-                const isCollapsed = !panelOpen;
-                panelHead.classList.toggle("collapse-left", panelSide === "right");
-                panelHead.classList.toggle("collapse-right", panelSide === "left");
-                const collapseIconClass = (collapseToward === "left")
-                    ? (isCollapsed ? "iconoir-nav-arrow-right" : "iconoir-nav-arrow-left")
-                    : (isCollapsed ? "iconoir-nav-arrow-left" : "iconoir-nav-arrow-right");
-                panelCollapseIcon.className = collapseIconClass;
-                panelCollapseBtn.title = isCollapsed ? "Expand panel" : `Collapse panel ${collapseToward}`;
-                panelCollapseBtn.setAttribute("aria-label", panelCollapseBtn.title);
-                panelCollapseBtn.setAttribute("aria-expanded", isCollapsed ? "false" : "true");
-            }
-
-            function setPanelOpen(open) {
-                sidePanel.classList.toggle("collapsed", !open);
-                stageEl.classList.toggle("panel-collapsed", !open);
-                stageEl.classList.toggle("panel-expanded", !!open);
-                sidePanel.setAttribute("aria-hidden", open ? "false" : "true");
-                updateCollapseAffordance();
-                resize();
-            }
-
-            function setPanelSide(side) {
-                const s = (side === "left") ? "left" : "right";
-                stageEl.classList.toggle("side-left", s === "left");
-                stageEl.classList.toggle("side-right", s === "right");
-                panelSideEl.value = s;
-                updateCollapseAffordance();
-                resize();
-            }
-
-            function setActiveTab(tab) {
-                tabButtons.forEach((btn) => {
-                    const active = !!tab && btn.dataset.tab === tab;
-                    btn.classList.toggle("active", active);
-                    btn.setAttribute("aria-pressed", active ? "true" : "false");
-                });
-                let activePane = null;
-                tabPanes.forEach((pane) => {
-                    const active = !!tab && pane.dataset.pane === tab;
-                    pane.classList.toggle("active", active);
-                    pane.hidden = !active;
-                    if (active) activePane = pane;
-                });
-                sidePanel.classList.toggle("surface-none", !!(activePane && activePane.dataset.surface === "none"));
-                const labelMap = { info: "Info", input: "Thoughts", timer: "Timer", editor: "Goblin Editor", debug: "Debug", options: "Options" };
-                panelTitle.textContent = labelMap[tab] || "Panel";
-                const editorActive = tab === "editor";
-                editorExpandBtn.hidden = !editorActive;
-                sidePanel.classList.toggle("editor-expanded", editorActive && editorExpanded);
-                editorExpandBtn.setAttribute("aria-pressed", editorActive && editorExpanded ? "true" : "false");
-                editorExpandBtn.title = editorActive && editorExpanded ? "Restore editor width" : "Expand editor width";
-                editorExpandBtn.setAttribute("aria-label", editorExpandBtn.title);
-                editorExpandIcon.className = editorActive && editorExpanded ? "iconoir-collapse" : "iconoir-expand";
-            }
-
-            function closePanelWithNoTab() {
-                panelOpen = false;
-                currentTab = null;
-                setPanelOpen(false);
-                setActiveTab(null);
-            }
-
-            function openPanelWithTab(tab) {
-                const next = tab || lastTab || "info";
-                currentTab = next;
-                lastTab = next;
-                panelOpen = true;
-                setPanelOpen(true);
-                setActiveTab(next);
-            }
-
-            function updatePanelLayoutMode() {
-                const vv = window.visualViewport;
-                const w = vv ? vv.width : window.innerWidth;
-                const h = vv ? vv.height : window.innerHeight;
-                const navTop = w <= 900 && h > w;
-                stageEl.classList.toggle("nav-top", navTop);
-            }
-
             let panelOpen = true;
             let debugOn = true;
             let skeletonOn = false;
@@ -1977,43 +2359,6 @@
             let panelSide = "left";
             let currentTab = "info";
             let lastTab = "info";
-
-            function setupThemeSelector() {
-                const themeSelectorApi = window.DesignSystemThemeSelector;
-                if (themeSelectorApi?.initThemeSelector) {
-                    const currentTheme = document.documentElement.getAttribute("data-theme") || "";
-                    themeSelectorApi.initThemeSelector(themeSelect, {
-                        includeSystem: true,
-                        storageKey: THEME_STORAGE_KEY,
-                        defaultTheme: currentTheme || "steel-night"
-                    });
-                    return;
-                }
-
-                const currentTheme = String(document.documentElement.getAttribute("data-theme") || "").trim();
-                themeSelect.innerHTML = `<option value="">System</option>${currentTheme ? `<option value="${currentTheme}">${currentTheme}</option>` : ""}`;
-                themeSelect.value = currentTheme;
-            }
-
-            function applyCanvasPalette(paletteId) {
-                const id = String(paletteId || "");
-                const validId = CANVAS_PALETTES[id] ? id : "cute";
-                canvasPaletteId = validId;
-                canvasPalette = CANVAS_PALETTES[validId];
-                document.documentElement.style.setProperty("--goblin-bg-top", canvasPalette.bgTop);
-                document.documentElement.style.setProperty("--goblin-bg-bottom", canvasPalette.bgBottom);
-                localStorage.setItem(CANVAS_PALETTE_STORAGE_KEY, validId);
-                if (canvasPaletteSelect.value !== validId) canvasPaletteSelect.value = validId;
-            }
-
-            function setupCanvasPaletteSelector() {
-                canvasPaletteSelect.innerHTML = Object.entries(CANVAS_PALETTES)
-                    .map(([id, p]) => `<option value="${id}">${p.label}</option>`)
-                    .join("");
-                const saved = localStorage.getItem(CANVAS_PALETTE_STORAGE_KEY) || "cute";
-                applyCanvasPalette(saved);
-                canvasPaletteSelect.addEventListener("change", () => applyCanvasPalette(canvasPaletteSelect.value));
-            }
             panelCollapseBtn.addEventListener("click", () => {
                 if (panelOpen) {
                     closePanelWithNoTab();
@@ -2031,17 +2376,13 @@
             });
             tModeBtn.addEventListener("click", () => {
                 tModeOn = !tModeOn;
-                tModeBtn.setAttribute("aria-pressed", tModeOn ? "true" : "false");
-                tModeBtn.classList.toggle("active", tModeOn);
-                tModeBtn.title = tModeOn ? "Exit rig mode" : "Enter rig mode";
-                tModeBtn.setAttribute("aria-label", tModeBtn.title);
+                syncEditorModeButtons();
+                refreshPartsInspector();
             });
             soloSelectedBtn.addEventListener("click", () => {
                 soloSelectedOn = !soloSelectedOn;
-                soloSelectedBtn.setAttribute("aria-pressed", soloSelectedOn ? "true" : "false");
-                soloSelectedBtn.classList.toggle("active", soloSelectedOn);
-                soloSelectedBtn.title = soloSelectedOn ? "Stop isolating the current selection" : "Isolate the current selection";
-                soloSelectedBtn.setAttribute("aria-label", soloSelectedBtn.title);
+                syncEditorModeButtons();
+                refreshPartsInspector();
             });
             timerToggleBtn?.addEventListener("click", () => {
                 timerState.running = !timerState.running;
@@ -2094,55 +2435,129 @@
                     openPanelWithTab(tab);
                 });
             });
-            function setInspectorPane(name) {
-                inspectorPane = (name === "json") ? "json" : "inputs";
-                inspectorTabInputs.classList.toggle("active", inspectorPane === "inputs");
-                inspectorTabJson.classList.toggle("active", inspectorPane === "json");
-                inspectorTabInputs.setAttribute("aria-pressed", inspectorPane === "inputs" ? "true" : "false");
-                inspectorTabJson.setAttribute("aria-pressed", inspectorPane === "json" ? "true" : "false");
-                inspectorPaneInputs.classList.toggle("active", inspectorPane === "inputs");
-                inspectorPaneJson.classList.toggle("active", inspectorPane === "json");
-            }
             inspectorTabInputs.addEventListener("click", () => setInspectorPane("inputs"));
             inspectorTabJson.addEventListener("click", () => setInspectorPane("json"));
-            [partDxEl, partDyEl, partDwEl, partDhEl].forEach((el) => {
-                el.addEventListener("input", () => {
-                    const def = getActiveAssetSkinDef();
-                    if (!def || !selectedPartKey) return;
-                    if (aspectLockOn && (el === partDwEl || el === partDhEl)) {
-                        if (el === partDwEl) partDhEl.value = partDwEl.value;
-                        if (el === partDhEl) partDwEl.value = partDhEl.value;
-                    }
-                    const st = getInspectorState(def);
-                    const renderModel = getRenderGroupedModel(def, st);
-                    if (isGroupSelection(renderModel.groupedParts, selectedPartKey)) st.slotTweaks[selectedPartKey] = readPartBoxInputs();
-                    else st.partTweaks[selectedPartKey] = readPartBoxInputs();
-                    refreshPartsInspector();
-                });
-            });
-            [armPivotXEl, armPivotYEl, armHandXEl, armHandYEl].forEach((el) => {
-                el.addEventListener("input", () => {
-                    const def = getActiveAssetSkinDef();
-                    if (!def || !selectedPartKey) return;
-                    const st = getInspectorState(def);
-                    const stretchCtx = getSelectedStretchArmGroup(def, st);
-                    if (!stretchCtx) return;
-                    st.groupConfigs[stretchCtx.group.id] = {
-                        ...(st.groupConfigs[stretchCtx.group.id] || {}),
-                        mode: "stretch",
-                        pivot: {
-                            x: +(armPivotXEl.value || 0.5),
-                            y: +(armPivotYEl.value || 0.10)
-                        },
-                        handAnchor: {
-                            x: +(armHandXEl.value || 0.5),
-                            y: +(armHandYEl.value || 0.96)
+            function coerceControlValue(inputEl, fallback = 0) {
+                const raw = +(inputEl.value ?? fallback);
+                const min = inputEl.min === "" ? -Infinity : +inputEl.min;
+                const max = inputEl.max === "" ? Infinity : +inputEl.max;
+                if (!Number.isFinite(raw)) return fallback;
+                return clamp(raw, min, max);
+            }
+
+            function applyPartInspectorInputs() {
+                const def = getActiveAssetSkinDef();
+                if (!def || !selectedPartKey) return;
+                const st = getInspectorState(def);
+                const renderModel = getRenderGroupedModel(def, st);
+                if (isGroupSelection(renderModel.groupedParts, selectedPartKey)) st.slotTweaks[selectedPartKey] = readPartBoxInputs();
+                else st.partTweaks[selectedPartKey] = readPartBoxInputs();
+                refreshPartsInspector();
+            }
+
+            function syncPartInspectorPair(rangeEl, valueEl) {
+                const syncFromRange = () => {
+                    valueEl.value = rangeEl.value;
+                };
+                const syncFromValue = () => {
+                    const next = coerceControlValue(valueEl, +(rangeEl.value || 0));
+                    valueEl.value = String(next);
+                    rangeEl.value = String(next);
+                };
+                rangeEl.addEventListener("input", () => {
+                    syncFromRange();
+                    if (aspectLockOn && (rangeEl === partDwEl || rangeEl === partDhEl)) {
+                        if (rangeEl === partDwEl) {
+                            partDhEl.value = partDwEl.value;
+                            partDhValEl.value = partDwEl.value;
                         }
-                    };
-                    writeArmRigInputs(st.groupConfigs[stretchCtx.group.id]);
-                    refreshPartsInspector();
+                        if (rangeEl === partDhEl) {
+                            partDwEl.value = partDhEl.value;
+                            partDwValEl.value = partDhEl.value;
+                        }
+                    }
+                    applyPartInspectorInputs();
                 });
-            });
+                valueEl.addEventListener("change", () => {
+                    syncFromValue();
+                    if (aspectLockOn && (rangeEl === partDwEl || rangeEl === partDhEl)) {
+                        if (rangeEl === partDwEl) {
+                            partDhEl.value = partDwEl.value;
+                            partDhValEl.value = partDwEl.value;
+                        }
+                        if (rangeEl === partDhEl) {
+                            partDwEl.value = partDhEl.value;
+                            partDwValEl.value = partDhEl.value;
+                        }
+                    }
+                    applyPartInspectorInputs();
+                });
+                valueEl.addEventListener("keydown", (ev) => {
+                    if (ev.key !== "Enter") return;
+                    ev.preventDefault();
+                    valueEl.blur();
+                });
+            }
+
+            [
+                [partDxEl, partDxValEl],
+                [partDyEl, partDyValEl],
+                [partDwEl, partDwValEl],
+                [partDhEl, partDhValEl]
+            ].forEach(([rangeEl, valueEl]) => syncPartInspectorPair(rangeEl, valueEl));
+
+            function applyArmRigInputs() {
+                const def = getActiveAssetSkinDef();
+                if (!def || !selectedPartKey) return;
+                const st = getInspectorState(def);
+                const stretchCtx = getSelectedStretchArmGroup(def, st);
+                if (!stretchCtx) return;
+                st.groupConfigs[stretchCtx.group.id] = {
+                    ...(st.groupConfigs[stretchCtx.group.id] || {}),
+                    mode: "stretch",
+                    pivot: {
+                        x: +(armPivotXEl.value || 0.5),
+                        y: +(armPivotYEl.value || 0.10)
+                    },
+                    handAnchor: {
+                        x: +(armHandXEl.value || 0.5),
+                        y: +(armHandYEl.value || 0.96)
+                    }
+                };
+                writeArmRigInputs(st.groupConfigs[stretchCtx.group.id]);
+                refreshPartsInspector();
+            }
+
+            function syncArmInspectorPair(rangeEl, valueEl) {
+                const syncFromRange = () => {
+                    valueEl.value = (+rangeEl.value || 0).toFixed(2);
+                };
+                const syncFromValue = () => {
+                    const next = coerceControlValue(valueEl, +(rangeEl.value || 0));
+                    rangeEl.value = String(next);
+                    valueEl.value = next.toFixed(2);
+                };
+                rangeEl.addEventListener("input", () => {
+                    syncFromRange();
+                    applyArmRigInputs();
+                });
+                valueEl.addEventListener("change", () => {
+                    syncFromValue();
+                    applyArmRigInputs();
+                });
+                valueEl.addEventListener("keydown", (ev) => {
+                    if (ev.key !== "Enter") return;
+                    ev.preventDefault();
+                    valueEl.blur();
+                });
+            }
+
+            [
+                [armPivotXEl, armPivotXValEl],
+                [armPivotYEl, armPivotYValEl],
+                [armHandXEl, armHandXValEl],
+                [armHandYEl, armHandYValEl]
+            ].forEach(([rangeEl, valueEl]) => syncArmInspectorPair(rangeEl, valueEl));
             partResetEl.addEventListener("click", () => {
                 const def = getActiveAssetSkinDef();
                 if (!def || !selectedPartKey) return;
@@ -2174,6 +2589,7 @@
                 refreshPartsInspector();
             });
             partCopyJsonEl.addEventListener("click", async () => {
+                refreshPartsInspector();
                 try {
                     await navigator.clipboard.writeText(partJsonEl.value || "");
                 } catch (_) {
@@ -2185,6 +2601,7 @@
             partDownloadJsonEl.addEventListener("click", () => {
                 const active = getActiveAssetSkinDef();
                 if (!active) return;
+                refreshPartsInspector();
                 const blob = new Blob([partJsonEl.value || ""], { type: "application/json;charset=utf-8" });
                 const href = URL.createObjectURL(blob);
                 const a = document.createElement("a");
@@ -2304,129 +2721,72 @@
                 }
             };
             let skinLibrary = { ...BASE_SKINS };
-
-            const PART_KEY_ALIASES = {
-                charLeftEarFill: ["charLeftEarFill", "leftEarFill"],
-                charLeftEarLine: ["charLeftEarLine", "leftEarLine"],
-                charLeftEarInner: ["charLeftEarInner", "leftEarInner"],
-                charRightEarFill: ["charRightEarFill", "rightEarFill"],
-                charRightEarLine: ["charRightEarLine", "rightEarLine"],
-                charLeftArmDownFill: ["charLeftArmDownFill", "leftArmDownFill", "leftArmFill"],
-                charLeftArmDownLine: ["charLeftArmDownLine", "leftArmDownLine", "leftArmLine", "leftArmLower"],
-                charLeftArmUpFill: ["charLeftArmUpFill", "leftArmUpFill"],
-                charLeftArmUpLine: ["charLeftArmUpLine", "leftArmUpLine"],
-                charRightArmDownFill: ["charRightArmDownFill", "rightArmDownFill", "rightArmFill"],
-                charRightArmDownLine: ["charRightArmDownLine", "rightArmDownLine", "rightArmLine"],
-                charRightArmUpFill: ["charRightArmUpFill", "rightArmUpFill"],
-                charRightArmUpLine: ["charRightArmUpLine", "rightArmUpLine"],
-                charLeftEye: ["charLeftEye", "leftEye"],
-                charRightEye: ["charRightEye", "rightEye"],
-                charLeftBrow: ["charLeftBrow", "leftBrow"],
-                charRightBrow: ["charRightBrow", "rightBrow"],
-                headFill: ["headFill"],
-                headLine: ["headLine"],
-                bodyFill: ["bodyFill"],
-                bodyLine: ["bodyLine"],
-                tailFill: ["tailFill"],
-                tailLine: ["tailLine"],
-                mouth: ["mouth"]
-            };
-
-            const DEFAULT_ASSET_PARTS = {
-                bodyFill: "BodyFillParts/Body fill.PNG",
-                bodyLine: "BodyFillParts/Body.PNG",
-                tailFill: "TailParts/TailFill.PNG",
-                tailLine: "TailParts/Tail.PNG",
-                headFill: "HeadBase/HeadFill.PNG",
-                headLine: "HeadBase/Head.PNG",
-                charLeftEarFill: "L_EarParts/L_EarFill.PNG",
-                charLeftEarLine: "L_EarParts/L_Ear.PNG",
-                charLeftEarInner: "L_EarParts/InnerEarLine.PNG",
-                charRightEarFill: "R_EarParts/R_EarFill.PNG",
-                charRightEarLine: "R_EarParts/R_Ear.PNG",
-                charLeftArmDownFill: "L_ArmDownParts/L_ArmFill.PNG",
-                charLeftArmDownLine: "L_ArmDownParts/L_ArmLower.PNG",
-                charLeftArmUpFill: "L_ArmUpParts/L_ArmUpFill.PNG",
-                charLeftArmUpLine: "L_ArmUpParts/L_ArmUp.PNG",
-                charRightArmDownFill: "R_ArmDownParts/R_ArmFill.PNG",
-                charRightArmDownLine: "R_ArmDownParts/R_Arm.PNG",
-                charRightArmUpFill: "R_ArmDownParts/R_ArmFill.PNG",
-                charRightArmUpLine: "R_ArmDownParts/R_Arm.PNG",
-                charLeftEye: "Face/L_Eye.PNG",
-                charRightEye: "Face/R_Eye.PNG",
-                charLeftBrow: "Face/L_Eyebrow.PNG",
-                charRightBrow: "Face/R_Eyebrow.PNG",
-                mouth: "Face/Mouth.PNG"
-            };
-            const DEFAULT_VISIBLE_PARTS = [
-                "headFill", "headLine",
-                "charLeftEye", "charRightEye",
-                "charLeftBrow", "charRightBrow",
-                "mouth"
-            ];
-            const FLAT_PART_GROUPS = {
-                bodyFill: { group: "body", layer: "fill", slot: "body" },
-                bodyLine: { group: "body", layer: "line", slot: "body" },
-                tailFill: { group: "tail", layer: "fill", slot: "tail" },
-                tailLine: { group: "tail", layer: "line", slot: "tail" },
-                headFill: { group: "head", layer: "fill", slot: "head" },
-                headLine: { group: "head", layer: "line", slot: "head" },
-                charLeftEarFill: { group: "charLeftEar", layer: "fill", slot: "charLeftEar" },
-                charLeftEarLine: { group: "charLeftEar", layer: "line", slot: "charLeftEar" },
-                charLeftEarInner: { group: "charLeftEar", layer: "inner", slot: "charLeftEar" },
-                charRightEarFill: { group: "charRightEar", layer: "fill", slot: "charRightEar" },
-                charRightEarLine: { group: "charRightEar", layer: "line", slot: "charRightEar" },
-                charLeftEye: { group: "charLeftEye", layer: "base", slot: "charLeftEye" },
-                charRightEye: { group: "charRightEye", layer: "base", slot: "charRightEye" },
-                charLeftBrow: { group: "charLeftBrow", layer: "base", slot: "charLeftBrow" },
-                charRightBrow: { group: "charRightBrow", layer: "base", slot: "charRightBrow" },
-                mouth: { group: "mouth", layer: "base", slot: "mouth" },
-                charLeftArmDownFill: { group: "charLeftArmDown", layer: "fill", slot: "charLeftArmDown" },
-                charLeftArmDownLine: { group: "charLeftArmDown", layer: "line", slot: "charLeftArmDown" },
-                charLeftArmUpFill: { group: "charLeftArmUp", layer: "fill", slot: "charLeftArmUp" },
-                charLeftArmUpLine: { group: "charLeftArmUp", layer: "line", slot: "charLeftArmUp" },
-                charRightArmDownFill: { group: "charRightArmDown", layer: "fill", slot: "charRightArmDown" },
-                charRightArmDownLine: { group: "charRightArmDown", layer: "line", slot: "charRightArmDown" },
-                charRightArmUpFill: { group: "charRightArmUp", layer: "fill", slot: "charRightArmUp" },
-                charRightArmUpLine: { group: "charRightArmUp", layer: "line", slot: "charRightArmUp" }
-            };
-            const GROUP_SLOT_ORDER = [
-                "body", "tail",
-                "charRightEar", "head", "charLeftEar",
-                "charLeftEye", "charRightEye", "charLeftBrow", "charRightBrow", "mouth",
-                "charRightArmDown", "charRightArmUp", "charLeftArmUp", "charLeftArmDown"
-            ];
-
-            function getDefaultGroupConfig(groupId) {
-                if (groupId === "charLeftArmUp" || groupId === "charRightArmUp") {
-                    return {
-                        mode: "stretch",
-                        pivot: { x: 0.5, y: 0.10 },
-                        handAnchor: { x: 0.5, y: 0.96 }
-                    };
-                }
-                return {
-                    mode: "static",
-                    pivot: { x: 0.5, y: 0.5 },
-                    handAnchor: { x: 0.5, y: 0.95 }
-                };
-            }
-
-            function extractGroupConfigs(groupedParts) {
-                const out = {};
-                Object.entries(groupedParts || {}).forEach(([groupId, group]) => {
-                    out[groupId] = {
-                        mode: String(group?.mode || getDefaultGroupConfig(groupId).mode),
-                        pivot: normalizePoint(group?.pivot, getDefaultGroupConfig(groupId).pivot.x, getDefaultGroupConfig(groupId).pivot.y),
-                        handAnchor: normalizePoint(group?.handAnchor, getDefaultGroupConfig(groupId).handAnchor.x, getDefaultGroupConfig(groupId).handAnchor.y)
-                    };
-                });
-                return out;
-            }
+            const skinManifestModule = window.DeskGoblin.createSkinManifestModule({ baseSkin: BASE_SKINS.test });
+            const {
+                DEFAULT_ASSET_PARTS,
+                DEFAULT_VISIBLE_PARTS,
+                GROUP_SLOT_ORDER,
+                extractGroupConfigs,
+                normalizeLayerOrder,
+                semanticPartLabel,
+                clonePartTweaks,
+                cloneSlotTweaks,
+                cloneGroupConfigs,
+                normalizePoint,
+                normalizeScale2,
+                normalizeGroupedDrawOrder,
+                normalizeAssetSkin
+            } = skinManifestModule;
             const assetSkinCache = new Map();
 
             const stageEl = document.querySelector(".stage");
-
+            uiShellModule = window.DeskGoblin.createUiShellModule({
+                stageEl,
+                sidePanel,
+                panelHead,
+                panelCollapseBtn,
+                panelCollapseIcon,
+                panelSideEl,
+                tabButtons,
+                tabPanes,
+                panelTitle,
+                editorExpandBtn,
+                editorExpandIcon,
+                themeSelect,
+                canvasPaletteSelect,
+                charSelectInfo,
+                charSelect,
+                editorSkinSelect,
+                inspectorTabInputs,
+                inspectorTabJson,
+                inspectorPaneInputs,
+                inspectorPaneJson,
+                storageKeys: {
+                    theme: THEME_STORAGE_KEY,
+                    canvasPalette: CANVAS_PALETTE_STORAGE_KEY
+                },
+                canvasPalettes: CANVAS_PALETTES,
+                state: {
+                    isPanelOpen: () => panelOpen,
+                    setPanelOpen: (value) => { panelOpen = !!value; },
+                    getPanelSide: () => panelSide,
+                    setPanelSide: (value) => { panelSide = value; },
+                    getCurrentTab: () => currentTab,
+                    setCurrentTab: (value) => { currentTab = value; },
+                    getLastTab: () => lastTab,
+                    setLastTab: (value) => { lastTab = value; },
+                    isEditorExpanded: () => editorExpanded,
+                    getCanvasPalette: () => canvasPalette,
+                    setCanvasPalette: (value) => { canvasPalette = value; },
+                    setCanvasPaletteId: (value) => { canvasPaletteId = value; },
+                    getInspectorPane: () => inspectorPane,
+                    setInspectorPane: (value) => { inspectorPane = value; }
+                },
+                callbacks: {
+                    resize,
+                    getSkinLibrary: () => skinLibrary
+                }
+            });
             function syncToVisualViewport() {
                 const vv = window.visualViewport;
                 const h = vv ? Math.floor(vv.height) : window.innerHeight;
@@ -2685,59 +3045,20 @@
             let mouseMoveTimer = 0;
             let suppressNextMouseDown = false;
 
-            let headBob = { y: 0, v: 0 };
+            const appState = window.DeskGoblin.createAppState({
+                baseSkin: BASE_SKINS.test,
+                copyNumObject,
+                copyColorObject
+            });
+            const headBob = appState.headBob;
             let lastTime = performance.now();
             let sceneTime = 0;
             let fpsSmoothed = 60;
             let debugTicker = 0;
             let lastAssetBoxes = [];
-            const flyState = {
-                active: false,
-                squashed: false,
-                escape: false,
-                x: 0,
-                y: 0,
-                vx: 0,
-                vy: 0,
-                age: 0,
-                life: 0,
-                turnTimer: 0,
-                wingPhase: 0,
-                splatTimer: 0,
-                cooldown: 5 + Math.random() * 6,
-                radius: 10
-            };
-            const timerState = {
-                durationSec: 5 * 60,
-                remaining: 5 * 60,
-                running: false
-            };
-            let stickyNotes = [];
-            let stickyDrag = null;
-            let stageMenuState = { open: false, sceneX: 0, sceneY: 0 };
-
-            const skinState = {
-                activeId: "test",
-                targetId: "test",
-                t: 1,
-                dur: 0.24,
-                fromMorph: copyNumObject(BASE_SKINS.test.morph),
-                toMorph: copyNumObject(BASE_SKINS.test.morph),
-                renderedMorph: copyNumObject(BASE_SKINS.test.morph),
-                fromColors: copyColorObject(BASE_SKINS.test.colors),
-                toColors: copyColorObject(BASE_SKINS.test.colors),
-                renderedColors: copyColorObject(BASE_SKINS.test.colors),
-                motion: 0,
-                blinkTimer: 0,
-                blinkNext: 1.8 + Math.random() * 2.2,
-                blinkDur: 0.13,
-                blink: 0,
-                idleFaceTimer: 0,
-                idleFaceNext: 4 + Math.random() * 5,
-                idleFaceDur: 0.9,
-                idleFaceType: "",
-                idleFaceAmount: 0
-            };
+            const flyState = appState.flyState;
+            const timerState = appState.timerState;
+            const skinState = appState.skinState;
 
             function currentSkinDef() {
                 return skinLibrary[skinState.activeId] || BASE_SKINS.test;
@@ -2751,46 +3072,19 @@
                 skinState.idleFaceNext = 4 + Math.random() * 6;
             }
 
-            function formatClock(totalSeconds) {
-                const secs = Math.max(0, Math.ceil(totalSeconds));
-                const mm = Math.floor(secs / 60);
-                const ss = secs % 60;
-                return `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}`;
-            }
-
-            function setTimerPreset(minutes) {
-                const mins = [5, 15, 30].includes(minutes) ? minutes : 5;
-                timerState.durationSec = mins * 60;
-                timerState.remaining = timerState.durationSec;
-                timerState.running = false;
-                syncTimerUI();
-            }
-
-            function syncTimerUI() {
-                if (!timerTimeEl) return;
-                const progress = clamp(timerState.remaining / Math.max(timerState.durationSec, 1), 0, 1);
-                const empty = clamp(1 - progress, 0, 1);
-                timerDurationEl.textContent = `${Math.round(timerState.durationSec / 60)} Minute Timer`;
-                timerTimeEl.textContent = formatClock(timerState.remaining);
-                timerSubEl.textContent = timerState.running
-                    ? "Counting down"
-                    : (timerState.remaining < timerState.durationSec ? "Paused" : "Ready to start");
-                timerToggleBtn.textContent = timerState.running ? "Pause" : "Start";
-                timerToggleBtn.setAttribute("aria-pressed", timerState.running ? "true" : "false");
-                timerFaceEl?.style.setProperty("--timer-progress", progress.toFixed(4));
-                timerFaceEl?.style.setProperty("--timer-empty", empty.toFixed(4));
-                timerPresetButtons.forEach((btn) => {
-                    const selected = Number(btn.dataset.minutes) === Math.round(timerState.durationSec / 60);
-                    btn.setAttribute("aria-pressed", selected ? "true" : "false");
-                });
-            }
-
-            function resetTimer() {
-                timerState.running = false;
-                timerState.remaining = timerState.durationSec;
-                syncTimerUI();
-            }
-
+            timerModule = window.DeskGoblin.createTimerModule({
+                timerState,
+                clamp,
+                ui: {
+                    faceEl: timerFaceEl,
+                    durationEl: timerDurationEl,
+                    timeEl: timerTimeEl,
+                    subEl: timerSubEl,
+                    toggleBtn: timerToggleBtn,
+                    presetButtons: timerPresetButtons
+                },
+                onComplete: () => triggerFaceReaction("perk", 1.2)
+            });
             function sceneToStagePoint(x, y) {
                 return {
                     x: VIEW.ox + x * VIEW.scale,
@@ -2809,225 +3103,21 @@
                     bottom: wallBottom
                 };
             }
-
-            function clampStickyPosition(note, x, y) {
-                const bounds = getStickyWallBounds(note.w, note.h);
-                return {
-                    x: clamp(x, bounds.left, Math.max(bounds.left, bounds.right)),
-                    y: clamp(y, bounds.top, Math.max(bounds.top, bounds.bottom))
-                };
-            }
-
-            function persistStickyNotes() {
-                try {
-                    localStorage.setItem(STICKY_STORAGE_KEY, JSON.stringify(stickyNotes));
-                } catch (_) {
-                    // Ignore quota and private-mode failures for this lightweight feature.
-                }
-            }
-
-            function loadStickyNotes() {
-                try {
-                    const raw = localStorage.getItem(STICKY_STORAGE_KEY);
-                    if (!raw) return [];
-                    const parsed = JSON.parse(raw);
-                    if (!Array.isArray(parsed)) return [];
-                    return parsed.map((note) => ({
-                        id: String(note.id || `sticky_${Date.now()}`),
-                        kind: note.kind === "image" ? "image" : "text",
-                        x: +note.x || 120,
-                        y: +note.y || 100,
-                        w: Math.max(120, +note.w || 152),
-                        h: Math.max(100, +note.h || 128),
-                        text: String(note.text || ""),
-                        dataUrl: typeof note.dataUrl === "string" ? note.dataUrl : "",
-                        createdAt: +note.createdAt || Date.now()
-                    }));
-                } catch (_) {
-                    return [];
-                }
-            }
-
-            function syncPasteboardTransform() {
-                if (!pasteboardScene) return;
-                pasteboardScene.style.transform = `translate(${VIEW.ox}px, ${VIEW.oy}px) scale(${VIEW.scale})`;
-            }
-
-            function hideStageMenu() {
-                stageMenuState.open = false;
-                if (stageMenu) stageMenu.hidden = true;
-            }
-
-            function showStageMenu(clientX, clientY, sceneX, sceneY) {
-                stageMenuState = { open: true, sceneX, sceneY };
-                stageMenu.hidden = false;
-                const menuRect = stageMenu.getBoundingClientRect();
-                const menuLeft = Math.min(clientX, Math.max(8, window.innerWidth - menuRect.width - 8));
-                const menuTop = Math.min(clientY, Math.max(8, window.innerHeight - menuRect.height - 8));
-                stageMenu.style.left = `${menuLeft}px`;
-                stageMenu.style.top = `${menuTop}px`;
-                pasteStickyBtn.disabled = false;
-                stageMenuNote.textContent = "Paste a clipboard image or text snippet onto the wall.";
-            }
-
-            function escapeHtml(value) {
-                return String(value || "")
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/\"/g, "&quot;");
-            }
-
-            function describeSticky(note) {
-                return note.kind === "image" ? "Image Clip" : "Text Note";
-            }
-
-            function renderStickyNotes() {
-                if (!pasteboardScene) return;
-                pasteboardScene.innerHTML = "";
-                stickyNotes.forEach((note) => {
-                    const el = document.createElement("article");
-                    el.className = `sticky-note ${note.kind === "image" ? "is-image" : "is-text"}`;
-                    el.dataset.id = note.id;
-                    el.style.left = `${note.x}px`;
-                    el.style.top = `${note.y}px`;
-                    el.style.width = `${note.w}px`;
-                    el.style.height = `${note.h}px`;
-                    el.innerHTML =
-                        `<div class="sticky-note-head">` +
-                        `<div class="sticky-note-kind">${escapeHtml(describeSticky(note))}</div>` +
-                        `<button type="button" class="sticky-note-delete ds-btn ds-btn-icon ds-btn-sm" data-action="delete" aria-label="Delete sticky" title="Delete sticky"><i class="iconoir-trash"></i></button>` +
-                        `</div>` +
-                        `<div class="sticky-note-thumb">${note.kind === "image"
-                            ? `<img src="${escapeHtml(note.dataUrl)}" alt="Sticky clipboard preview" />`
-                            : `<div class="sticky-note-text">${escapeHtml((note.text || "").slice(0, 240))}</div>`}</div>` +
-                        `<div class="sticky-note-actions">` +
-                        `<button type="button" class="ds-btn ds-btn-icon ds-btn-sm" data-action="copy" aria-label="Copy sticky" title="Copy sticky"><i class="iconoir-copy"></i></button>` +
-                        `<button type="button" class="ds-btn ds-btn-icon ds-btn-sm" data-action="export" aria-label="Export sticky" title="Export sticky"><i class="iconoir-download"></i></button>` +
-                        `</div>`;
-
-                    el.addEventListener("pointerdown", (ev) => {
-                        if (ev.button !== 0) return;
-                        if (ev.target.closest("button, a, input, textarea, select")) return;
-                        ev.preventDefault();
-                        ev.stopPropagation();
-                        stickyDrag = {
-                            id: note.id,
-                            startX: ev.clientX,
-                            startY: ev.clientY,
-                            noteX: note.x,
-                            noteY: note.y
-                        };
-                    });
-
-                    el.querySelectorAll("[data-action]").forEach((btn) => {
-                        btn.addEventListener("click", async (ev) => {
-                            ev.stopPropagation();
-                            const action = btn.dataset.action;
-                            if (action === "delete") {
-                                stickyNotes = stickyNotes.filter((entry) => entry.id !== note.id);
-                                persistStickyNotes();
-                                renderStickyNotes();
-                                return;
-                            }
-                            if (action === "export") {
-                                const filename = note.kind === "image" ? `sticky-${note.id}.png` : `sticky-${note.id}.txt`;
-                                const href = note.kind === "image"
-                                    ? note.dataUrl
-                                    : URL.createObjectURL(new Blob([note.text || ""], { type: "text/plain;charset=utf-8" }));
-                                const a = document.createElement("a");
-                                a.href = href;
-                                a.download = filename;
-                                document.body.appendChild(a);
-                                a.click();
-                                a.remove();
-                                if (note.kind !== "image") setTimeout(() => URL.revokeObjectURL(href), 500);
-                                return;
-                            }
-                            if (action === "copy") {
-                                try {
-                                    if (note.kind === "image" && navigator.clipboard?.write && window.ClipboardItem) {
-                                        const blob = await fetch(note.dataUrl).then((res) => res.blob());
-                                        await navigator.clipboard.write([new ClipboardItem({ [blob.type || "image/png"]: blob })]);
-                                    } else if (navigator.clipboard?.writeText) {
-                                        await navigator.clipboard.writeText(note.kind === "image" ? note.dataUrl : note.text || "");
-                                    }
-                                } catch (_) {
-                                    // Leave failures silent for now; clipboard permissions vary by browser.
-                                }
-                            }
-                        });
-                    });
-
-                    pasteboardScene.appendChild(el);
-                });
-            }
-
-            async function readClipboardStickyData() {
-                if (navigator.clipboard?.read) {
-                    try {
-                        const items = await navigator.clipboard.read();
-                        for (const item of items) {
-                            const imageType = item.types.find((type) => type.startsWith("image/"));
-                            if (imageType) {
-                                const blob = await item.getType(imageType);
-                                const dataUrl = await new Promise((resolve, reject) => {
-                                    const reader = new FileReader();
-                                    reader.onload = () => resolve(String(reader.result || ""));
-                                    reader.onerror = () => reject(reader.error);
-                                    reader.readAsDataURL(blob);
-                                });
-                                return { kind: "image", dataUrl };
-                            }
-                            if (item.types.includes("text/plain")) {
-                                const blob = await item.getType("text/plain");
-                                const text = await blob.text();
-                                if (text.trim()) return { kind: "text", text };
-                            }
-                        }
-                    } catch (_) {
-                        // Fall back to readText below.
-                    }
-                }
-
-                if (navigator.clipboard?.readText) {
-                    const text = await navigator.clipboard.readText();
-                    if (text.trim()) return { kind: "text", text };
-                }
-
-                throw new Error("Clipboard did not contain an image or text snippet.");
-            }
-
-            async function pasteStickyAt(sceneX, sceneY) {
-                try {
-                    pasteStickyBtn.disabled = true;
-                    stageMenuNote.textContent = "Reading clipboard…";
-                    const clip = await readClipboardStickyData();
-                    const base = clip.kind === "image"
-                        ? { w: 156, h: 146, dataUrl: clip.dataUrl, text: "" }
-                        : { w: 152, h: 126, dataUrl: "", text: clip.text || "" };
-                    const id = `sticky_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
-                    const pos = clampStickyPosition(base, sceneX - base.w * 0.5, sceneY - base.h * 0.5);
-                    stickyNotes.push({
-                        id,
-                        kind: clip.kind,
-                        x: pos.x,
-                        y: pos.y,
-                        w: base.w,
-                        h: base.h,
-                        text: base.text,
-                        dataUrl: base.dataUrl,
-                        createdAt: Date.now()
-                    });
-                    persistStickyNotes();
-                    renderStickyNotes();
-                    hideStageMenu();
-                    triggerFaceReaction("perk", 1.0);
-                } catch (err) {
-                    stageMenuNote.textContent = err?.message || "Clipboard access was blocked.";
-                    pasteStickyBtn.disabled = false;
-                }
-            }
+            pasteboard = window.DeskGoblin.createPasteboardModule({
+                storageKey: STICKY_STORAGE_KEY,
+                state: pasteboardState,
+                dom: {
+                    scene: pasteboardScene,
+                    menu: stageMenu,
+                    pasteBtn: pasteStickyBtn,
+                    menuNote: stageMenuNote
+                },
+                viewRef: () => VIEW,
+                sceneToStagePoint,
+                getStickyWallBounds,
+                clamp,
+                triggerFaceReaction
+            });
 
             function loadImage(src) {
                 return new Promise((resolve, reject) => {
@@ -3037,739 +3127,54 @@
                     img.src = src;
                 });
             }
-
-            function getAssetSkinState(def) {
-                if (!assetSkinCache.has(def.id)) {
-                    assetSkinCache.set(def.id, { requested: false, loaded: false, failed: [], images: {} });
+            skinEditorModule = window.DeskGoblin.createSkinEditorModule({
+                skinLibraryRef: { get: () => skinLibrary },
+                skinStateRef: { get: () => skinState },
+                getCurrentSkinDef: () => currentSkinDef(),
+                selectedPartRef: {
+                    get: () => selectedPartKey,
+                    set: (value) => { selectedPartKey = value; }
+                },
+                uiState: {
+                    isPanelOpen: () => panelOpen,
+                    getCurrentTab: () => currentTab,
+                    isSoloSelected: () => soloSelectedOn,
+                    isTModeOn: () => tModeOn
+                },
+                assetSkinCache,
+                loadImage,
+                manifest: skinManifestModule,
+                dom: {
+                    partDxEl,
+                    partDyEl,
+                    partDwEl,
+                    partDhEl,
+                    partDxValEl,
+                    partDyValEl,
+                    partDwValEl,
+                    partDhValEl,
+                    partResetEl,
+                    partsResetAllEl,
+                    partCopyJsonEl,
+                    inspectorTabInputs,
+                    inspectorTabJson,
+                    partInspector,
+                    selectedPartLabelEl,
+                    partJsonEl,
+                    layerTableBody,
+                    armRigControlsEl,
+                    tModeBtn,
+                    soloSelectedBtn,
+                    armPivotXEl,
+                    armPivotYEl,
+                    armHandXEl,
+                    armHandYEl,
+                    armPivotXValEl,
+                    armPivotYValEl,
+                    armHandXValEl,
+                    armHandYValEl
                 }
-                return assetSkinCache.get(def.id);
-            }
-
-            function toCanonicalPartKey(key) {
-                for (const [canon, aliases] of Object.entries(PART_KEY_ALIASES)) {
-                    if (aliases.includes(key)) return canon;
-                }
-                return key;
-            }
-
-            function canonicalizePartMap(parts) {
-                const out = {};
-                for (const [k, v] of Object.entries(parts || {})) {
-                    out[toCanonicalPartKey(k)] = v;
-                }
-                return out;
-            }
-
-            function canonicalizePartList(list) {
-                return Array.from(new Set((list || []).map(toCanonicalPartKey)));
-            }
-
-            function normalizeLayerOrder(keys, order) {
-                const keySet = new Set(keys);
-                const seen = new Set();
-                const out = [];
-                (order || []).map(toCanonicalPartKey).forEach((k) => {
-                    if (!keySet.has(k) || seen.has(k)) return;
-                    seen.add(k);
-                    out.push(k);
-                });
-                keys.forEach((k) => {
-                    if (seen.has(k)) return;
-                    seen.add(k);
-                    out.push(k);
-                });
-                return out;
-            }
-
-            function fileNameFromPath(p) {
-                const s = String(p || "");
-                const i = Math.max(s.lastIndexOf("/"), s.lastIndexOf("\\"));
-                return i >= 0 ? s.slice(i + 1) : s;
-            }
-
-            function semanticPartLabel(key) {
-                const map = {
-                    charLeftEye: "charLeftEye (model-left / viewer-right)",
-                    charRightEye: "charRightEye (model-right / viewer-left)",
-                    charLeftBrow: "charLeftBrow (model-left / viewer-right)",
-                    charRightBrow: "charRightBrow (model-right / viewer-left)",
-                    charLeftEarFill: "charLeftEarFill (model-left / viewer-right)",
-                    charLeftEarLine: "charLeftEarLine (model-left / viewer-right)",
-                    charLeftEarInner: "charLeftEarInner (model-left / viewer-right)",
-                    charRightEarFill: "charRightEarFill (model-right / viewer-left)",
-                    charRightEarLine: "charRightEarLine (model-right / viewer-left)",
-                    charLeftArmDownFill: "charLeftArmDownFill (model-left / viewer-right)",
-                    charLeftArmDownLine: "charLeftArmDownLine (model-left / viewer-right)",
-                    charLeftArmUpFill: "charLeftArmUpFill (model-left / viewer-right)",
-                    charLeftArmUpLine: "charLeftArmUpLine (model-left / viewer-right)",
-                    charRightArmDownFill: "charRightArmDownFill (model-right / viewer-left)",
-                    charRightArmDownLine: "charRightArmDownLine (model-right / viewer-left)",
-                    charRightArmUpFill: "charRightArmUpFill (model-right / viewer-left)",
-                    charRightArmUpLine: "charRightArmUpLine (model-right / viewer-left)"
-                };
-                if (map[key]) return map[key];
-                if (key.startsWith("charLeft")) return `${key} (model-left / viewer-right)`;
-                if (key.startsWith("charRight")) return `${key} (model-right / viewer-left)`;
-                return key;
-            }
-
-            function clonePartTweaks(src) {
-                const out = {};
-                for (const [k, v] of Object.entries(src || {})) {
-                    out[toCanonicalPartKey(k)] = {
-                        x: +(v?.x || 0),
-                        y: +(v?.y || 0),
-                        w: +(v?.w || 0),
-                        h: +(v?.h || 0)
-                    };
-                }
-                return out;
-            }
-
-            function cloneSlotTweaks(src) {
-                const out = {};
-                for (const [k, v] of Object.entries(src || {})) {
-                    out[k] = {
-                        x: +(v?.x || 0),
-                        y: +(v?.y || 0),
-                        w: +(v?.w || 0),
-                        h: +(v?.h || 0)
-                    };
-                }
-                return out;
-            }
-
-            function cloneGroupConfigs(src) {
-                const out = {};
-                for (const [k, v] of Object.entries(src || {})) {
-                    out[k] = {
-                        mode: String(v?.mode || "static"),
-                        pivot: normalizePoint(v?.pivot, 0.5, 0.5),
-                        handAnchor: normalizePoint(v?.handAnchor, 0.5, 0.95)
-                    };
-                }
-                return out;
-            }
-
-            function normalizePoint(v, fallbackX = 0, fallbackY = 0) {
-                return {
-                    x: +(v?.x ?? fallbackX),
-                    y: +(v?.y ?? fallbackY)
-                };
-            }
-
-            function normalizeScale2(v, fallbackX = 1, fallbackY = 1) {
-                if (typeof v === "number") {
-                    return { x: +v || fallbackX, y: +v || fallbackY };
-                }
-                return {
-                    x: +(v?.x ?? fallbackX),
-                    y: +(v?.y ?? fallbackY)
-                };
-            }
-
-            function normalizeGroupedDrawOrder(keys, order) {
-                const keySet = new Set(keys);
-                const seen = new Set();
-                const out = [];
-                (order || []).forEach((k) => {
-                    const key = String(k || "");
-                    if (!keySet.has(key) || seen.has(key)) return;
-                    seen.add(key);
-                    out.push(key);
-                });
-                keys.forEach((k) => {
-                    if (seen.has(k)) return;
-                    seen.add(k);
-                    out.push(k);
-                });
-                return out;
-            }
-
-            function buildGroupedPartsFromFlat(parts, visibleParts, partTweaks, drawOrder) {
-                const grouped = {};
-                const groupedOrder = [];
-                const addGroup = (groupId) => {
-                    if (grouped[groupId]) return grouped[groupId];
-                    const defaults = getDefaultGroupConfig(groupId);
-                    grouped[groupId] = {
-                        id: groupId,
-                        slot: groupId,
-                        visible: true,
-                        offset: { x: 0, y: 0 },
-                        scale: { x: 1, y: 1 },
-                        rotation: 0,
-                        mode: defaults.mode,
-                        pivot: defaults.pivot,
-                        handAnchor: defaults.handAnchor,
-                        layers: []
-                    };
-                    groupedOrder.push(groupId);
-                    return grouped[groupId];
-                };
-
-                const seenOrder = new Set();
-                (drawOrder || []).forEach((key) => {
-                    const canon = toCanonicalPartKey(key);
-                    const mapping = FLAT_PART_GROUPS[canon];
-                    if (!mapping || seenOrder.has(mapping.group)) return;
-                    seenOrder.add(mapping.group);
-                    addGroup(mapping.group);
-                });
-
-                Object.entries(parts || {}).forEach(([rawKey, file]) => {
-                    const key = toCanonicalPartKey(rawKey);
-                    const mapping = FLAT_PART_GROUPS[key];
-                    if (!mapping) return;
-                    const group = addGroup(mapping.group);
-                    const tweak = partTweaks?.[key] || { x: 0, y: 0, w: 0, h: 0 };
-                    group.layers.push({
-                        id: mapping.layer,
-                        key,
-                        file,
-                        visible: (visibleParts || []).includes(key),
-                        offset: { x: +tweak.x || 0, y: +tweak.y || 0 },
-                        scale: { x: 1 + ((+tweak.w || 0) / 100), y: 1 + ((+tweak.h || 0) / 100) },
-                        rotation: 0
-                    });
-                });
-
-                Object.values(grouped).forEach((group) => {
-                    if (!group.layers.length) return;
-                    const count = group.layers.length;
-                    const avgX = group.layers.reduce((sum, layer) => sum + (layer.offset?.x || 0), 0) / count;
-                    const avgY = group.layers.reduce((sum, layer) => sum + (layer.offset?.y || 0), 0) / count;
-                    const avgScaleX = group.layers.reduce((sum, layer) => sum + (layer.scale?.x || 1), 0) / count;
-                    const avgScaleY = group.layers.reduce((sum, layer) => sum + (layer.scale?.y || 1), 0) / count;
-                    group.offset = { x: avgX, y: avgY };
-                    group.scale = { x: avgScaleX, y: avgScaleY };
-                    group.visible = group.layers.some((layer) => layer.visible);
-                    group.layers = group.layers.map((layer) => ({
-                        ...layer,
-                        offset: {
-                            x: (layer.offset?.x || 0) - avgX,
-                            y: (layer.offset?.y || 0) - avgY
-                        },
-                        scale: {
-                            x: Math.max(0.05, (layer.scale?.x || 1) / Math.max(0.05, avgScaleX || 1)),
-                            y: Math.max(0.05, (layer.scale?.y || 1) / Math.max(0.05, avgScaleY || 1))
-                        }
-                    }));
-                });
-
-                const keys = Object.keys(grouped);
-                return {
-                    groupedParts: grouped,
-                    groupedDrawOrder: normalizeGroupedDrawOrder(keys, groupedOrder.length ? groupedOrder : GROUP_SLOT_ORDER)
-                };
-            }
-
-            function buildGroupedPartsFromManifest(manifestParts, visibleParts) {
-                const grouped = {};
-                Object.entries(manifestParts || {}).forEach(([partId, def]) => {
-                    if (!def || typeof def !== "object" || Array.isArray(def)) return;
-                    const layers = Array.isArray(def.layers) ? def.layers : [];
-                    const defaults = getDefaultGroupConfig(partId);
-                    grouped[partId] = {
-                        id: partId,
-                        slot: def.slot || partId,
-                        visible: def.visible !== false,
-                        offset: normalizePoint(def.offset, 0, 0),
-                        scale: normalizeScale2(def.scale, 1, 1),
-                        rotation: +(def.rotation || 0),
-                        mode: String(def.mode || defaults.mode || "static"),
-                        pivot: normalizePoint(def.pivot, defaults.pivot.x, defaults.pivot.y),
-                        handAnchor: normalizePoint(def.handAnchor, defaults.handAnchor.x, defaults.handAnchor.y),
-                        layers: layers.map((layer, idx) => ({
-                            id: String(layer?.id || idx),
-                            key: String(layer?.key || `${partId}.${layer?.id || idx}`),
-                            file: String(layer?.file || ""),
-                            slot: layer?.slot || def.slot || partId,
-                            visible: layer?.visible !== false,
-                            offset: normalizePoint(layer?.offset, 0, 0),
-                            scale: normalizeScale2(layer?.scale, 1, 1),
-                            rotation: +(layer?.rotation || 0)
-                        }))
-                    };
-                    if (Array.isArray(visibleParts) && visibleParts.length) {
-                        grouped[partId].visible = grouped[partId].layers.some((layer) =>
-                            visibleParts.includes(layer.key) || visibleParts.includes(partId)
-                        );
-                    }
-                });
-                const keys = Object.keys(grouped);
-                return {
-                    groupedParts: grouped,
-                    groupedDrawOrder: keys
-                };
-            }
-
-            function flattenGroupedParts(groupedParts, groupedDrawOrder) {
-                const partsMap = {};
-                const visibleParts = [];
-                const partTweaks = {};
-                const layerOrder = [];
-                const orderedGroups = normalizeGroupedDrawOrder(Object.keys(groupedParts || {}), groupedDrawOrder || GROUP_SLOT_ORDER);
-                orderedGroups.forEach((groupId) => {
-                    const group = groupedParts[groupId];
-                    if (!group) return;
-                    (group.layers || []).forEach((layer) => {
-                        const key = layer.key || `${groupId}.${layer.id}`;
-                        partsMap[key] = layer.file;
-                        layerOrder.push(key);
-                        if (group.visible && layer.visible !== false) visibleParts.push(key);
-                        partTweaks[key] = {
-                            x: Math.round((group.offset?.x || 0) + (layer.offset?.x || 0)),
-                            y: Math.round((group.offset?.y || 0) + (layer.offset?.y || 0)),
-                            w: Math.round((((group.scale?.x || 1) * (layer.scale?.x || 1)) - 1) * 100),
-                            h: Math.round((((group.scale?.y || 1) * (layer.scale?.y || 1)) - 1) * 100)
-                        };
-                    });
-                });
-                return { partsMap, visibleParts, partTweaks, layerOrder };
-            }
-
-            function getInspectorState(def) {
-                const st = getAssetSkinState(def);
-                const parts = { ...DEFAULT_ASSET_PARTS, ...(def.partsMap || {}) };
-                const keys = Object.keys(parts);
-                if (!st.inspectorReady) {
-                    st.partsMap = { ...parts };
-                    st.partTweaks = clonePartTweaks(def.partTweaks || {});
-                    st.slotTweaks = cloneSlotTweaks(def.slotTweaks || {});
-                    st.groupConfigs = cloneGroupConfigs(def.groupConfigs || extractGroupConfigs(def.groupedParts || {}));
-                    st.visibleSet = new Set(def.visibleParts || DEFAULT_VISIBLE_PARTS);
-                    st.drawOrder = normalizeLayerOrder(Object.keys(st.partsMap), def.drawOrder || keys);
-                    st.collapsedGroups = new Set();
-                    st.inspectorReady = true;
-                } else {
-                    st.partsMap = { ...parts, ...(st.partsMap || {}) };
-                    st.drawOrder = normalizeLayerOrder(Object.keys(st.partsMap), st.drawOrder || keys);
-                    st.collapsedGroups = st.collapsedGroups || new Set();
-                    st.slotTweaks = st.slotTweaks || cloneSlotTweaks(def.slotTweaks || {});
-                    st.groupConfigs = st.groupConfigs || cloneGroupConfigs(def.groupConfigs || extractGroupConfigs(def.groupedParts || {}));
-                }
-                return st;
-            }
-
-            function groupLabelFromId(groupId) {
-                return editorPartLabel(groupId);
-            }
-
-            function editorPartLabel(key) {
-                const map = {
-                    body: "Body",
-                    tail: "Tail",
-                    head: "Head",
-                    mouth: "Mouth",
-                    charLeftEye: "Eye Left",
-                    charRightEye: "Eye Right",
-                    charLeftBrow: "Brow Left",
-                    charRightBrow: "Brow Right",
-                    charLeftEar: "Ear Left",
-                    charRightEar: "Ear Right",
-                    charLeftArmDown: "Arm Down Left",
-                    charLeftArmUp: "Arm Up Left",
-                    charRightArmDown: "Arm Down Right",
-                    charRightArmUp: "Arm Up Right",
-                    charLeftEarFill: "Ear Left",
-                    charLeftEarLine: "Ear Left",
-                    charLeftEarInner: "Ear Left",
-                    charRightEarFill: "Ear Right",
-                    charRightEarLine: "Ear Right",
-                    charLeftArmDownFill: "Arm Down Left",
-                    charLeftArmDownLine: "Arm Down Left",
-                    charLeftArmUpFill: "Arm Up Left",
-                    charLeftArmUpLine: "Arm Up Left",
-                    charRightArmDownFill: "Arm Down Right",
-                    charRightArmDownLine: "Arm Down Right",
-                    charRightArmUpFill: "Arm Up Right",
-                    charRightArmUpLine: "Arm Up Right",
-                    bodyFill: "Body",
-                    bodyLine: "Body",
-                    tailFill: "Tail",
-                    tailLine: "Tail",
-                    headFill: "Head",
-                    headLine: "Head"
-                };
-                return map[key] || key.replace(/^char/, "").replace(/([A-Z])/g, " $1").trim();
-            }
-
-            function editorLayerLabel(layer) {
-                const id = String(layer?.id || "").toLowerCase();
-                const map = {
-                    fill: "Fill",
-                    line: "Line",
-                    inner: "Inner",
-                    base: "Base"
-                };
-                return map[id] || (layer?.id ? String(layer.id) : "Layer");
-            }
-
-            function getAssetOptionList(partsMap) {
-                return Array.from(new Set(Object.values(partsMap || {}).filter(Boolean))).sort((a, b) => a.localeCompare(b));
-            }
-
-            function getEditorGroupRows(def, st) {
-                const renderModel = getRenderGroupedModel(def, st);
-                const groupedParts = renderModel.groupedParts || {};
-                const groupedOrder = normalizeGroupedDrawOrder(Object.keys(groupedParts), renderModel.groupedDrawOrder || GROUP_SLOT_ORDER);
-                return groupedOrder.map((groupId) => {
-                    const group = groupedParts[groupId];
-                    const layers = (group?.layers || []).slice().sort((a, b) => {
-                        const ai = st.drawOrder.indexOf(a.key);
-                        const bi = st.drawOrder.indexOf(b.key);
-                        return (ai < 0 ? 9999 : ai) - (bi < 0 ? 9999 : bi);
-                    });
-                    return {
-                        id: groupId,
-                        group,
-                        layers,
-                        visibleCount: layers.filter((layer) => st.visibleSet.has(layer.key)).length,
-                        totalCount: layers.length,
-                        collapsed: st.collapsedGroups.has(groupId)
-                    };
-                });
-            }
-
-            function setGroupVisibility(def, st, groupRow, visible) {
-                groupRow.layers.forEach((layer) => {
-                    if (!layer?.key) return;
-                    if (visible) {
-                        st.visibleSet.add(layer.key);
-                        ensurePartLoaded(def, layer.key);
-                    } else {
-                        st.visibleSet.delete(layer.key);
-                    }
-                });
-            }
-
-            function getActiveAssetSkinDef() {
-                const target = skinLibrary[skinState.targetId];
-                if (target?.mode === "asset") return target;
-                const active = currentSkinDef();
-                return (active.mode === "asset") ? active : null;
-            }
-
-            function ensurePartLoaded(def, key) {
-                const st = getInspectorState(def);
-                if (st.images[key]) return;
-                const parts = st.partsMap || { ...DEFAULT_ASSET_PARTS, ...(def.partsMap || {}) };
-                const rel = parts[key];
-                if (!rel) return;
-                const src = def.root ? `${def.root}/${rel}` : rel;
-                loadImage(src).then((img) => {
-                    st.images[key] = img;
-                    st.loaded = Object.keys(st.images).length > 0;
-                }).catch(() => {
-                    if (!st.failed.includes(src)) st.failed.push(src);
-                });
-            }
-
-            function readPartBoxInputs() {
-                return {
-                    x: +(partDxEl.value || 0),
-                    y: +(partDyEl.value || 0),
-                    w: +(partDwEl.value || 0),
-                    h: +(partDhEl.value || 0)
-                };
-            }
-
-            function writePartBoxInputs(v) {
-                const x = +(v?.x || 0);
-                const y = +(v?.y || 0);
-                const w = +(v?.w || 0);
-                const h = +(v?.h || 0);
-                partDxEl.value = String(x);
-                partDyEl.value = String(y);
-                partDwEl.value = String(w);
-                partDhEl.value = String(h);
-                partDxValEl.textContent = String(x);
-                partDyValEl.textContent = String(y);
-                partDwValEl.textContent = String(w);
-                partDhValEl.textContent = String(h);
-            }
-
-            function getSelectedGroup(groupedParts, selectionKey) {
-                const groupId = getSelectedGroupId(groupedParts, selectionKey);
-                return groupId ? groupedParts[groupId] : null;
-            }
-
-            function getSelectedStretchArmGroup(def, st) {
-                const renderModel = getRenderGroupedModel(def, st);
-                const group = getSelectedGroup(renderModel.groupedParts, selectedPartKey);
-                if (!group || group.mode !== "stretch") return null;
-                return { group, renderModel };
-            }
-
-            function writeArmRigInputs(group) {
-                const pivot = normalizePoint(group?.pivot, 0.5, 0.10);
-                const handAnchor = normalizePoint(group?.handAnchor, 0.5, 0.96);
-                armPivotXEl.value = pivot.x.toFixed(2);
-                armPivotYEl.value = pivot.y.toFixed(2);
-                armHandXEl.value = handAnchor.x.toFixed(2);
-                armHandYEl.value = handAnchor.y.toFixed(2);
-                armPivotXValEl.textContent = pivot.x.toFixed(2);
-                armPivotYValEl.textContent = pivot.y.toFixed(2);
-                armHandXValEl.textContent = handAnchor.x.toFixed(2);
-                armHandYValEl.textContent = handAnchor.y.toFixed(2);
-            }
-
-            function refreshPartsInspector() {
-                const def = getActiveAssetSkinDef();
-                const disabled = !def;
-                [partDxEl, partDyEl, partDwEl, partDhEl, partResetEl, partsResetAllEl, partCopyJsonEl, inspectorTabInputs, inspectorTabJson]
-                    .forEach((el) => { el.disabled = disabled; });
-                if (!def) {
-                    partInspector.style.opacity = "0.55";
-                    selectedPartLabelEl.textContent = "";
-                    partJsonEl.value = "Select an asset skin to inspect parts.";
-                    layerTableBody.innerHTML = "";
-                    armRigControlsEl.hidden = true;
-                    tModeBtn.setAttribute("aria-pressed", tModeOn ? "true" : "false");
-                    tModeBtn.classList.toggle("active", tModeOn);
-                    return;
-                }
-                partInspector.style.opacity = "1";
-
-                const st = getInspectorState(def);
-                const parts = st.partsMap || { ...DEFAULT_ASSET_PARTS, ...(def.partsMap || {}) };
-                const keys = Object.keys(parts);
-                const assetOptions = getAssetOptionList(parts);
-                st.drawOrder = normalizeLayerOrder(keys, st.drawOrder || keys);
-                const groupRows = getEditorGroupRows(def, st);
-                const groupIds = groupRows.map((groupRow) => groupRow.id);
-                if (!keys.includes(selectedPartKey) && !groupIds.includes(selectedPartKey)) {
-                    selectedPartKey = groupIds[0] || st.drawOrder[0] || "";
-                }
-                const isSlotSelection = groupIds.includes(selectedPartKey);
-                const stretchCtx = getSelectedStretchArmGroup(def, st);
-                selectedPartLabelEl.textContent = selectedPartKey ? `${editorPartLabel(selectedPartKey)}${isSlotSelection ? " Slot" : " Layer"}` : "";
-                partResetEl.textContent = "Reset";
-                partResetEl.title = isSlotSelection ? "Reset the selected slot box and slot transform values" : "Reset the selected layer offset and scale values";
-                if (stretchCtx && isSlotSelection) {
-                    partResetEl.title = "Reset the selected arm slot box plus pivot and hand anchor";
-                }
-                partResetEl.setAttribute("aria-label", partResetEl.title);
-                armRigControlsEl.hidden = !stretchCtx;
-                if (stretchCtx) writeArmRigInputs(stretchCtx.group);
-                tModeBtn.setAttribute("aria-pressed", tModeOn ? "true" : "false");
-                tModeBtn.classList.toggle("active", tModeOn);
-                tModeBtn.title = tModeOn ? "Exit rig mode" : "Enter rig mode";
-                tModeBtn.setAttribute("aria-label", tModeBtn.title);
-                soloSelectedBtn.disabled = !selectedPartKey;
-                soloSelectedBtn.setAttribute("aria-pressed", soloSelectedOn ? "true" : "false");
-                soloSelectedBtn.classList.toggle("active", soloSelectedOn);
-                soloSelectedBtn.title = soloSelectedOn ? "Stop isolating the current selection" : "Isolate the current selection";
-                soloSelectedBtn.setAttribute("aria-label", soloSelectedBtn.title);
-
-                layerTableBody.innerHTML = "";
-                let layerIndex = 0;
-                groupRows.forEach((groupRow) => {
-                    const groupTr = document.createElement("tr");
-                    groupTr.className = "group-row";
-                    groupTr.dataset.group = groupRow.id;
-                    if (selectedPartKey === groupRow.id) groupTr.classList.add("selected", "ds-table-row-selected");
-                    const groupVisible = groupRow.visibleCount > 0;
-                    const collapseIcon = groupRow.collapsed ? "iconoir-nav-arrow-right" : "iconoir-nav-arrow-down";
-                    const visIcon = groupVisible ? "iconoir-eye" : "iconoir-eye-closed";
-                    groupTr.innerHTML =
-                        `<td class="col-layer ds-table-utility-cell"><button type="button" class="row-toggle-btn ds-btn ds-icon-action" aria-label="${groupRow.collapsed ? "Expand" : "Collapse"} ${groupRow.id}"><i class="${collapseIcon}"></i></button></td>` +
-                        `<td><span class="part-name">${groupLabelFromId(groupRow.id)} <span class="part-count">[${groupRow.totalCount}]</span></span></td>` +
-                        `<td></td>` +
-                        `<td class="col-vis ds-table-utility-cell"><button type="button" class="row-visibility-btn ds-btn ds-icon-action ${groupVisible ? "" : "is-hidden"}" aria-label="${groupVisible ? "Hide" : "Show"} ${groupRow.id}" title="${groupVisible ? "Hide" : "Show"} ${groupRow.id}"><i class="${visIcon}"></i></button></td>`;
-
-                    const collapseBtn = groupTr.querySelector(".row-toggle-btn");
-                    const groupVisBtn = groupTr.querySelector(".row-visibility-btn");
-                    collapseBtn.addEventListener("click", (ev) => {
-                        ev.stopPropagation();
-                        if (st.collapsedGroups.has(groupRow.id)) st.collapsedGroups.delete(groupRow.id);
-                        else st.collapsedGroups.add(groupRow.id);
-                        refreshPartsInspector();
-                    });
-                    groupVisBtn.addEventListener("click", (ev) => {
-                        ev.stopPropagation();
-                        setGroupVisibility(def, st, groupRow, !groupVisible);
-                        refreshPartsInspector();
-                    });
-                    groupTr.addEventListener("click", (ev) => {
-                        if (ev.target && ev.target.closest && ev.target.closest("button, select, input")) return;
-                        selectedPartKey = groupRow.id;
-                        refreshPartsInspector();
-                    });
-                    layerTableBody.appendChild(groupTr);
-
-                    if (groupRow.collapsed) return;
-                    groupRow.layers.forEach((layer) => {
-                        const k = layer.key;
-                        const tr = document.createElement("tr");
-                        tr.classList.add("draggable", "layer-row");
-                        tr.draggable = false;
-                        tr.dataset.key = k;
-                        if (selectedPartKey === k) tr.classList.add("selected", "ds-table-row-selected");
-                        tr.addEventListener("click", (ev) => {
-                            if (ev.target && ev.target.closest && ev.target.closest("input, select, button")) return;
-                            selectedPartKey = k;
-                            refreshPartsInspector();
-                        });
-
-                        const file = parts[k] || "";
-                        const vis = st.visibleSet.has(k);
-                        const visLayerIcon = vis ? "iconoir-eye" : "iconoir-eye-closed";
-                        const assetOptionsMarkup = assetOptions.map((assetPath) =>
-                            `<option value="${assetPath.replace(/"/g, "&quot;")}" ${assetPath === file ? "selected" : ""}>${fileNameFromPath(assetPath)}</option>`
-                        ).join("");
-                        const layerLabel = editorLayerLabel(layer);
-
-                        tr.innerHTML =
-                            `<td class="col-layer ds-table-utility-cell"><span class="child-row-indent"><span class="child-row-branch"></span><span class="layer-idx">${++layerIndex}</span><span class="layer-drag" title="Drag to reorder"><i class="iconoir-menu-scale"></i></span></span></td>` +
-                            `<td><div class="layer-name">${layerLabel}</div></td>` +
-                            `<td><select class="asset-select">${assetOptionsMarkup}</select></td>` +
-                            `<td class="col-vis ds-table-utility-cell"><button type="button" class="row-visibility-btn ds-btn ds-icon-action ${vis ? "" : "is-hidden"}" aria-label="${vis ? "Hide" : "Show"} ${k}" title="${vis ? "Hide" : "Show"} ${k}"><i class="${visLayerIcon}"></i></button></td>`;
-
-                        const assetEl = tr.querySelector(".asset-select");
-                        const layerDragEl = tr.querySelector(".layer-drag");
-                        const visBtn = tr.querySelector(".row-visibility-btn");
-                        layerDragEl.draggable = true;
-                        layerDragEl.addEventListener("dragstart", (ev) => {
-                            tr.classList.add("dragging");
-                            ev.dataTransfer.effectAllowed = "move";
-                            ev.dataTransfer.setData("text/plain", k);
-                        });
-                        layerDragEl.addEventListener("dragend", () => {
-                            tr.classList.remove("dragging");
-                            Array.from(layerTableBody.querySelectorAll("tr.drop-target"))
-                                .forEach((row) => row.classList.remove("drop-target"));
-                        });
-                        assetEl.addEventListener("click", (ev) => ev.stopPropagation());
-                        assetEl.addEventListener("change", () => {
-                            parts[k] = assetEl.value || file;
-                            delete st.images[k];
-                            if (st.visibleSet.has(k)) ensurePartLoaded(def, k);
-                            refreshPartsInspector();
-                        });
-                        visBtn.addEventListener("click", (ev) => {
-                            ev.stopPropagation();
-                            if (vis) {
-                                st.visibleSet.delete(k);
-                            } else {
-                                st.visibleSet.add(k);
-                                ensurePartLoaded(def, k);
-                            }
-                            refreshPartsInspector();
-                        });
-
-                        tr.addEventListener("dragover", (ev) => {
-                            ev.preventDefault();
-                            ev.dataTransfer.dropEffect = "move";
-                            if (!tr.classList.contains("dragging")) tr.classList.add("drop-target");
-                        });
-                        tr.addEventListener("dragleave", () => {
-                            tr.classList.remove("drop-target");
-                        });
-                        tr.addEventListener("drop", (ev) => {
-                            ev.preventDefault();
-                            tr.classList.remove("drop-target");
-                            const fromKey = ev.dataTransfer.getData("text/plain");
-                            const toKey = k;
-                            if (!fromKey || fromKey === toKey) return;
-                            const fromIdx = st.drawOrder.indexOf(fromKey);
-                            const toIdx = st.drawOrder.indexOf(toKey);
-                            if (fromIdx < 0 || toIdx < 0) return;
-                            st.drawOrder.splice(fromIdx, 1);
-                            st.drawOrder.splice(toIdx, 0, fromKey);
-                            refreshPartsInspector();
-                        });
-
-                        layerTableBody.appendChild(tr);
-                    });
-                });
-
-                if (isSlotSelection) writePartBoxInputs(st.slotTweaks[selectedPartKey] || { x: 0, y: 0, w: 0, h: 0 });
-                else writePartBoxInputs(st.partTweaks[selectedPartKey] || { x: 0, y: 0, w: 0, h: 0 });
-                partJsonEl.value = JSON.stringify({
-                    visibleParts: Array.from(st.visibleSet),
-                    drawOrder: st.drawOrder,
-                    parts: parts,
-                    partTweaks: st.partTweaks,
-                    slotTweaks: st.slotTweaks,
-                    groupConfigs: st.groupConfigs
-                }, null, 2);
-            }
-
-            function loadAssetSkin(def) {
-                const state = getInspectorState(def);
-                if (state.requested) return;
-                state.requested = true;
-                const parts = state.partsMap || { ...DEFAULT_ASSET_PARTS, ...(def.partsMap || {}) };
-                const root = def.root || "";
-                const loadKeys = Array.from(state.visibleSet).filter((k) => !!parts[k]);
-
-                const jobs = loadKeys.map(async (key) => {
-                    const rel = parts[key];
-                    const src = root ? `${root}/${rel}` : rel;
-                    try {
-                        const img = await loadImage(src);
-                        state.images[key] = img;
-                    } catch (_) {
-                        state.failed.push(src);
-                    }
-                });
-
-                Promise.all(jobs).then(() => {
-                    state.loaded = Object.keys(state.images).length > 0;
-                    if (!state.loaded) {
-                        console.warn(`Asset skin '${def.id}' did not load any images. Check ${root}/manifest.json paths.`);
-                    } else if (state.failed.length) {
-                        console.warn(`Some asset files failed for skin '${def.id}':`, state.failed);
-                    }
-                });
-            }
-
-            function normalizeAssetSkin(id, manifest) {
-                const m = manifest || {};
-                const manifestLabel = m.meta?.label || m.label;
-                const manifestVersion = +(m.meta?.version || m.version || 1);
-                const isGroupedManifest = manifestVersion >= 2 || Object.values(m.parts || {}).some((v) => v && typeof v === "object" && !Array.isArray(v));
-                const flatVisibleParts = Array.isArray(m.visibleParts) ? canonicalizePartList(m.visibleParts) : DEFAULT_VISIBLE_PARTS.slice();
-                const flatPartTweaks = clonePartTweaks(m.partTweaks || {});
-                const flatDrawOrder = Array.isArray(m.drawOrder) ? m.drawOrder : [];
-                let groupedData;
-                if (isGroupedManifest) {
-                    groupedData = buildGroupedPartsFromManifest(m.parts || {}, flatVisibleParts);
-                } else {
-                    const flatParts = canonicalizePartMap(m.parts || {});
-                    groupedData = buildGroupedPartsFromFlat(flatParts, flatVisibleParts, flatPartTweaks, flatDrawOrder);
-                }
-                const flattened = flattenGroupedParts(groupedData.groupedParts, isGroupedManifest ? (m.drawOrder || groupedData.groupedDrawOrder) : groupedData.groupedDrawOrder);
-                const keys = Object.keys({ ...DEFAULT_ASSET_PARTS, ...flattened.partsMap });
-                return {
-                    id,
-                    label: manifestLabel || id,
-                    mode: "asset",
-                    root: `skins/${id}`,
-                    version: manifestVersion,
-                    partsMap: flattened.partsMap,
-                    groupedParts: groupedData.groupedParts,
-                    groupConfigs: {
-                        ...cloneGroupConfigs(extractGroupConfigs(groupedData.groupedParts)),
-                        ...cloneGroupConfigs(m.groupConfigs || {})
-                    },
-                    groupedDrawOrder: normalizeGroupedDrawOrder(Object.keys(groupedData.groupedParts), m.drawOrder || groupedData.groupedDrawOrder),
-                    visibleParts: flattened.visibleParts,
-                    drawOrder: normalizeLayerOrder(keys, flattened.layerOrder.length ? flattened.layerOrder : keys),
-                    partTweaks: flattened.partTweaks,
-                    slotTweaks: cloneSlotTweaks(m.slotTweaks || {}),
-                    hideDefaultArms: !!(m.render?.hideDefaultArms ?? m.hideDefaultArms),
-                    render: {
-                        nativeSize: m.render?.nativeSize !== false,
-                        defaultScaleMode: m.render?.defaultScaleMode || "contain"
-                    },
-                    morph: { ...BASE_SKINS.test.morph, ...(m.morph || {}) },
-                    colors: { ...BASE_SKINS.test.colors, ...(m.colors || {}) }
-                };
-            }
-
+            });
             async function loadManifestSkins() {
                 if (IS_FILE_PROTOCOL) {
                     return;
@@ -3808,9 +3213,18 @@
                 });
             }
 
+            function reportInitWarning(err) {
+                const message = err?.message || String(err || "unknown init warning");
+                console.error("DeskGoblin init warning:", err);
+                debugText.style.display = "block";
+                debugText.textContent = `init warning: ${message}`;
+            }
+
             function switchSkin(id) {
                 const next = skinLibrary[id];
                 if (!next || id === skinState.targetId) return;
+                resetEditorTransientModes();
+                const current = currentSkinDef();
                 if (next.mode === "asset") loadAssetSkin(next);
                 skinState.targetId = id;
                 skinState.t = 0;
@@ -3818,6 +3232,9 @@
                 skinState.toMorph = copyNumObject(next.morph);
                 skinState.fromColors = copyColorObject(skinState.renderedColors);
                 skinState.toColors = copyColorObject(next.colors);
+                if (next.mode === "asset" || current?.mode === "asset") {
+                    skinState.activeId = id;
+                }
                 refreshPartsInspector();
             }
 
@@ -3872,123 +3289,15 @@
                 return !!(mTargets?.left?.held || mTargets?.right?.held || mTargets?.middle?.held);
             }
 
-            function resetFlyCooldown(min = 6, max = 14) {
-                flyState.cooldown = min + Math.random() * (max - min);
-            }
-
-            function spawnFly() {
-                const bounds = getSceneViewportBounds();
-                const LAYOUT = layout();
-                const margin = 42;
-                const minX = bounds.left + margin;
-                const maxX = bounds.right - margin;
-                const minY = bounds.top + margin;
-                const maxY = Math.max(minY + 24, LAYOUT.deskTopY - 56);
-                const fromLeft = Math.random() < 0.5;
-                flyState.active = true;
-                flyState.squashed = false;
-                flyState.escape = false;
-                flyState.age = 0;
-                flyState.life = 6 + Math.random() * 4;
-                flyState.turnTimer = 0;
-                flyState.wingPhase = Math.random() * Math.PI * 2;
-                flyState.splatTimer = 0;
-                flyState.x = fromLeft ? minX : maxX;
-                flyState.y = minY + Math.random() * Math.max(40, maxY - minY);
-                flyState.vx = fromLeft ? 48 + Math.random() * 22 : -(48 + Math.random() * 22);
-                flyState.vy = (Math.random() - 0.5) * 24;
-            }
-
-            function hitTestFly(x, y) {
-                if (!flyState.active || flyState.squashed) return false;
-                return Math.hypot(x - flyState.x, y - flyState.y) <= flyState.radius + 6;
-            }
-
-            function smashFlyAt(x, y) {
-                if (!flyState.active || flyState.squashed || tModeOn) return false;
-                if (armL && armR) {
-                    const arm = (Math.hypot(x - armL.shoulder.x, y - armL.shoulder.y) <= Math.hypot(x - armR.shoulder.x, y - armR.shoulder.y)) ? armL : armR;
-                    arm.assignedId = "__fly__";
-                    startSmash(arm, { id: "__fly__", x, y, type: "ambient", held: false });
-                }
-                flyState.squashed = true;
-                flyState.escape = false;
-                flyState.splatTimer = 0.8;
-                flyState.vx = 0;
-                flyState.vy = 0;
-                triggerFaceReaction("smirk", 1.1);
-                resetFlyCooldown(9, 18);
-                return true;
-            }
-
-            function updateFly(dt) {
-                if (tModeOn) return;
-                if (!flyState.active) {
-                    flyState.cooldown -= dt;
-                    if (flyState.cooldown <= 0) spawnFly();
-                    return;
-                }
-
-                flyState.wingPhase += dt * 24;
-
-                if (flyState.squashed) {
-                    flyState.splatTimer = Math.max(0, flyState.splatTimer - dt);
-                    if (flyState.splatTimer <= 0) flyState.active = false;
-                    return;
-                }
-
-                const bounds = getSceneViewportBounds();
-                const LAYOUT = layout();
-                const margin = 36;
-                const minX = bounds.left + margin;
-                const maxX = bounds.right - margin;
-                const minY = bounds.top + margin;
-                const maxY = Math.max(minY + 20, LAYOUT.deskTopY - 48);
-
-                flyState.age += dt;
-                flyState.turnTimer -= dt;
-                if (flyState.age >= flyState.life) flyState.escape = true;
-
-                if (flyState.turnTimer <= 0) {
-                    flyState.turnTimer = 0.25 + Math.random() * 0.8;
-                    const jitter = flyState.escape ? 42 : 26;
-                    flyState.vx += (Math.random() - 0.5) * jitter;
-                    flyState.vy += (Math.random() - 0.5) * jitter;
-                }
-
-                const speedLimit = flyState.escape ? 130 : 82;
-                const speed = Math.hypot(flyState.vx, flyState.vy) || 1;
-                if (speed > speedLimit) {
-                    flyState.vx = (flyState.vx / speed) * speedLimit;
-                    flyState.vy = (flyState.vy / speed) * speedLimit;
-                }
-
-                if (flyState.escape) {
-                    const escapeBias = (flyState.x < (minX + maxX) * 0.5) ? -1 : 1;
-                    flyState.vx += escapeBias * dt * 120;
-                    flyState.vy -= dt * 16;
-                }
-
-                flyState.x += flyState.vx * dt;
-                flyState.y += flyState.vy * dt;
-
-                if (flyState.escape) {
-                    if (flyState.x < minX - 40 || flyState.x > maxX + 40 || flyState.y < minY - 40) {
-                        flyState.active = false;
-                        resetFlyCooldown(10, 18);
-                        return;
-                    }
-                } else {
-                    if (flyState.x < minX || flyState.x > maxX) {
-                        flyState.x = clamp(flyState.x, minX, maxX);
-                        flyState.vx *= -1;
-                    }
-                    if (flyState.y < minY || flyState.y > maxY) {
-                        flyState.y = clamp(flyState.y, minY, maxY);
-                        flyState.vy *= -1;
-                    }
-                }
-            }
+            ambient = window.DeskGoblin.createAmbientModule({
+                flyState,
+                getSceneViewportBounds,
+                layout,
+                isTModeOn: () => tModeOn,
+                getArms: () => ({ armL, armR }),
+                startSmash,
+                triggerFaceReaction
+            });
 
             function ensureMouseMoveTarget() {
                 const t = pressed.get("mouse_move");
@@ -4145,7 +3454,7 @@
                     suppressNextMouseDown = false;
                     return;
                 }
-                if (stickyDrag || e.target?.closest?.(".sticky-note, #stageMenu")) return;
+                if (pasteboardState.drag || e.target?.closest?.(".sticky-note, #stageMenu")) return;
                 if (!mTargets) return;
                 let btn = null;
                 if (e.button === 0) btn = mTargets.left;
@@ -4180,7 +3489,7 @@
             // Mouse movement -> slide mouse on pad
             let lastClientX = null, lastClientY = null;
             window.addEventListener("mousemove", (e) => {
-                if (stickyDrag) return;
+                if (pasteboardState.drag) return;
                 if (!mousePad || !mouseSize) return;
 
                 if (lastClientX == null) { lastClientX = e.clientX; lastClientY = e.clientY; return; }
@@ -4517,36 +3826,6 @@
                 };
             }
 
-            function getRenderGroupedModel(skinDef, state) {
-                const grouped = skinDef.version >= 2
-                    ? {
-                        groupedParts: skinDef.groupedParts || {},
-                        groupedDrawOrder: skinDef.groupedDrawOrder || []
-                    }
-                    : buildGroupedPartsFromFlat(
-                    state.partsMap || skinDef.partsMap || {},
-                    Array.from(state.visibleSet || []),
-                    state.partTweaks || skinDef.partTweaks || {},
-                    state.drawOrder || skinDef.drawOrder || []
-                );
-                const configSource = state?.groupConfigs || skinDef.groupConfigs || {};
-                const configuredParts = {};
-                Object.entries(grouped.groupedParts || {}).forEach(([groupId, group]) => {
-                    const defaults = getDefaultGroupConfig(groupId);
-                    const config = configSource[groupId] || defaults;
-                    configuredParts[groupId] = {
-                        ...group,
-                        mode: String(config.mode || group.mode || defaults.mode),
-                        pivot: normalizePoint(config.pivot || group.pivot, defaults.pivot.x, defaults.pivot.y),
-                        handAnchor: normalizePoint(config.handAnchor || group.handAnchor, defaults.handAnchor.x, defaults.handAnchor.y)
-                    };
-                });
-                return {
-                    groupedParts: configuredParts,
-                    groupedDrawOrder: grouped.groupedDrawOrder || []
-                };
-            }
-
             function getRigPoseMetrics(LAYOUT) {
                 if (tModeOn) {
                     return {
@@ -4621,33 +3900,6 @@
                     return { def, st, slotId: group.slot, scope: "overlay", localRect: slotRects.overlay[group.slot], worldRect: { ...slotRects.overlay[group.slot] } };
                 }
                 return null;
-            }
-
-            function findGroupIdForLayer(groupedParts, layerKey) {
-                if (!layerKey) return "";
-                for (const [groupId, group] of Object.entries(groupedParts || {})) {
-                    if ((group.layers || []).some((layer) => layer.key === layerKey)) return groupId;
-                }
-                return "";
-            }
-
-            function getSelectedGroupId(groupedParts, selectionKey) {
-                if (!selectionKey) return "";
-                if (groupedParts && groupedParts[selectionKey]) return selectionKey;
-                return findGroupIdForLayer(groupedParts, selectionKey);
-            }
-
-            function isGroupSelection(groupedParts, selectionKey) {
-                return !!(selectionKey && groupedParts && groupedParts[selectionKey]);
-            }
-
-            function getSoloRenderAlpha(groupedParts, layerKey) {
-                const soloActive = soloSelectedOn && panelOpen && currentTab === "editor" && !!selectedPartKey;
-                if (!soloActive) return 1;
-                const selectedGroupId = getSelectedGroupId(groupedParts, selectedPartKey);
-                if (selectedPartKey === layerKey) return 1;
-                if (selectedGroupId && groupedParts?.[selectedPartKey] && findGroupIdForLayer(groupedParts, layerKey) === selectedGroupId) return 1;
-                return 0;
             }
 
             function drawCustomAssetCharacter(LAYOUT, skinDef) {
@@ -5081,15 +4333,7 @@
                 sceneTime += dt;
                 mouseMoveTimer = Math.max(0, mouseMoveTimer - dt);
 
-                if (timerState.running) {
-                    timerState.remaining = Math.max(0, timerState.remaining - dt);
-                    if (timerState.remaining <= 0) {
-                        timerState.remaining = 0;
-                        timerState.running = false;
-                        triggerFaceReaction("perk", 1.2);
-                    }
-                    syncTimerUI();
-                }
+                updateTimer(dt);
 
                 if (tModeOn) {
                     if (flyState.active) {
@@ -5230,7 +4474,16 @@
                     const st = getInspectorState(active);
                     const loadedCount = Object.keys(st.images).length;
                     const expectedCount = st.visibleSet ? st.visibleSet.size : 0;
-                    assetLine = `asset: ${active.id} loaded=${loadedCount}/${expectedCount} failed=${st.failed.length}`;
+                    const renderModel = getRenderGroupedModel(active, st);
+                    const groups = Object.values(renderModel.groupedParts || {});
+                    const drawableLayers = groups.reduce((sum, group) => {
+                        return sum + (group.layers || []).filter((layer) => layer.visible !== false && st.images[layer.key]).length;
+                    }, 0);
+                    const firstBox = lastAssetBoxes[0];
+                    const boxLine = firstBox
+                        ? ` box=${firstBox.key}@${Math.round(firstBox.x)},${Math.round(firstBox.y)} ${Math.round(firstBox.w)}x${Math.round(firstBox.h)}`
+                        : " box=none";
+                    assetLine = `asset: ${active.id} requested=${st.requested ? "yes" : "no"} ready=${st.loaded ? "yes" : "no"} loaded=${loadedCount}/${expectedCount} failed=${st.failed.length} groups=${groups.length} drawable=${drawableLayers}${boxLine}`;
                 }
 
                 debugText.textContent =
@@ -5304,66 +4557,11 @@
                 requestAnimationFrame(loop);
             }
 
-            function populateCharacterSelect() {
-                const fillSelect = (el) => {
-                    if (!el) return;
-                    el.innerHTML = "";
-                    Object.entries(skinLibrary).forEach(([id, def]) => {
-                        const opt = document.createElement("option");
-                        opt.value = id;
-                        opt.textContent = def.label;
-                        el.appendChild(opt);
-                    });
-                };
-                fillSelect(charSelectInfo);
-                fillSelect(charSelect);
-                fillSelect(editorSkinSelect);
-            }
-
-            function syncSkinSelects(id) {
-                if (charSelectInfo && charSelectInfo.value !== id) charSelectInfo.value = id;
-                if (charSelect.value !== id) charSelect.value = id;
-                if (editorSkinSelect.value !== id) editorSkinSelect.value = id;
-            }
-
             // ===== INIT
             async function init() {
                 resize();
                 const LAYOUT = layout();
-                setupThemeSelector();
-                setupCanvasPaletteSelector();
-                syncTimerUI();
-                setPanelSide(panelSide);
-                openPanelWithTab("info");
-                setInspectorPane(inspectorPane);
-                debugText.style.display = debugOn ? "block" : "none";
-                stickyNotes = loadStickyNotes();
-                syncPasteboardTransform();
-                renderStickyNotes();
-
-                await loadManifestSkins();
-                syncSkinRuntimeNotice();
-                populateCharacterSelect();
-                syncSkinSelects(skinState.activeId);
-                charSelectInfo?.addEventListener("change", () => {
-                    switchSkin(charSelectInfo.value);
-                    syncSkinSelects(charSelectInfo.value);
-                    refreshPartsInspector();
-                });
-                charSelect.addEventListener("change", () => {
-                    switchSkin(charSelect.value);
-                    syncSkinSelects(charSelect.value);
-                    refreshPartsInspector();
-                });
-                editorSkinSelect.addEventListener("change", () => {
-                    switchSkin(editorSkinSelect.value);
-                    syncSkinSelects(editorSkinSelect.value);
-                    refreshPartsInspector();
-                });
-                refreshPartsInspector();
-
                 keys = buildKeyRects(LAYOUT.keyboard);
-
                 mousePad = LAYOUT.mousepad;
                 mouseSize = LAYOUT.mouseSize;
                 mouseCenter = {
@@ -5378,6 +4576,44 @@
 
                 armL = makeArm(LAYOUT.shoulderL, LAYOUT.restL);
                 armR = makeArm(LAYOUT.shoulderR, LAYOUT.restR);
+
+                requestAnimationFrame((t) => { lastTime = t; loop(t); });
+
+                setupThemeSelector();
+                setupCanvasPaletteSelector();
+                syncTimerUI();
+                setPanelSide(panelSide);
+                openPanelWithTab("info");
+                setInspectorPane(inspectorPane);
+                debugText.style.display = debugOn ? "block" : "none";
+                pasteboardState.notes = loadStickyNotes();
+                syncPasteboardTransform();
+                renderStickyNotes();
+
+                try {
+                    await loadManifestSkins();
+                    syncSkinRuntimeNotice();
+                    populateCharacterSelect();
+                    syncSkinSelects(skinState.activeId);
+                    charSelectInfo?.addEventListener("change", () => {
+                        switchSkin(charSelectInfo.value);
+                        syncSkinSelects(charSelectInfo.value);
+                        refreshPartsInspector();
+                    });
+                    charSelect.addEventListener("change", () => {
+                        switchSkin(charSelect.value);
+                        syncSkinSelects(charSelect.value);
+                        refreshPartsInspector();
+                    });
+                    editorSkinSelect.addEventListener("change", () => {
+                        switchSkin(editorSkinSelect.value);
+                        syncSkinSelects(editorSkinSelect.value);
+                        refreshPartsInspector();
+                    });
+                    refreshPartsInspector();
+                } catch (err) {
+                    reportInitWarning(err);
+                }
 
                 window.addEventListener("resize", () => {
                     resize();
@@ -5409,8 +4645,6 @@
                     if (armL.phase === "idle") { armL.pos = { ...armL.rest }; }
                     if (armR.phase === "idle") { armR.pos = { ...armR.rest }; }
                 });
-
-                requestAnimationFrame((t) => { lastTime = t; loop(t); });
             }
 
             init();

@@ -1,222 +1,505 @@
-﻿{
-  "visibleParts": [
-    "tailFill",
-    "tailLine",
-    "bodyFill",
-    "bodyLine",
-    "charRightEarFill",
-    "charRightEarLine",
-    "headFill",
-    "headLine",
-    "charLeftEarFill",
-    "charLeftEarLine",
-    "charLeftEarInner",
+{
+  "version": 3,
+  "groupOrder": [
+    "tail",
+    "body",
+    "charRightEar",
+    "head",
+    "charLeftEar",
     "charLeftEye",
     "charRightEye",
     "charLeftBrow",
     "charRightBrow",
     "mouth",
-    "charRightArmUpFill",
-    "charRightArmUpLine",
-    "charLeftArmUpFill",
-    "charLeftArmUpLine"
-  ],
-  "drawOrder": [
-    "tailFill",
-    "tailLine",
-    "bodyFill",
-    "bodyLine",
-    "charRightEarFill",
-    "charRightEarLine",
-    "headFill",
-    "headLine",
-    "charLeftEarFill",
-    "charLeftEarLine",
-    "charLeftEarInner",
-    "charLeftEye",
-    "charRightEye",
-    "charLeftBrow",
-    "charRightBrow",
-    "mouth",
-    "charRightArmDownFill",
-    "charRightArmDownLine",
-    "charRightArmUpFill",
-    "charRightArmUpLine",
-    "charLeftArmUpFill",
-    "charLeftArmUpLine",
-    "charLeftArmDownFill",
-    "charLeftArmDownLine"
+    "charRightArmDown",
+    "charRightArmUp",
+    "charLeftArmUp",
+    "charLeftArmDown"
   ],
   "parts": {
-    "bodyFill": "BodyFillParts/Body fill.PNG",
-    "bodyLine": "BodyFillParts/Body.PNG",
-    "tailFill": "TailParts/TailFill.PNG",
-    "tailLine": "TailParts/Tail.PNG",
-    "headFill": "HeadBase/HeadFill.PNG",
-    "headLine": "HeadBase/Head.PNG",
-    "charLeftEarFill": "L_EarParts/L_EarFill.PNG",
-    "charLeftEarLine": "L_EarParts/L_Ear.PNG",
-    "charLeftEarInner": "L_EarParts/InnerEarLine.PNG",
-    "charRightEarFill": "R_EarParts/R_EarFill.PNG",
-    "charRightEarLine": "R_EarParts/R_Ear.PNG",
-    "charLeftArmDownFill": "L_ArmDownParts/L_ArmFill.PNG",
-    "charLeftArmDownLine": "L_ArmDownParts/L_ArmLower.PNG",
-    "charLeftArmUpFill": "L_ArmUpParts/L_ArmUpFill.PNG",
-    "charLeftArmUpLine": "L_ArmUpParts/L_ArmUp.PNG",
-    "charRightArmDownFill": "R_ArmDownParts/R_ArmFill.PNG",
-    "charRightArmDownLine": "R_ArmDownParts/R_Arm.PNG",
-    "charRightArmUpFill": "R_ArmDownParts/R_ArmFill.PNG",
-    "charRightArmUpLine": "R_ArmDownParts/R_Arm.PNG",
-    "charLeftEye": "Face/L_Eye.PNG",
-    "charRightEye": "Face/R_Eye.PNG",
-    "charLeftBrow": "Face/L_Eyebrow.PNG",
-    "charRightBrow": "Face/R_Eyebrow.PNG",
-    "mouth": "Face/Mouth.PNG"
-  },
-  "partTweaks": {
-    "tailFill": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
+    "tail": {
+      "slot": "tail",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "tailFill",
+          "label": "fill",
+          "file": "TailParts/TailFill.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        },
+        {
+          "id": "tailLine",
+          "label": "line",
+          "file": "TailParts/Tail.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        }
+      ]
     },
-    "tailLine": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
+    "body": {
+      "slot": "body",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "bodyFill",
+          "label": "fill",
+          "file": "BodyFillParts/Body fill.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        },
+        {
+          "id": "bodyLine",
+          "label": "line",
+          "file": "BodyFillParts/Body.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        }
+      ]
     },
-    "bodyFill": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
+    "charRightEar": {
+      "slot": "charRightEar",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "charRightEarFill",
+          "label": "fill",
+          "file": "R_EarParts/R_EarFill.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": -61,
+            "w": 58,
+            "h": 58
+          }
+        },
+        {
+          "id": "charRightEarLine",
+          "label": "line",
+          "file": "R_EarParts/R_Ear.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": -62,
+            "w": 59,
+            "h": 59
+          }
+        }
+      ]
     },
-    "bodyLine": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
+    "head": {
+      "slot": "head",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "headFill",
+          "label": "fill",
+          "file": "HeadBase/HeadFill.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        },
+        {
+          "id": "headLine",
+          "label": "line",
+          "file": "HeadBase/Head.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        }
+      ]
     },
-    "charRightEarFill": {
-      "x": 0,
-      "y": -61,
-      "w": 58,
-      "h": 58
-    },
-    "charRightEarLine": {
-      "x": 0,
-      "y": -62,
-      "w": 59,
-      "h": 59
-    },
-    "headFill": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
-    },
-    "headLine": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
-    },
-    "charLeftEarFill": {
-      "x": 0,
-      "y": -47,
-      "w": 63,
-      "h": 63
-    },
-    "charLeftEarLine": {
-      "x": 0,
-      "y": -56,
-      "w": 60,
-      "h": 60
-    },
-    "charLeftEarInner": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
+    "charLeftEar": {
+      "slot": "charLeftEar",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "charLeftEarFill",
+          "label": "fill",
+          "file": "L_EarParts/L_EarFill.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": -47,
+            "w": 63,
+            "h": 63
+          }
+        },
+        {
+          "id": "charLeftEarLine",
+          "label": "line",
+          "file": "L_EarParts/L_Ear.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": -56,
+            "w": 60,
+            "h": 60
+          }
+        },
+        {
+          "id": "charLeftEarInner",
+          "label": "inner",
+          "file": "L_EarParts/InnerEarLine.PNG",
+          "visible": true,
+          "tweak": {
+            "x": -160,
+            "y": -89,
+            "w": 0,
+            "h": 0
+          }
+        }
+      ]
     },
     "charLeftEye": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
+      "slot": "charLeftEye",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "charLeftEye",
+          "label": "base",
+          "file": "Face/L_Eye.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        }
+      ]
     },
     "charRightEye": {
-      "x": -17,
-      "y": 0,
-      "w": 69,
-      "h": 69
+      "slot": "charRightEye",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "charRightEye",
+          "label": "base",
+          "file": "Face/R_Eye.PNG",
+          "visible": true,
+          "tweak": {
+            "x": -17,
+            "y": 0,
+            "w": 69,
+            "h": 69
+          }
+        }
+      ]
     },
     "charLeftBrow": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
+      "slot": "charLeftBrow",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "charLeftBrow",
+          "label": "base",
+          "file": "Face/L_Eyebrow.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        }
+      ]
     },
     "charRightBrow": {
-      "x": -14,
-      "y": -20,
-      "w": -49,
-      "h": -49
+      "slot": "charRightBrow",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "charRightBrow",
+          "label": "base",
+          "file": "Face/R_Eyebrow.PNG",
+          "visible": true,
+          "tweak": {
+            "x": -14,
+            "y": -20,
+            "w": -49,
+            "h": -49
+          }
+        }
+      ]
     },
     "mouth": {
-      "x": -16,
-      "y": 0,
-      "w": -17,
-      "h": -17
+      "slot": "mouth",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "mouth",
+          "label": "base",
+          "file": "Face/Mouth.PNG",
+          "visible": true,
+          "tweak": {
+            "x": -16,
+            "y": 0,
+            "w": -17,
+            "h": -17
+          }
+        }
+      ]
     },
-    "charRightArmDownFill": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
+    "charRightArmDown": {
+      "slot": "charRightArmDown",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "charRightArmDownFill",
+          "label": "fill",
+          "file": "R_ArmDownParts/R_ArmFill.PNG",
+          "visible": false,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        },
+        {
+          "id": "charRightArmDownLine",
+          "label": "line",
+          "file": "R_ArmDownParts/R_Arm.PNG",
+          "visible": false,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        }
+      ]
     },
-    "charRightArmDownLine": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
+    "charRightArmUp": {
+      "slot": "charRightArmUp",
+      "mode": "stretch",
+      "pivot": {
+        "x": 1,
+        "y": 0.46
+      },
+      "handAnchor": {
+        "x": 0,
+        "y": 0
+      },
+      "layers": [
+        {
+          "id": "charRightArmUpFill",
+          "label": "fill",
+          "file": "R_ArmDownParts/R_ArmFill.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        },
+        {
+          "id": "charRightArmUpLine",
+          "label": "line",
+          "file": "R_ArmDownParts/R_Arm.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        }
+      ]
     },
-    "charRightArmUpFill": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
+    "charLeftArmUp": {
+      "slot": "charLeftArmUp",
+      "mode": "stretch",
+      "pivot": {
+        "x": 0,
+        "y": 0.94
+      },
+      "handAnchor": {
+        "x": 1,
+        "y": 0
+      },
+      "layers": [
+        {
+          "id": "charLeftArmUpFill",
+          "label": "fill",
+          "file": "L_ArmUpParts/L_ArmUpFill.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        },
+        {
+          "id": "charLeftArmUpLine",
+          "label": "line",
+          "file": "L_ArmUpParts/L_ArmUp.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        }
+      ]
     },
-    "charRightArmUpLine": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
-    },
-    "charLeftArmUpFill": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
-    },
-    "charLeftArmUpLine": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
-    },
-    "charLeftArmDownFill": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
-    },
-    "charLeftArmDownLine": {
-      "x": 0,
-      "y": 0,
-      "w": 0,
-      "h": 0
+    "charLeftArmDown": {
+      "slot": "charLeftArmDown",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "charLeftArmDownFill",
+          "label": "fill",
+          "file": "L_ArmDownParts/L_ArmFill.PNG",
+          "visible": false,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        },
+        {
+          "id": "charLeftArmDownLine",
+          "label": "line",
+          "file": "L_ArmDownParts/L_ArmLower.PNG",
+          "visible": false,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        }
+      ]
     }
   },
   "slotTweaks": {
@@ -233,220 +516,69 @@
       "h": 171
     },
     "charRightArmUp": {
-      "x": 20,
-      "y": -5,
+      "x": 41,
+      "y": -16,
       "w": -67,
       "h": -109
     },
     "charLeftArmUp": {
-      "x": 26,
-      "y": -63,
-      "w": -103,
-      "h": -85
+      "x": 23,
+      "y": -58,
+      "w": -85,
+      "h": -102
     },
     "head": {
-      "x": -52,
-      "y": -139,
-      "w": 89,
-      "h": 93
+      "x": -63,
+      "y": -126,
+      "w": 110,
+      "h": 40
     },
     "charLeftEar": {
-      "x": -7,
-      "y": -59,
-      "w": 3,
-      "h": 24
+      "x": -39,
+      "y": -196,
+      "w": 72,
+      "h": 140
     },
     "charLeftEye": {
-      "x": 4,
-      "y": -67,
-      "w": -28,
-      "h": 51
+      "x": 15,
+      "y": -80,
+      "w": -23,
+      "h": 47
     },
     "charLeftBrow": {
-      "x": 6,
-      "y": -60,
+      "x": 15,
+      "y": -74,
+      "w": -37,
+      "h": -14
+    },
+    "charRightEar": {
+      "x": -16,
+      "y": -209,
+      "w": 25,
+      "h": 121
+    },
+    "charRightBrow": {
+      "x": -20,
+      "y": -75,
       "w": -34,
+      "h": -15
+    },
+    "mouth": {
+      "x": -21,
+      "y": -62,
+      "w": -9,
       "h": -10
     },
-    "charRightEar": {
-      "x": 6,
-      "y": -65,
-      "w": 10,
-      "h": 35
-    },
-    "charRightBrow": {
-      "x": -19,
-      "y": -43,
-      "w": -7,
-      "h": -1
-    },
-    "mouth": {
-      "x": -9,
-      "y": -60,
-      "w": -7,
-      "h": 2
-    },
     "charRightEye": {
-      "x": -10,
-      "y": -41,
-      "w": -39,
-      "h": -7
+      "x": -34,
+      "y": -79,
+      "w": -25,
+      "h": 45
     }
   },
-  "groupConfigs": {
-    "tail": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    },
-    "body": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    },
-    "charRightEar": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    },
-    "head": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    },
-    "charLeftEar": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    },
-    "charLeftEye": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    },
-    "charRightEye": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    },
-    "charLeftBrow": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    },
-    "charRightBrow": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    },
-    "mouth": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    },
-    "charRightArmDown": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    },
-    "charRightArmUp": {
-      "mode": "stretch",
-      "pivot": {
-        "x": 1,
-        "y": 0.46
-      },
-      "handAnchor": {
-        "x": 0,
-        "y": 0
-      }
-    },
-    "charLeftArmUp": {
-      "mode": "stretch",
-      "pivot": {
-        "x": 0,
-        "y": 0.94
-      },
-      "handAnchor": {
-        "x": 1,
-        "y": 0
-      }
-    },
-    "charLeftArmDown": {
-      "mode": "static",
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      },
-      "handAnchor": {
-        "x": 0.5,
-        "y": 0.95
-      }
-    }
+  "render": {
+    "hideDefaultArms": false,
+    "nativeSize": true,
+    "defaultScaleMode": "contain"
   }
 }
