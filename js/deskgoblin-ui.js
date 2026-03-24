@@ -75,7 +75,7 @@
                 if (active) activePane = pane;
             });
             sidePanel.classList.toggle("surface-none", !!(activePane && activePane.dataset.surface === "none"));
-            const labelMap = { info: "Info", input: "Thoughts", timer: "Timer", editor: "Goblin Editor", debug: "Debug", options: "Options" };
+            const labelMap = { info: "Info", input: "Thoughts", timer: "Timer", chance: "Chance", editor: "Goblin Editor", debug: "Debug", options: "Options" };
             panelTitle.textContent = labelMap[tab] || "Panel";
             const editorActive = tab === "editor";
             editorExpandBtn.hidden = !editorActive;

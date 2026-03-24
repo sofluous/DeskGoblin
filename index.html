@@ -191,6 +191,358 @@
             color: var(--ds-accent);
         }
 
+        .chance-pane {
+            display: grid;
+            gap: var(--ds-space-3);
+            min-width: 0;
+        }
+
+        .chance-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--ds-space-2);
+            align-items: center;
+        }
+
+        .chance-controls .ds-input {
+            width: 100%;
+            max-width: 108px;
+        }
+
+        .chance-range-controls .ds-input {
+            max-width: 96px;
+        }
+
+        .chance-range-sep {
+            font-size: var(--ds-fs-1);
+            color: var(--dg-subtle-text);
+            text-transform: var(--ds-label-transform);
+            letter-spacing: var(--ds-label-spacing);
+        }
+
+        .chance-presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--ds-space-2);
+        }
+
+        .dice-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--ds-space-2);
+            justify-content: center;
+        }
+
+        .dice-select-btn[aria-pressed="true"] {
+            background: color-mix(in oklab, var(--ds-accent) 18%, var(--ds-btn-bg));
+            border-color: color-mix(in oklab, var(--ds-accent) 42%, transparent);
+            color: var(--ds-text);
+        }
+
+        .dice-hero {
+            position: relative;
+            width: min(220px, 100%);
+            aspect-ratio: 1;
+            margin-inline: auto;
+            display: grid;
+            place-items: center;
+        }
+
+        .chance-object-shell {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            padding: 0;
+            background: transparent;
+            cursor: pointer;
+            touch-action: none;
+            user-select: none;
+        }
+
+        .chance-object-shell:focus-visible {
+            outline: none;
+        }
+
+        .dice-shape {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            position: relative;
+            border: var(--ds-border-w) solid color-mix(in oklab, var(--ds-border) 88%, transparent);
+            background:
+                radial-gradient(circle at 30% 24%, color-mix(in oklab, white 14%, transparent), transparent 42%),
+                linear-gradient(145deg, color-mix(in oklab, var(--ds-bg-elevated) 82%, white 6%), color-mix(in oklab, var(--ds-bg-soft) 88%, black 6%));
+            box-shadow: inset 0 1px 0 color-mix(in oklab, white 10%, transparent), 0 18px 36px rgba(0, 0, 0, 0.18);
+            transition: transform 140ms ease, box-shadow 140ms ease;
+        }
+
+        .chance-object-shell:hover .dice-shape,
+        .chance-object-shell:focus-visible .dice-shape {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: inset 0 1px 0 color-mix(in oklab, white 10%, transparent), 0 22px 38px rgba(0, 0, 0, 0.22);
+        }
+
+        .dice-shape.is-rolling {
+            animation: dg-die-bounce 420ms ease;
+        }
+
+        .dice-shape.is-holding {
+            animation: dg-die-hold-shake 420ms linear infinite;
+        }
+
+        .dice-shape[data-sides="4"] {
+            clip-path: polygon(50% 8%, 94% 92%, 6% 92%);
+        }
+
+        .dice-shape[data-sides="6"] {
+            border-radius: 18%;
+        }
+
+        .dice-shape[data-sides="8"] {
+            clip-path: polygon(50% 4%, 92% 50%, 50% 96%, 8% 50%);
+        }
+
+        .dice-shape[data-sides="10"] {
+            clip-path: polygon(50% 2%, 88% 18%, 98% 54%, 74% 94%, 26% 94%, 2% 54%, 12% 18%);
+        }
+
+        .dice-shape[data-sides="12"] {
+            clip-path: polygon(25% 6%, 75% 6%, 96% 25%, 96% 75%, 75% 94%, 25% 94%, 4% 75%, 4% 25%);
+        }
+
+        .dice-shape[data-sides="20"] {
+            clip-path: polygon(50% 2%, 82% 14%, 98% 44%, 92% 78%, 66% 98%, 34% 98%, 8% 78%, 2% 44%, 18% 14%);
+        }
+
+        .dice-face {
+            display: grid;
+            justify-items: center;
+            gap: var(--ds-space-1);
+            text-align: center;
+            padding: var(--ds-space-3);
+        }
+
+        .dice-kind {
+            font-size: var(--ds-fs-1);
+            text-transform: var(--ds-label-transform);
+            letter-spacing: var(--ds-label-spacing);
+            color: var(--dg-subtle-text);
+        }
+
+        .dice-total {
+            font-size: clamp(42px, 10vw, 68px);
+            line-height: 0.95;
+            font-weight: 800;
+            color: var(--ds-text);
+        }
+
+        .dice-meta {
+            font-size: var(--ds-fs-1);
+            color: var(--dg-subtle-text);
+        }
+
+        .chance-result {
+            display: grid;
+            gap: var(--ds-space-1);
+            padding: var(--ds-space-3);
+            border: var(--ds-border-w) var(--ds-border-style) color-mix(in oklab, var(--ds-border) 72%, transparent);
+            border-radius: var(--ds-radius-2);
+            background: var(--dg-surface-softer);
+            min-width: 0;
+        }
+
+        .chance-result-label {
+            font-size: var(--ds-fs-1);
+            color: var(--dg-subtle-text);
+            text-transform: var(--ds-label-transform);
+            letter-spacing: var(--ds-label-spacing);
+        }
+
+        .chance-result-value {
+            font-size: clamp(24px, 5vw, 34px);
+            line-height: 1.05;
+            font-weight: 700;
+            color: var(--ds-text);
+            word-break: break-word;
+        }
+
+        .chance-result-sub {
+            font-size: var(--ds-fs-1);
+            color: var(--dg-subtle-text);
+            word-break: break-word;
+        }
+
+        .chance-trigger {
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+        }
+
+        .chance-trigger:hover,
+        .chance-trigger:focus-visible {
+            transform: translateY(-1px);
+            border-color: color-mix(in oklab, var(--ds-accent) 38%, transparent);
+            box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--ds-accent) 18%, transparent), 0 12px 28px rgba(0, 0, 0, 0.16);
+            outline: none;
+        }
+
+        .rng-trigger {
+            min-height: 172px;
+            justify-items: center;
+            align-content: center;
+            text-align: center;
+        }
+
+        .magic-ball-shell {
+            width: min(240px, 100%);
+            aspect-ratio: 1;
+            margin-inline: auto;
+            border: 0;
+            padding: 0;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .magic-ball-shell:focus-visible {
+            outline: none;
+        }
+
+        .magic-ball {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 32% 22%, rgba(255,255,255,0.22), transparent 30%),
+                radial-gradient(circle at 50% 120%, rgba(7, 10, 24, 0.92), rgba(2, 3, 10, 1) 52%, rgba(18, 22, 38, 0.98) 100%);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 -18px 40px rgba(0,0,0,0.4), 0 20px 36px rgba(0,0,0,0.28);
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            transition: transform 140ms ease;
+        }
+
+        .magic-ball.is-shaking {
+            animation: dg-ball-shake 520ms ease;
+        }
+
+        .magic-ball.is-holding {
+            animation: dg-ball-hold-shake 240ms linear infinite;
+        }
+
+        .magic-eight {
+            position: absolute;
+            top: 18%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 34%;
+            height: 34%;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(248, 249, 255, 0.96);
+            color: rgba(12, 16, 28, 0.9);
+            font-size: clamp(30px, 8vw, 44px);
+            font-weight: 800;
+            box-shadow: inset 0 -4px 8px rgba(0,0,0,0.08);
+            transition: transform 320ms ease, opacity 280ms ease, top 320ms ease;
+        }
+
+        .magic-window {
+            width: 56%;
+            aspect-ratio: 1.08;
+            clip-path: polygon(50% 4%, 96% 84%, 4% 84%);
+            background:
+                radial-gradient(circle at 50% 30%, rgba(133, 200, 255, 0.9), rgba(62, 98, 212, 0.94) 48%, rgba(18, 28, 86, 0.98) 100%);
+            display: grid;
+            place-items: center;
+            padding: 18% 12% 14%;
+            text-align: center;
+            color: rgba(237, 245, 255, 0.98);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+            transform: translateY(0);
+            transition: transform 340ms ease, opacity 260ms ease;
+        }
+
+        .magic-window-text {
+            font-size: clamp(11px, 2vw, 14px);
+            line-height: 1.15;
+            font-weight: 700;
+            opacity: 0;
+            transition: opacity 360ms ease 120ms;
+        }
+
+        .magic-ball.is-idle .magic-window-text,
+        .magic-ball.is-revealed .magic-window-text {
+            opacity: 1;
+        }
+
+        .magic-ball.is-idle .magic-eight {
+            opacity: 0;
+            transform: translate(-50%, -150%);
+        }
+
+        .magic-ball.is-holding .magic-eight {
+            opacity: 1;
+            top: 46%;
+            transform: translate(-50%, -50%);
+        }
+
+        .magic-ball.is-holding .magic-window {
+            transform: translateY(158%);
+        }
+
+        .magic-ball.is-revealing .magic-eight,
+        .magic-ball.is-revealed .magic-eight {
+            opacity: 0;
+            top: 18%;
+            transform: translate(-50%, -150%);
+        }
+
+        .magic-ball.is-revealing .magic-window,
+        .magic-ball.is-revealed .magic-window {
+            transform: translateY(0);
+        }
+
+        .magic-ball-shell:focus-visible .magic-ball,
+        .magic-ball-shell:hover .magic-ball {
+            transform: translateY(-1px);
+        }
+
+        @keyframes dg-die-bounce {
+            0% { transform: translateY(0) scale(1) rotate(0deg); }
+            24% { transform: translateY(-6px) scale(1.02) rotate(-6deg); }
+            50% { transform: translateY(3px) scale(0.98) rotate(8deg); }
+            100% { transform: translateY(0) scale(1) rotate(0deg); }
+        }
+
+        @keyframes dg-die-hold-shake {
+            0% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-4px) rotate(-4deg); }
+            50% { transform: translateX(4px) rotate(4deg); }
+            75% { transform: translateX(-3px) rotate(-3deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
+
+        @keyframes dg-ball-shake {
+            0% { transform: translateX(0) rotate(0deg); }
+            18% { transform: translateX(-8px) rotate(-6deg); }
+            36% { transform: translateX(8px) rotate(6deg); }
+            54% { transform: translateX(-7px) rotate(-5deg); }
+            72% { transform: translateX(7px) rotate(5deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
+
+        @keyframes dg-ball-hold-shake {
+            0% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-5px) rotate(-4deg); }
+            50% { transform: translateX(5px) rotate(4deg); }
+            75% { transform: translateX(-4px) rotate(-3deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
+
         .stage {
             position: relative;
             width: 100%;
@@ -1573,6 +1925,7 @@
                 <div class="nav-group utility">
                     <button type="button" class="nav-btn ds-btn ds-btn-icon ds-btn-sm" data-tab="input" title="Thoughts" aria-label="Thoughts" aria-pressed="false" aria-controls="pane-input"><i class="iconoir-edit-pencil"></i></button>
                     <button type="button" class="nav-btn ds-btn ds-btn-icon ds-btn-sm" data-tab="timer" title="Timer" aria-label="Timer" aria-pressed="false" aria-controls="pane-timer"><i class="iconoir-timer"></i></button>
+                    <button type="button" class="nav-btn ds-btn ds-btn-icon ds-btn-sm" data-tab="chance" title="Chance" aria-label="Chance" aria-pressed="false" aria-controls="pane-chance"><i class="iconoir-dice-five"></i></button>
                 </div>
                 <div class="nav-group meta">
                     <button type="button" class="nav-btn ds-btn ds-btn-icon ds-btn-sm" data-tab="editor" title="Goblin Editor" aria-label="Goblin Editor" aria-pressed="false" aria-controls="pane-editor"><i class="iconoir-tools"></i></button>
@@ -1635,6 +1988,72 @@
                                         <button id="timerToggle" class="ds-btn ds-btn-sm" type="button" aria-pressed="false">Start</button>
                                         <button id="timerReset" class="ds-btn ds-btn-sm" type="button">Reset</button>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="pane-chance" class="tab-pane ds-panel-scroll" data-pane="chance" hidden>
+                        <div class="chance-pane ds-pane-stack-compact">
+                            <div class="utility-section ds-card">
+                                <h4>Dice Roller</h4>
+                                <div class="utility-section-body">
+                                    <div class="dice-selector">
+                                        <button id="diceD4" class="dice-select-btn ds-btn ds-btn-sm" type="button" data-sides="4" aria-pressed="false">d4</button>
+                                        <button id="diceD6" class="dice-select-btn ds-btn ds-btn-sm" type="button" data-sides="6" aria-pressed="true">d6</button>
+                                        <button id="diceD8" class="dice-select-btn ds-btn ds-btn-sm" type="button" data-sides="8" aria-pressed="false">d8</button>
+                                        <button id="diceD10" class="dice-select-btn ds-btn ds-btn-sm" type="button" data-sides="10" aria-pressed="false">d10</button>
+                                        <button id="diceD12" class="dice-select-btn ds-btn ds-btn-sm" type="button" data-sides="12" aria-pressed="false">d12</button>
+                                        <button id="diceD20" class="dice-select-btn ds-btn ds-btn-sm" type="button" data-sides="20" aria-pressed="false">d20</button>
+                                    </div>
+                                    <div class="dice-hero">
+                                        <button id="diceThrowSurface" class="chance-object-shell" type="button" aria-label="Throw the selected die">
+                                            <div id="diceShape" class="dice-shape" data-sides="6">
+                                                <div class="dice-face">
+                                                    <div id="diceKind" class="dice-kind">d6</div>
+                                                    <div id="diceResultValue" class="dice-total">6</div>
+                                                    <div id="diceResultSub" class="dice-meta">Hold and release</div>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                    <div class="chance-controls">
+                                        <input id="diceCount" class="ds-input" type="number" min="1" max="12" step="1" value="1" aria-label="Dice count" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="utility-section ds-card">
+                                <h4>Random Number</h4>
+                                <div class="utility-section-body">
+                                    <div class="chance-controls chance-range-controls">
+                                        <input id="rngMin" class="ds-input" type="number" step="1" value="1" aria-label="Minimum value" />
+                                        <span class="chance-range-sep">to</span>
+                                        <input id="rngMax" class="ds-input" type="number" step="1" value="100" aria-label="Maximum value" />
+                                    </div>
+                                    <div class="chance-presets">
+                                        <button class="ds-btn ds-btn-sm rng-preset-btn" type="button" data-min="1" data-max="10">1-10</button>
+                                        <button class="ds-btn ds-btn-sm rng-preset-btn" type="button" data-min="1" data-max="100">1-100</button>
+                                        <button class="ds-btn ds-btn-sm rng-preset-btn" type="button" data-min="1" data-max="1000">1-1000</button>
+                                    </div>
+                                    <button id="rngRollBtn" class="chance-result chance-trigger rng-trigger" type="button" aria-label="Generate random number">
+                                        <div class="chance-result-label">Tap to Generate</div>
+                                        <div id="rngResultValue" class="chance-result-value">1-100</div>
+                                        <div id="rngResultSub" class="chance-result-sub">Random Number</div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="utility-section ds-card">
+                                <h4>Magic 8 Ball</h4>
+                                <div class="utility-section-body">
+                                    <input id="magicQuestion" class="ds-input" type="text" maxlength="140" placeholder="Ask a yes/no question..." aria-label="Magic 8 ball question" />
+                                    <button id="magicBall" class="magic-ball-shell" type="button" aria-label="Shake the magic 8 ball">
+                                        <div class="magic-ball">
+                                            <div class="magic-eight">8</div>
+                                            <div class="magic-window">
+                                                <div id="magicAnswerValue" class="magic-window-text">Ask</div>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <div id="magicAnswerSub" class="chance-result-sub">Hold and release.</div>
                                 </div>
                             </div>
                         </div>
@@ -1836,6 +2255,23 @@
             const timerToggleBtn = document.getElementById("timerToggle");
             const timerResetBtn = document.getElementById("timerReset");
             const timerPresetButtons = Array.from(document.querySelectorAll(".timer-preset-btn"));
+            const diceCountEl = document.getElementById("diceCount");
+            const diceThrowSurfaceEl = document.getElementById("diceThrowSurface");
+            const dicePresetButtons = Array.from(document.querySelectorAll("[data-sides]"));
+            const diceShapeEl = document.getElementById("diceShape");
+            const diceKindEl = document.getElementById("diceKind");
+            const diceResultValueEl = document.getElementById("diceResultValue");
+            const diceResultSubEl = document.getElementById("diceResultSub");
+            const rngMinEl = document.getElementById("rngMin");
+            const rngMaxEl = document.getElementById("rngMax");
+            const rngRollBtn = document.getElementById("rngRollBtn");
+            const rngPresetButtons = Array.from(document.querySelectorAll(".rng-preset-btn"));
+            const rngResultValueEl = document.getElementById("rngResultValue");
+            const rngResultSubEl = document.getElementById("rngResultSub");
+            const magicQuestionEl = document.getElementById("magicQuestion");
+            const magicBallEl = document.getElementById("magicBall");
+            const magicAnswerValueEl = document.getElementById("magicAnswerValue");
+            const magicAnswerSubEl = document.getElementById("magicAnswerSub");
             const tabButtons = Array.from(document.querySelectorAll(".nav-btn"));
             const tabPanes = Array.from(document.querySelectorAll(".tab-pane"));
             const partInspector = document.getElementById("partInspector");
@@ -2243,7 +2679,9 @@
                     bgBottom: "rgba(197, 230, 255, 0.14)",
                     sceneOverlay: "rgba(34, 20, 36, 0.08)",
                     deskBase: "rgb(53, 39, 59)",
+                    deskTopPlane: "rgba(115, 84, 126, 0.88)",
                     deskLip: "rgba(255, 198, 236, 0.45)",
+                    deskFrontShadow: "rgba(22, 10, 26, 0.16)",
                     deskShadeTop: "rgba(255,255,255,0.04)",
                     deskShadeBottom: "rgba(24, 12, 28, 0.24)",
                     keyboardBase: "rgba(255, 214, 241, 0.18)",
@@ -2262,7 +2700,9 @@
                     bgBottom: "rgba(206, 246, 240, 0.13)",
                     sceneOverlay: "rgba(42, 49, 58, 0.08)",
                     deskBase: "rgb(58, 69, 82)",
+                    deskTopPlane: "rgba(115, 134, 156, 0.84)",
                     deskLip: "rgba(185, 214, 255, 0.35)",
+                    deskFrontShadow: "rgba(16, 24, 36, 0.16)",
                     deskShadeTop: "rgba(255,255,255,0.05)",
                     deskShadeBottom: "rgba(22, 30, 44, 0.24)",
                     keyboardBase: "rgba(206, 229, 255, 0.16)",
@@ -2281,7 +2721,9 @@
                     bgBottom: "rgba(160, 196, 255, 0.10)",
                     sceneOverlay: "rgba(16, 22, 34, 0.10)",
                     deskBase: "rgb(26, 34, 48)",
+                    deskTopPlane: "rgba(44, 62, 84, 0.82)",
                     deskLip: "rgba(149, 226, 255, 0.26)",
+                    deskFrontShadow: "rgba(4, 8, 16, 0.18)",
                     deskShadeTop: "rgba(211, 242, 255, 0.04)",
                     deskShadeBottom: "rgba(6, 10, 18, 0.30)",
                     keyboardBase: "rgba(133, 198, 230, 0.12)",
@@ -2300,7 +2742,9 @@
                     bgBottom: "rgba(151, 173, 127, 0.12)",
                     sceneOverlay: "rgba(20, 20, 14, 0.08)",
                     deskBase: "rgb(56, 48, 37)",
+                    deskTopPlane: "rgba(108, 88, 62, 0.84)",
                     deskLip: "rgba(194, 166, 118, 0.36)",
+                    deskFrontShadow: "rgba(18, 12, 8, 0.15)",
                     deskShadeTop: "rgba(255, 238, 210, 0.04)",
                     deskShadeBottom: "rgba(16, 12, 8, 0.24)",
                     keyboardBase: "rgba(178, 154, 119, 0.15)",
@@ -2319,7 +2763,9 @@
                     bgBottom: "rgba(223, 206, 255, 0.12)",
                     sceneOverlay: "rgba(44, 26, 36, 0.08)",
                     deskBase: "rgb(66, 47, 61)",
+                    deskTopPlane: "rgba(126, 92, 117, 0.86)",
                     deskLip: "rgba(255, 190, 225, 0.40)",
+                    deskFrontShadow: "rgba(24, 12, 20, 0.16)",
                     deskShadeTop: "rgba(255, 240, 248, 0.05)",
                     deskShadeBottom: "rgba(26, 15, 24, 0.26)",
                     keyboardBase: "rgba(255, 205, 230, 0.16)",
@@ -2338,7 +2784,9 @@
                     bgBottom: "rgba(121, 229, 213, 0.11)",
                     sceneOverlay: "rgba(16, 30, 44, 0.08)",
                     deskBase: "rgb(26, 49, 68)",
+                    deskTopPlane: "rgba(53, 94, 126, 0.84)",
                     deskLip: "rgba(124, 214, 255, 0.30)",
+                    deskFrontShadow: "rgba(6, 16, 26, 0.16)",
                     deskShadeTop: "rgba(220, 244, 255, 0.04)",
                     deskShadeBottom: "rgba(8, 18, 29, 0.24)",
                     keyboardBase: "rgba(115, 184, 219, 0.14)",
@@ -2350,10 +2798,77 @@
                     mouseButton: "rgba(184, 231, 252, 0.26)",
                     armStroke: "rgba(156, 215, 243, 0.30)",
                     armHand: "rgba(187, 233, 252, 0.36)"
+                },
+                confetti: {
+                    label: "Confetti Desk",
+                    bgTop: "rgba(255, 223, 167, 0.18)",
+                    bgBottom: "rgba(255, 191, 219, 0.14)",
+                    sceneOverlay: "rgba(58, 34, 28, 0.06)",
+                    deskBase: "rgb(255, 129, 161)",
+                    deskTopPlane: "rgba(255, 177, 196, 0.96)",
+                    deskLip: "rgba(255, 248, 199, 0.82)",
+                    deskFrontShadow: "rgba(189, 63, 106, 0.24)",
+                    deskShadeTop: "rgba(255, 255, 255, 0.04)",
+                    deskShadeBottom: "rgba(164, 58, 98, 0.10)",
+                    keyboardBase: "rgba(255, 245, 206, 0.92)",
+                    keyboardKey: "rgba(255, 255, 255, 0.94)",
+                    keyboardLabel: "rgba(146, 58, 96, 0.96)",
+                    mousePad: "rgba(145, 226, 196, 0.82)",
+                    mousePadStroke: "rgba(255, 255, 255, 0.55)",
+                    mouseBody: "rgba(255, 255, 255, 0.94)",
+                    mouseButton: "rgba(255, 226, 120, 0.88)",
+                    armStroke: "rgba(255, 224, 236, 0.52)",
+                    armHand: "rgba(255, 247, 252, 0.62)"
+                },
+                mintchip: {
+                    label: "Mint Cream",
+                    bgTop: "rgba(191, 255, 236, 0.16)",
+                    bgBottom: "rgba(255, 243, 179, 0.12)",
+                    sceneOverlay: "rgba(20, 44, 36, 0.06)",
+                    deskBase: "rgb(72, 173, 151)",
+                    deskTopPlane: "rgba(161, 236, 215, 0.94)",
+                    deskLip: "rgba(255, 251, 224, 0.76)",
+                    deskFrontShadow: "rgba(35, 116, 97, 0.24)",
+                    deskShadeTop: "rgba(255, 255, 255, 0.04)",
+                    deskShadeBottom: "rgba(22, 88, 74, 0.12)",
+                    keyboardBase: "rgba(255, 252, 238, 0.90)",
+                    keyboardKey: "rgba(242, 255, 250, 0.94)",
+                    keyboardLabel: "rgba(38, 108, 93, 0.95)",
+                    mousePad: "rgba(255, 217, 128, 0.70)",
+                    mousePadStroke: "rgba(255, 251, 236, 0.54)",
+                    mouseBody: "rgba(255, 255, 255, 0.92)",
+                    mouseButton: "rgba(126, 207, 188, 0.82)",
+                    armStroke: "rgba(221, 255, 245, 0.42)",
+                    armHand: "rgba(243, 255, 251, 0.54)"
+                },
+                arcadepop: {
+                    label: "Arcade Pop",
+                    bgTop: "rgba(143, 181, 255, 0.18)",
+                    bgBottom: "rgba(255, 145, 199, 0.12)",
+                    sceneOverlay: "rgba(20, 18, 42, 0.08)",
+                    deskBase: "rgb(78, 74, 184)",
+                    deskTopPlane: "rgba(123, 118, 242, 0.94)",
+                    deskLip: "rgba(255, 230, 94, 0.84)",
+                    deskFrontShadow: "rgba(36, 28, 119, 0.30)",
+                    deskShadeTop: "rgba(255, 255, 255, 0.03)",
+                    deskShadeBottom: "rgba(28, 21, 96, 0.14)",
+                    keyboardBase: "rgba(38, 35, 88, 0.90)",
+                    keyboardKey: "rgba(255, 255, 255, 0.90)",
+                    keyboardLabel: "rgba(62, 53, 168, 0.96)",
+                    mousePad: "rgba(255, 111, 173, 0.72)",
+                    mousePadStroke: "rgba(255, 231, 247, 0.46)",
+                    mouseBody: "rgba(246, 248, 255, 0.92)",
+                    mouseButton: "rgba(255, 214, 79, 0.86)",
+                    armStroke: "rgba(185, 182, 255, 0.42)",
+                    armHand: "rgba(233, 235, 255, 0.54)"
                 }
             };
             let canvasPaletteId = "cute";
             let canvasPalette = CANVAS_PALETTES.cute;
+            let currentDiceSides = 6;
+            let magicRevealToken = 0;
+            let diceRollToken = 0;
+            let magicBallBusy = false;
             let selectedPartKey = "";
             let inspectorPane = "inputs";
             let panelSide = "left";
@@ -2395,6 +2910,59 @@
                 btn.addEventListener("click", () => {
                     setTimerPreset(Number(btn.dataset.minutes));
                 });
+            });
+            dicePresetButtons.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    currentDiceSides = Number(btn.dataset.sides) || 6;
+                    syncDiceSelector();
+                    diceResultSubEl.textContent = "Hold and release";
+                });
+            });
+            attachHoldReleaseAction(
+                diceThrowSurfaceEl,
+                diceShapeEl,
+                {
+                    onStart: () => startDiceHold(),
+                    onRelease: () => stopDiceHoldAndReveal(),
+                    onCancel: () => {
+                        diceRollToken++;
+                        diceResultSubEl.textContent = "Hold and release";
+                    },
+                    allowClickFallback: false
+                }
+            );
+            rngRollBtn?.addEventListener("click", () => {
+                generateRandomNumber();
+            });
+            rngPresetButtons.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    rngMinEl.value = String(btn.dataset.min || "1");
+                    rngMaxEl.value = String(btn.dataset.max || "100");
+                    generateRandomNumber();
+                });
+            });
+            attachHoldReleaseAction(
+                magicBallEl,
+                magicBallEl?.querySelector(".magic-ball"),
+                {
+                    canStart: () => !magicBallBusy,
+                    onStart: () => {
+                        setMagicBallState("is-holding");
+                        magicAnswerValueEl.textContent = "...";
+                        magicAnswerSubEl.textContent = "Shake to reveal";
+                    },
+                    onRelease: () => askMagicBall(),
+                    onCancel: () => {
+                        setMagicBallState("is-idle");
+                        magicAnswerSubEl.textContent = "Hold and release.";
+                    },
+                    allowClickFallback: false
+                }
+            );
+            magicQuestionEl?.addEventListener("keydown", (ev) => {
+                if (ev.key !== "Enter") return;
+                ev.preventDefault();
+                askMagicBall();
             });
             panelSideEl.addEventListener("change", () => {
                 panelSide = panelSideEl.value === "left" ? "left" : "right";
@@ -3220,6 +3788,204 @@
                 debugText.textContent = `init warning: ${message}`;
             }
 
+            function randomIntInclusive(min, max) {
+                const lo = Math.ceil(Math.min(min, max));
+                const hi = Math.floor(Math.max(min, max));
+                return Math.floor(Math.random() * (hi - lo + 1)) + lo;
+            }
+
+            function attachHoldReleaseAction(buttonEl, visualEl, hooks) {
+                if (!buttonEl || !visualEl) return;
+                let holding = false;
+                let pointerId = null;
+                let releaseHandled = false;
+
+                const cleanup = () => {
+                    window.removeEventListener("pointerup", handleWindowPointerUp, true);
+                    window.removeEventListener("pointercancel", handleWindowPointerCancel, true);
+                    window.removeEventListener("blur", handleWindowBlur, true);
+                };
+
+                const finishHold = (didRelease) => {
+                    if (!holding) return false;
+                    holding = false;
+                    visualEl.classList.remove("is-holding");
+                    cleanup();
+                    if (didRelease && !releaseHandled) {
+                        releaseHandled = true;
+                        hooks.onRelease?.();
+                    } else if (!didRelease) {
+                        hooks.onCancel?.();
+                    }
+                    pointerId = null;
+                    return true;
+                };
+
+                const handleWindowPointerUp = (ev) => {
+                    if (!holding) return;
+                    if (pointerId !== null && ev.pointerId !== pointerId) return;
+                    if (buttonEl.releasePointerCapture && pointerId !== null) {
+                        try { buttonEl.releasePointerCapture(pointerId); } catch {}
+                    }
+                    finishHold(true);
+                };
+
+                const handleWindowPointerCancel = (ev) => {
+                    if (!holding) return;
+                    if (pointerId !== null && ev.pointerId !== pointerId) return;
+                    finishHold(false);
+                };
+
+                const handleWindowBlur = () => {
+                    if (!holding) return;
+                    finishHold(false);
+                };
+
+                const startHold = (ev) => {
+                    if (holding) return;
+                    if (hooks.canStart && hooks.canStart() === false) return;
+                    holding = true;
+                    releaseHandled = false;
+                    pointerId = ev?.pointerId ?? null;
+                    if (pointerId !== null && buttonEl.setPointerCapture) {
+                        try { buttonEl.setPointerCapture(pointerId); } catch {}
+                    }
+                    window.addEventListener("pointerup", handleWindowPointerUp, true);
+                    window.addEventListener("pointercancel", handleWindowPointerCancel, true);
+                    window.addEventListener("blur", handleWindowBlur, true);
+                    visualEl.classList.remove("is-rolling", "is-shaking");
+                    void visualEl.offsetWidth;
+                    visualEl.classList.add("is-holding");
+                    hooks.onStart?.();
+                };
+
+                buttonEl.addEventListener("pointerdown", (ev) => {
+                    if (typeof ev.button === "number" && ev.button !== 0) return;
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    startHold(ev);
+                });
+                buttonEl.addEventListener("dragstart", (ev) => {
+                    ev.preventDefault();
+                });
+                if (hooks.allowClickFallback !== false) {
+                    buttonEl.addEventListener("click", (ev) => {
+                        if (holding || releaseHandled) {
+                            ev.preventDefault();
+                            return;
+                        }
+                        hooks.onClick?.();
+                    });
+                }
+            }
+
+            function syncDiceSelector() {
+                dicePresetButtons.forEach((btn) => {
+                    const active = Number(btn.dataset.sides) === currentDiceSides;
+                    btn.setAttribute("aria-pressed", active ? "true" : "false");
+                });
+                diceShapeEl.dataset.sides = String(currentDiceSides);
+                diceKindEl.textContent = `d${currentDiceSides}`;
+            }
+
+            function rollDice(sides, count) {
+                const safeSides = Math.max(2, Math.floor(Number(sides) || 6));
+                const safeCount = clamp(Math.floor(Number(count) || 1), 1, 12);
+                currentDiceSides = safeSides;
+                syncDiceSelector();
+                const rolls = Array.from({ length: safeCount }, () => randomIntInclusive(1, safeSides));
+                const total = rolls.reduce((sum, roll) => sum + roll, 0);
+                diceCountEl.value = String(safeCount);
+                diceShapeEl.classList.remove("is-rolling");
+                void diceShapeEl.offsetWidth;
+                diceShapeEl.classList.add("is-rolling");
+                diceResultValueEl.textContent = `${total}`;
+                diceResultSubEl.textContent = safeCount > 1 ? `${safeCount} rolls` : "Single roll";
+            }
+
+            function previewRollingDie() {
+                const preview = randomIntInclusive(1, currentDiceSides);
+                diceResultValueEl.textContent = `${preview}`;
+            }
+
+            function startDiceHold() {
+                const token = ++diceRollToken;
+                previewRollingDie();
+                diceResultSubEl.textContent = "Shaking...";
+                let delay = 70;
+                const step = () => {
+                    if (token !== diceRollToken) return;
+                    previewRollingDie();
+                    window.setTimeout(step, delay);
+                };
+                step();
+            }
+
+            function stopDiceHoldAndReveal() {
+                const token = ++diceRollToken;
+                const safeCount = clamp(Math.floor(Number(diceCountEl.value) || 1), 1, 12);
+                const delays = [80, 110, 150, 210];
+                const run = (idx) => {
+                    if (token !== diceRollToken) return;
+                    if (idx >= delays.length) {
+                        rollDice(currentDiceSides, safeCount);
+                        return;
+                    }
+                    previewRollingDie();
+                    window.setTimeout(() => run(idx + 1), delays[idx]);
+                };
+                run(0);
+            }
+
+            function setMagicBallState(state) {
+                const ball = magicBallEl?.querySelector(".magic-ball");
+                if (!ball) return;
+                ball.classList.remove("is-idle", "is-holding", "is-revealing", "is-revealed", "is-shaking");
+                ball.classList.add(state);
+            }
+
+            function generateRandomNumber() {
+                const min = Math.floor(Number(rngMinEl.value) || 0);
+                const max = Math.floor(Number(rngMaxEl.value) || 0);
+                const lo = Math.min(min, max);
+                const hi = Math.max(min, max);
+                rngMinEl.value = String(lo);
+                rngMaxEl.value = String(hi);
+                const next = randomIntInclusive(lo, hi);
+                rngResultValueEl.textContent = `${next}`;
+                rngResultSubEl.textContent = `Generated from ${lo} to ${hi}.`;
+            }
+
+            function askMagicBall() {
+                if (magicBallBusy) return;
+                magicBallBusy = true;
+                const answers = [
+                    "It is certain.",
+                    "Outlook good.",
+                    "Signs point to yes.",
+                    "Reply hazy.",
+                    "Ask again later.",
+                    "Better not tell you now.",
+                    "Don't count on it.",
+                    "Very doubtful.",
+                    "Yes, but keep it simple.",
+                    "The goblin approves."
+                ];
+                const question = String(magicQuestionEl.value || "").trim();
+                const answer = answers[randomIntInclusive(0, answers.length - 1)];
+                const token = ++magicRevealToken;
+                setMagicBallState("is-revealing");
+                magicAnswerValueEl.textContent = "...";
+                magicAnswerSubEl.textContent = "Consulting...";
+                window.setTimeout(() => {
+                    if (token !== magicRevealToken) return;
+                    setMagicBallState("is-revealed");
+                    magicAnswerValueEl.textContent = answer;
+                    magicAnswerSubEl.textContent = question ? question : "No question asked.";
+                    magicBallBusy = false;
+                }, 520);
+            }
+
             function switchSkin(id) {
                 const next = skinLibrary[id];
                 if (!next || id === skinState.targetId) return;
@@ -3532,15 +4298,23 @@
             function drawDesk(LAYOUT) {
                 const bounds = getSceneViewportBounds();
                 const { deskTopY } = LAYOUT;
+                const deskW = bounds.right - bounds.left;
+                const deskH = bounds.bottom - deskTopY;
+                const topPlaneH = Math.max(16, Math.min(28, deskH * 0.075));
+                const frontShadowH = Math.max(10, Math.min(20, deskH * 0.052));
                 ctx.fillStyle = canvasPalette.deskBase;
-                ctx.fillRect(bounds.left, deskTopY, bounds.right - bounds.left, bounds.bottom - deskTopY);
+                ctx.fillRect(bounds.left, deskTopY, deskW, deskH);
+                ctx.fillStyle = canvasPalette.deskTopPlane || canvasPalette.deskLip;
+                ctx.fillRect(bounds.left, deskTopY, deskW, topPlaneH);
                 ctx.fillStyle = canvasPalette.deskLip;
-                ctx.fillRect(bounds.left, deskTopY - 3, bounds.right - bounds.left, 3);
+                ctx.fillRect(bounds.left, deskTopY - 3, deskW, 3);
+                ctx.fillStyle = canvasPalette.deskFrontShadow || "rgba(0, 0, 0, 0.12)";
+                ctx.fillRect(bounds.left, deskTopY + topPlaneH, deskW, frontShadowH);
                 const g = ctx.createLinearGradient(0, deskTopY, 0, bounds.bottom);
                 g.addColorStop(0, canvasPalette.deskShadeTop);
                 g.addColorStop(1, canvasPalette.deskShadeBottom);
                 ctx.fillStyle = g;
-                ctx.fillRect(bounds.left, deskTopY, bounds.right - bounds.left, bounds.bottom - deskTopY);
+                ctx.fillRect(bounds.left, deskTopY, deskW, deskH);
             }
 
             function drawImageFit(img, x, y, w, h, alpha = 1) {
@@ -4582,6 +5356,13 @@
                 setupThemeSelector();
                 setupCanvasPaletteSelector();
                 syncTimerUI();
+                syncDiceSelector();
+                setMagicBallState("is-idle");
+                rollDice(6, 1);
+                diceResultSubEl.textContent = "Hold and release";
+                rngResultValueEl.textContent = "1-100";
+                rngResultSubEl.textContent = "Choose a range and generate a number.";
+                magicAnswerSubEl.textContent = "Hold and release.";
                 setPanelSide(panelSide);
                 openPanelWithTab("info");
                 setInspectorPane(inspectorPane);
