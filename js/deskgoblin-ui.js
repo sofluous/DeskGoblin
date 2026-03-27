@@ -111,18 +111,12 @@
         }
 
         function setupThemeSelector() {
-            const themeSelectorApi = root.DesignSystemThemeSelector;
-            if (themeSelectorApi?.initThemeSelector) {
-                const currentTheme = document.documentElement.getAttribute("data-theme") || "";
-                themeSelectorApi.initThemeSelector(themeSelect, {
-                    includeSystem: true,
-                    storageKey: storageKeys.theme,
-                    defaultTheme: currentTheme || "steel-night"
-                });
+            const currentTheme = String(document.documentElement.getAttribute("data-theme") || "").trim();
+            if (!themeSelect) return;
+            if (root.DesignSystemThemeSelector) {
+                if (currentTheme) themeSelect.value = currentTheme;
                 return;
             }
-
-            const currentTheme = String(document.documentElement.getAttribute("data-theme") || "").trim();
             themeSelect.innerHTML = `<option value="">System</option>${currentTheme ? `<option value="${currentTheme}">${currentTheme}</option>` : ""}`;
             themeSelect.value = currentTheme;
         }
