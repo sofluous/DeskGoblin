@@ -323,6 +323,8 @@
                 parts[groupId] = {
                     slot: sourceGroup.slot || groupId,
                     mode: String(config.mode || sourceGroup.mode || defaults.mode),
+                    offset: normalizePoint(sourceGroup.offset, 0, 0),
+                    scale: normalizeScale2(sourceGroup.scale, 1, 1),
                     pivot: normalizePoint(config.pivot || sourceGroup.pivot, defaults.pivot.x, defaults.pivot.y),
                     handAnchor: normalizePoint(config.handAnchor || sourceGroup.handAnchor, defaults.handAnchor.x, defaults.handAnchor.y),
                     layers: orderedLayers.map((layer) => {
@@ -332,6 +334,8 @@
                             label: layer.label || key,
                             file: String(runtimeAssetFiles[key] || layer.file || ""),
                             visible: visibleSet.has(key),
+                            offset: normalizePoint(layer.offset, 0, 0),
+                            scale: normalizeScale2(layer.scale, 1, 1),
                             tweak: {
                                 x: +runtimeLayerTweaks?.[key]?.x || 0,
                                 y: +runtimeLayerTweaks?.[key]?.y || 0,

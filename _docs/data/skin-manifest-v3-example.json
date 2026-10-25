@@ -1,0 +1,52 @@
+{
+  "version": 3,
+  "groupOrder": [
+    "head"
+  ],
+  "parts": {
+    "head": {
+      "slot": "head",
+      "mode": "static",
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "handAnchor": {
+        "x": 0.5,
+        "y": 0.95
+      },
+      "layers": [
+        {
+          "id": "headFill",
+          "label": "fill",
+          "file": "HeadBase/HeadFill.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        },
+        {
+          "id": "headLine",
+          "label": "line",
+          "file": "HeadBase/Head.PNG",
+          "visible": true,
+          "tweak": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          }
+        }
+      ]
+    }
+  },
+  "slotTweaks": {},
+  "render": {
+    "hideDefaultArms": false,
+    "nativeSize": true,
+    "defaultScaleMode": "contain"
+  }
+}

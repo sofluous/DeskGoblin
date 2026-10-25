@@ -2360,8 +2360,8 @@
                 return timerModule?.resetTimer?.();
             }
 
-            function updateTimer(dt) {
-                return timerModule?.updateTimer?.(dt);
+            function updateTimer() {
+                return timerModule?.updateTimer?.();
             }
 
             function resetFlyCooldown(min = 6, max = 14) {
@@ -2899,8 +2899,7 @@
                 refreshPartsInspector();
             });
             timerToggleBtn?.addEventListener("click", () => {
-                timerState.running = !timerState.running;
-                syncTimerUI();
+                timerModule?.toggleTimer();
             });
             timerResetBtn?.addEventListener("click", () => {
                 resetTimer();
@@ -5106,7 +5105,7 @@
                 sceneTime += dt;
                 mouseMoveTimer = Math.max(0, mouseMoveTimer - dt);
 
-                updateTimer(dt);
+                updateTimer();
 
                 if (tModeOn) {
                     if (flyState.active) {

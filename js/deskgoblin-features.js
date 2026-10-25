@@ -50,7 +50,9 @@
         };
     };
 
-    root.createTimerModule = function createTimerModule({ timerState, clamp, ui, onComplete }) {
+    root.createTimerModule = function createTimerModule({ timerState, clamp, ui, onComplete, now = Date.now }) {
+        // A wall-clock deadline includes time spent backgrounded or asleep.
+        let deadline = timerState.running ? now() + timerState.remaining * 1000 : null;
         function formatClock(totalSeconds) {
             const secs = Math.max(0, Math.ceil(totalSeconds));
             const mm = Math.floor(secs / 60);
@@ -82,27 +84,43 @@
             timerState.durationSec = mins * 60;
             timerState.remaining = timerState.durationSec;
             timerState.running = false;
+            deadline = null;
             syncTimerUI();
         }
 
         function resetTimer() {
             timerState.running = false;
             timerState.remaining = timerState.durationSec;
+            deadline = null;
             syncTimerUI();
         }
 
-        function updateTimer(dt) {
+        function updateTimer() {
             if (!timerState.running) return;
-            timerState.remaining = Math.max(0, timerState.remaining - dt);
+            timerState.remaining = Math.max(0, (deadline - now()) / 1000);
             if (timerState.remaining <= 0) {
                 timerState.remaining = 0;
                 timerState.running = false;
+                deadline = null;
                 if (onComplete) onComplete();
             }
             syncTimerUI();
         }
 
-        return { formatClock, syncTimerUI, setTimerPreset, resetTimer, updateTimer };
+        function toggleTimer() {
+            if (timerState.running) {
+                updateTimer();
+                timerState.running = false;
+                deadline = null;
+            } else {
+                if (timerState.remaining <= 0) timerState.remaining = timerState.durationSec;
+                deadline = now() + timerState.remaining * 1000;
+                timerState.running = true;
+            }
+            syncTimerUI();
+        }
+
+        return { formatClock, syncTimerUI, setTimerPreset, resetTimer, updateTimer, toggleTimer };
     };
 
     root.createPasteboardModule = function createPasteboardModule({
